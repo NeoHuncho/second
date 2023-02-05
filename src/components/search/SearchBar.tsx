@@ -1,32 +1,47 @@
+import type { MantineSize } from "@mantine/core";
 import { Popover, Text, TextInput } from "@mantine/core";
 import { getHotkeyHandler, useMediaQuery } from "@mantine/hooks";
 import { SearchIcon } from "../../assets/icons";
 import useCompletion from "../../hooks/completion/useCompletion";
 import useCompletionSubmit from "../../hooks/completion/useCompletionSubmit";
 
-const SearchBar = () => {
+type PropTypes = {
+  size?: MantineSize;
+  inputClassName?: string;
+};
+
+const SearchBar = ({ size = "md", inputClassName }: PropTypes) => {
   const smallBreakout = useMediaQuery("(min-width: 640px)");
   const { completionResults, setDebouncedSearchTerm, debouncedSearchTerm } =
     useCompletion();
   const { onSubmit, setSearchTerm } = useCompletionSubmit();
   return (
     <Popover
-      width={smallBreakout ? "35%" : "80%"}
+      width={
+        size === "lg"
+          ? smallBreakout
+            ? "35%"
+            : "80%"
+          : smallBreakout
+          ? "25%"
+          : "60%"
+      }
       opened={!!debouncedSearchTerm.length}
       position="bottom"
       withArrow
     >
       <Popover.Target>
         <TextInput
-          size="lg"
+          placeholder="Rechercher"
+          size={size}
           radius={"lg"}
-          className="w-5/6 sm:w-2/5"
+          className={inputClassName || "w-full"}
           onKeyDown={getHotkeyHandler([["Enter", () => onSubmit()]])}
           rightSection={
             <SearchIcon
               onClick={onSubmit}
               className="mr-3 cursor-pointer"
-              size={32}
+              size={size === "lg" ? 32 : 25}
             />
           }
           rightSectionWidth={48}

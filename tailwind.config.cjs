@@ -7,6 +7,9 @@ module.exports = {
         "background-landing":
           "url('~/src/assets/images/background-landing-min.jpg')",
       },
+      gridTemplateColumns: {
+        mobileHeader: "1fr 3fr 1fr ",
+      },
     },
   },
   plugins: [],

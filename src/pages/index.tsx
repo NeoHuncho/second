@@ -19,7 +19,7 @@ const Home: NextPage = () => {
             </Title>
             <Text className="text-center text-lg">101% seconde main</Text>
           </div>
-          <SearchBar />
+          <SearchBar size="lg" inputClassName="w-5/6 sm:w-2/5" />
         </div>
       </main>
     </>
