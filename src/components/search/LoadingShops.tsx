@@ -1,5 +1,6 @@
 import { Card, Image, Loader } from "@mantine/core";
-
+import { motion } from "framer-motion";
+import { CheckIcon } from "../../assets/icons";
 type LoadingStates = {
   leboncoin: boolean;
   vinted: boolean;
@@ -25,6 +26,9 @@ const LoadingShops = ({ loadingStates, shops }: LoadingShopsProps) => {
                 fit="contain"
               />
               {loadingStates.leboncoin ? <Loader /> : null}
+              {/* {loadingStates.leboncoin ? (
+                <CheckIcon color="green" size={35} />
+              ) : null} */}
             </div>
           ) : null}
           {!shops || shops.includes("vinted") ? (
@@ -36,7 +40,17 @@ const LoadingShops = ({ loadingStates, shops }: LoadingShopsProps) => {
                 height={40}
                 fit="contain"
               />
-              {loadingStates.vinted ? <Loader /> : null}
+              {/* {loadingStates.vinted ? <Loader /> : null} */}
+              {loadingStates.vinted ? (
+                <motion.div
+                className="flex items-center justify-center"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <CheckIcon color="green" size={35} />
+                </motion.div>
+              ) : null}
             </div>
           ) : null}
         </div>
