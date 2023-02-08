@@ -21,7 +21,12 @@ const LoadingShops = ({ values }: Props) => {
               className="flex flex-col items-center gap-3"
             >
               <div className="relative h-8 w-20">
-                <Image alt={value.name} src={value.image} fill />
+                <Image
+                  className="object-contain"
+                  alt={value.name}
+                  src={value.image}
+                  fill
+                />
               </div>
               {value.status === "success" ? (
                 <motion.div
