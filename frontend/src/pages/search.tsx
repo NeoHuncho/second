@@ -8,7 +8,7 @@ const Search = () => {
   const shops = useShops();
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-4 sm:gap-2">
       <SearchTerm />
       <LoadingShops values={[...Object.values(shops)]} />
       {Object.values(shops).map((shop) => (
