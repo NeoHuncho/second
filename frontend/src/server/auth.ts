@@ -4,15 +4,16 @@ import {
   type NextAuthOptions,
   type DefaultSession,
 } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord.js";
+import DiscordProvider from "next-auth/providers/discord";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { env } from "../env/server.mjs";
+import { env } from "../env.mjs";
 import { prisma } from "./db";
 
 /**
- * Module augmentation for `next-auth` types
- * Allows us to add custom properties to the `session` object
- * and keep type safety
+ * Module augmentation for `next-auth` types.
+ * Allows us to add custom properties to the `session` object and keep type
+ * safety.
+ *
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  **/
 declare module "next-auth" {
@@ -31,8 +32,9 @@ declare module "next-auth" {
 }
 
 /**
- * Options for NextAuth.js used to configure
- * adapters, providers, callbacks, etc.
+ * Options for NextAuth.js used to configure adapters, providers, callbacks,
+ * etc.
+ *
  * @see https://next-auth.js.org/configuration/options
  **/
 export const authOptions: NextAuthOptions = {
@@ -64,8 +66,9 @@ export const authOptions: NextAuthOptions = {
 };
 
 /**
- * Wrapper for getServerSession so that you don't need
- * to import the authOptions in every file.
+ * Wrapper for `getServerSession` so that you don't need to import the
+ * `authOptions` in every file.
+ *
  * @see https://next-auth.js.org/configuration/nextjs
  **/
 export const getServerAuthSession = (ctx: {
