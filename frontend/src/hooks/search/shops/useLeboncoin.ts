@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import leboncoinResponse from "../../../static/leboncoinResponse";
-import type { Shop, ShopListing } from "../../../types/types";
+import type { LoadingTypes, Shop, ShopListing } from "../../../types/types";
 import useSearch from "../useSearch";
 import leboncoinImage from "../../../assets/shops/leboncoin.webp";
 const useLeboncoin = () => {
@@ -13,6 +13,7 @@ const useLeboncoin = () => {
   });
 
   useEffect(() => {
+    setCurrentShop({ ...currentShop, status: "loading" });
     const results: ShopListing[] = leboncoinResponse?.ads
       ?.filter(
         (listing) => listing.status === "active" && listing.ad_type === "offer"

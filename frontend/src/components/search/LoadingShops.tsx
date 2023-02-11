@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { appearMotion } from "../../animate/Animate";
 import { CheckIcon, ErrorIcon } from "../../assets/icons";
-import type { LoadingTypes, Shop, Shops } from "../../types/types";
+import type { Shop } from "../../types/types";
 
 type Props = {
   values: Shop[];

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import LoadingShops from "../components/search/LoadingShops";
 import SearchTerm from "../components/search/SearchedTerm";
 import ListingShop from "../components/search/listingsShop/ListingShop";
@@ -8,7 +7,7 @@ const Search = () => {
   const shops = useShops();
 
   return (
-    <div className="flex flex-col gap-4 sm:gap-2">
+    <div className="m-auto flex max-w-screen-2xl flex-col gap-4 sm:gap-2">
       <SearchTerm />
       <LoadingShops values={[...Object.values(shops)]} />
       {Object.values(shops).map((shop) => (

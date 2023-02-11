@@ -14,7 +14,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   pageProps: { session, ...pageProps },
 }) => {
   const router = useRouter();
-  console.log(router.pathname);
+
   return (
     <SessionProvider session={session}>
       <MantineProvider
