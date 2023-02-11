@@ -5,7 +5,7 @@ import { Image as ImageMantine } from "@mantine/core";
 import React from "react";
 import type { Shop } from "../../../types/types";
 import { useMediaQuery } from "@mantine/hooks";
-import Listing from "./sub/listing";
+import Listing from "./sub/Listing";
 
 interface Props {
   shop: Shop;
