@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import leboncoinResponse from "../../../static/leboncoinResponse";
-import type { LoadingTypes, Shop, ShopListing } from "../../../types/types";
+import type { Shop } from "../../../types/types";
 import useSearch from "../useSearch";
 import leboncoinImage from "../../../assets/shops/leboncoin.webp";
+import axios from "axios";
+import type { LeboncoinRes } from "../../../types/api/shopsRes";
+
 const useLeboncoin = () => {
-  const { searchTerm } = useSearch();
+  const { searchTerm, apiUrl, encodedSearchTerm } = useSearch();
   const [currentShop, setCurrentShop] = useState<Shop>({
     status: "loading",
     name: "Leboncoin",
@@ -12,20 +14,20 @@ const useLeboncoin = () => {
     listings: [],
   });
 
+  const getAndSetListings = async () => {
+    setCurrentShop({ ...currentShop, status: "loading" });
+    const response = await axios.get<LeboncoinRes>(
+      `${apiUrl}/stores/leboncoin?text=${encodedSearchTerm}`
+    );
+    const listings = response.data.listings.filter(
+      (listing) => listing.status === "active" && listing.ad_type === "offer"
+    );
+    setCurrentShop({ ...currentShop, status: "success", listings });
+  };
+
   useEffect(() => {
     setCurrentShop({ ...currentShop, status: "loading" });
-    const results: ShopListing[] = leboncoinResponse?.ads
-      ?.filter(
-        (listing) => listing.status === "active" && listing.ad_type === "offer"
-      )
-      .map((listing) => ({
-        image: listing.images?.small_url,
-        title: listing.subject,
-        price: listing.price[0] || 0,
-      }));
-    setTimeout(() => {
-      setCurrentShop({ ...currentShop, status: "success", listings: results });
-    }, 1100);
+    getAndSetListings();
   }, [searchTerm]);
 
   return { currentShop };

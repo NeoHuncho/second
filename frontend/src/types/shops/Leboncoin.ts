@@ -1,13 +1,4 @@
-import type { StaticImageData } from "next/image";
-
-export type Shop = {
-  name: Shops;
-  image: StaticImageData;
-  listings: ShopListing[];
-  status: LoadingTypes;
-};
-
-export interface ShopListing {
+export interface LeboncoinListing {
   list_id: number;
   first_publication_date: string;
   index_date: string;
@@ -27,6 +18,7 @@ export interface ShopListing {
 interface Images {
   thumb_url: string;
   small_url: string;
+  nb_images: number;
   urls: string[];
   urls_thumb: string[];
   urls_large: string[];
@@ -37,6 +29,3 @@ interface Attribute {
   value: string;
   values: string[];
 }
-
-export type Shops = "Vinted" | "Leboncoin";
-export type LoadingTypes = "success" | "error" | "loading";

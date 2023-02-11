@@ -12,14 +12,18 @@ const Listing = ({ listing }: Props) => {
       <Card.Section>
         <Image
           height={!smallBreakpoint ? 150 : 200}
-          src={listing.image}
-          alt={listing.title}
+          src={listing.images.small_url}
+          alt={listing.subject}
         />
-        <Title className="absolute right-0 -mt-7 rounded-tl-lg bg-white px-2 text-xl">{`${listing.price} €`}</Title>
+        {listing.price && (
+          <Title className="absolute right-0 -mt-7 rounded-tl-lg bg-white px-2 text-xl">{`${
+            listing.price[0]?.toString() || ""
+          } €`}</Title>
+        )}
       </Card.Section>
       <div className="flex h-full flex-col gap-3 ">
         <Title lineClamp={2} className="mt-3 text-sm sm:text-lg">
-          {listing.title}
+          {listing.subject}
         </Title>
       </div>
     </Card>

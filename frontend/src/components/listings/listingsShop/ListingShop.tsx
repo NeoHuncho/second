@@ -1,7 +1,6 @@
 import { Carousel } from "@mantine/carousel";
-import { Card, Title } from "@mantine/core";
 import Image from "next/image";
-import { Image as ImageMantine } from "@mantine/core";
+
 import React from "react";
 import type { Shop } from "../../../types/types";
 import { useMediaQuery } from "@mantine/hooks";
@@ -37,7 +36,7 @@ export default function ListingShop({ shop }: Props) {
           withIndicators
         >
           {shop.listings.map((listing) => (
-            <Carousel.Slide key={listing.image}>
+            <Carousel.Slide key={listing.list_id}>
               <Listing listing={listing} />
             </Carousel.Slide>
           ))}
