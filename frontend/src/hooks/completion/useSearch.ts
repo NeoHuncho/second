@@ -12,7 +12,7 @@ export type SearchResultResponse = {
   suggestions: SearchResult[];
 };
 
-const useCompletion = () => {
+const useSearch = () => {
   const router = useRouter();
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useDebouncedState(
     "",
@@ -27,6 +27,7 @@ const useCompletion = () => {
 
   const onSubmit = (searchTermOverride?: string) => {
     void router.push(`/search?query=${searchTermOverride || searchTerm}`);
+    setSearchTerm(searchTermOverride || searchTerm);
     setCompletionResults([]);
     return;
   };
@@ -56,6 +57,7 @@ const useCompletion = () => {
     setDebouncedSearchTerm,
     onSubmit,
     setSearchTerm,
+    searchTerm,
   };
 };
-export default useCompletion;
+export default useSearch;

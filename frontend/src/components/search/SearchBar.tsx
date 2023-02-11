@@ -2,7 +2,7 @@ import type { MantineSize } from "@mantine/core";
 import { Popover, Text, TextInput } from "@mantine/core";
 import { getHotkeyHandler, useMediaQuery } from "@mantine/hooks";
 import { SearchIcon } from "../../assets/icons";
-import useCompletion from "../../hooks/completion/useCompletion";
+import useSearch from "../../hooks/completion/useSearch";
 
 type PropTypes = {
   size?: MantineSize;
@@ -16,7 +16,8 @@ const SearchBar = ({ size = "md", inputClassName }: PropTypes) => {
     setDebouncedSearchTerm,
     onSubmit,
     setSearchTerm,
-  } = useCompletion();
+    searchTerm,
+  } = useSearch();
 
   return (
     <Popover
@@ -38,6 +39,7 @@ const SearchBar = ({ size = "md", inputClassName }: PropTypes) => {
           placeholder="Rechercher"
           size={size}
           radius={"lg"}
+          value={searchTerm}
           className={inputClassName || "w-full"}
           onKeyDown={getHotkeyHandler([["Enter", () => onSubmit()]])}
           rightSection={
