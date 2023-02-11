@@ -27,7 +27,13 @@ const useLeboncoin = () => {
 
   useEffect(() => {
     setCurrentShop({ ...currentShop, status: "loading" });
-    getAndSetListings();
+    getAndSetListings()
+    .then(() => {
+    console.log("Leboncoin listings fetched");
+      })
+      .catch(() => {
+        console.log("error");
+      });
   }, [searchTerm]);
 
   return { currentShop };
