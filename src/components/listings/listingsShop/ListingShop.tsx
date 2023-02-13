@@ -1,21 +1,55 @@
 import { Carousel } from "@mantine/carousel";
 import Image from "next/image";
 
-import React from "react";
+import React, { useEffect } from "react";
 import type { Shop } from "../../../types/types";
 import { useMediaQuery } from "@mantine/hooks";
 import Listing from "./sub/Listing";
+import type { EmblaCarouselType } from "embla-carousel-react";
 
 interface Props {
   shop: Shop;
 }
-
+//embla.slidesInView()
 export default function ListingShop({ shop }: Props) {
   const smallBreakpoint = useMediaQuery("(min-width: 640px)");
+  const [embla, setEmbla] = React.useState<EmblaCarouselType | null>(null);
+  const [slidesInView, setSlidesInView] = React.useState<number[]>([]);
 
+  useEffect(() => {
+    setSlidesInView(embla?.slidesInView() || []);
+    if (embla) {
+      embla.on("select", () => {
+        setSlidesInView((slidesInView) =>
+          Array.from(
+            new Set([
+              ...slidesInView,
+              ...new Set((embla.slidesInView() || []).sort()),
+            ])
+          )
+        );
+      });
+      embla.on("settle", () => {
+        Array.from(
+          new Set([
+            ...slidesInView,
+            ...new Set((embla.slidesInView() || []).sort()),
+          ])
+        );
+      });
+      embla.on("scroll", () => {
+        Array.from(
+          new Set([
+            ...slidesInView,
+            ...new Set((embla.slidesInView() || []).sort()),
+          ])
+        );
+      });
+    }
+  }, [embla]);
   if (shop.status === "success")
     return (
-      <div>
+      <div className="flex flex-col gap-3">
         <div className="relative h-16 w-40">
           <Image
             className="object-contain"
@@ -26,8 +60,19 @@ export default function ListingShop({ shop }: Props) {
         </div>
 
         <Carousel
+          getEmblaApi={(embla) => {
+            setEmbla(embla);
+          }}
           height={!smallBreakpoint ? 320 : 350}
-          slideSize={!smallBreakpoint ? "50%" : "18%"}
+          slideSize={
+            shop.name !== "Vinted"
+              ? !smallBreakpoint
+                ? "50%"
+                : "18%"
+              : !smallBreakpoint
+              ? "33%"
+              : "14%"
+          }
           slideGap={"md"}
           dragFree
           align={"start"}
@@ -35,9 +80,16 @@ export default function ListingShop({ shop }: Props) {
           controlSize={!smallBreakpoint ? 20 : 25}
           withIndicators
         >
-          {shop.listings.map((listing) => (
-            <Carousel.Slide key={listing.list_id}>
-              <Listing listing={listing} />
+          {shop.listings.map((listing, index) => (
+            <Carousel.Slide key={listing.id}>
+              <Listing
+                listing={listing}
+                inView={
+                  (slidesInView?.[slidesInView.length - 1] || 0) +
+                    (!smallBreakpoint ? 10 : 4) >=
+                  index
+                }
+              />
             </Carousel.Slide>
           ))}
         </Carousel>

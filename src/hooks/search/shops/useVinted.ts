@@ -1,25 +1,42 @@
 import { useEffect, useState } from "react";
-import type { LoadingTypes, Shop, ShopListing } from "../../../types/types";
+import type { Shop } from "../../../types/types";
 import useSearch from "../useSearch";
-import vintedImg from "../../../assets/shops/vinted.png";
+import vintedImage from "../../../assets/shops/vinted.webp";
+import axios from "axios";
+import type { ShopRes } from "../../../types/api/shopsRes";
+
 const useVinted = () => {
-  const { searchTerm } = useSearch();
+  const { searchTerm, apiUrl, encodedSearchTerm } = useSearch();
   const [currentShop, setCurrentShop] = useState<Shop>({
     status: "loading",
     name: "Vinted",
-    image: vintedImg,
+    image: vintedImage,
     listings: [],
   });
-  const setLoading = (status: LoadingTypes) => {
-    setCurrentShop({ ...currentShop, status });
+
+  const getAndSetListings = async () => {
+    setCurrentShop({ ...currentShop, status: "loading" });
+    const response = await axios.get<ShopRes>(
+      `${apiUrl}/stores/vinted?text=${encodedSearchTerm}`
+    );
+    setCurrentShop({
+      ...currentShop,
+      status: "success",
+      listings: response.data.listings,
+    });
   };
+
   useEffect(() => {
     setCurrentShop({ ...currentShop, status: "loading" });
-    setTimeout(() => {
-      setCurrentShop({ ...currentShop, status: "error", listings: [] });
-    }, 500);
+    getAndSetListings()
+      .then(() => {
+        console.log("Vinted listings fetched");
+      })
+      .catch(() => {
+        setCurrentShop({ ...currentShop, status: "error" });
+      });
   }, [searchTerm]);
-  return { currentShop, setLoading };
-};
 
+  return { currentShop };
+};
 export default useVinted;

@@ -1,4 +1,4 @@
-import { useDebouncedState } from "@mantine/hooks";
+import { useDebouncedState, useDisclosure } from "@mantine/hooks";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -51,6 +51,7 @@ const useSearch = () => {
     }
   }, [debouncedSearchTerm]);
 
+  const [inputInFocus, focusHandlers] = useDisclosure(false);
   return {
     completionResults,
     searching,
@@ -58,6 +59,8 @@ const useSearch = () => {
     onSubmit,
     setSearchTerm,
     searchTerm,
+    inputInFocus,
+    focusHandlers,
   };
 };
 export default useSearch;

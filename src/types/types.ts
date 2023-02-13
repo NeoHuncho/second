@@ -8,28 +8,23 @@ export type Shop = {
 };
 
 export interface ShopListing {
-  list_id: number;
-  first_publication_date: string;
-  index_date: string;
-  status: string;
-  category_id: string;
-  category_name: string;
-  subject: string;
-  body: string;
-  ad_type: string;
-  url: string;
-  price: number[];
-  price_cents: number;
+  id: number;
+  publication_date?: string;
+  category_name?: string;
+  category_id?: string;
+  title: string;
+  body?: string;
+  url?: string;
+  price: number;
   images: Images;
-  attributes: Attribute[];
+  attributes?: Attribute[];
 }
 
 interface Images {
-  thumb_url: string;
+  urls?: string[];
+  urls_thumb?: string[];
   small_url: string;
-  urls: string[];
-  urls_thumb: string[];
-  urls_large: string[];
+  url: string;
 }
 
 interface Attribute {

@@ -3,6 +3,7 @@ import {
   AiOutlineUser,
   AiFillCheckCircle,
   AiFillWarning,
+  AiFillFileImage,
 } from "react-icons/ai";
 
 export const SearchIcon = ({ size, className, onClick }: IconProps) => (
@@ -28,6 +29,15 @@ export const CheckIcon = ({ size, className, onClick, color }: IconProps) => (
 
 export const ErrorIcon = ({ size, className, onClick, color }: IconProps) => (
   <AiFillWarning
+    color={color || "black"}
+    className={className}
+    size={size}
+    onClick={onClick}
+  />
+);
+
+export const ImageIcon = ({ size, className, onClick, color }: IconProps) => (
+  <AiFillFileImage
     color={color || "black"}
     className={className}
     size={size}

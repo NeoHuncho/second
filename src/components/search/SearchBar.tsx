@@ -17,6 +17,8 @@ const SearchBar = ({ size = "md", inputClassName }: PropTypes) => {
     onSubmit,
     setSearchTerm,
     searchTerm,
+    focusHandlers,
+    inputInFocus,
   } = useSearch();
 
   return (
@@ -30,12 +32,14 @@ const SearchBar = ({ size = "md", inputClassName }: PropTypes) => {
           ? "25%"
           : "60%"
       }
-      opened={!!completionResults.length}
+      opened={!!completionResults.length && inputInFocus}
       position="bottom"
       withArrow
     >
       <Popover.Target>
         <TextInput
+          onFocus={focusHandlers.open}
+          onBlur={focusHandlers.close}
           placeholder="Rechercher"
           size={size}
           radius={"lg"}
@@ -44,7 +48,7 @@ const SearchBar = ({ size = "md", inputClassName }: PropTypes) => {
           onKeyDown={getHotkeyHandler([["Enter", () => onSubmit()]])}
           rightSection={
             <SearchIcon
-              onClick={onSubmit}
+              onClick={() => onSubmit()}
               className="mr-3 cursor-pointer"
               size={size === "lg" ? 32 : 25}
             />

@@ -1,9 +1,9 @@
-import type { LeboncoinListing } from "../shops/Leboncoin";
+import type { ShopListing } from "../types";
 
-export interface LeboncoinRes {
+export interface ShopRes {
   query: {
     url: string;
   };
   cookies: null;
-  listings: LeboncoinListing[];
+  listings: ShopListing[];
 }

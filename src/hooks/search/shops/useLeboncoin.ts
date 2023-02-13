@@ -3,7 +3,7 @@ import type { Shop } from "../../../types/types";
 import useSearch from "../useSearch";
 import leboncoinImage from "../../../assets/shops/leboncoin.webp";
 import axios from "axios";
-import type { LeboncoinRes } from "../../../types/api/shopsRes";
+import type { ShopRes } from "../../../types/api/shopsRes";
 
 const useLeboncoin = () => {
   const { searchTerm, apiUrl, encodedSearchTerm } = useSearch();
@@ -16,23 +16,25 @@ const useLeboncoin = () => {
 
   const getAndSetListings = async () => {
     setCurrentShop({ ...currentShop, status: "loading" });
-    const response = await axios.get<LeboncoinRes>(
+    const response = await axios.get<ShopRes>(
       `${apiUrl}/stores/leboncoin?text=${encodedSearchTerm}`
     );
-    const listings = response.data.listings.filter(
-      (listing) => listing.status === "active" && listing.ad_type === "offer"
-    );
-    setCurrentShop({ ...currentShop, status: "success", listings });
+
+    setCurrentShop({
+      ...currentShop,
+      status: "success",
+      listings: response.data.listings,
+    });
   };
 
   useEffect(() => {
     setCurrentShop({ ...currentShop, status: "loading" });
     getAndSetListings()
-    .then(() => {
-    console.log("Leboncoin listings fetched");
+      .then(() => {
+        console.log("Leboncoin listings fetched");
       })
       .catch(() => {
-        console.log("error");
+        setCurrentShop({ ...currentShop, status: "error" });
       });
   }, [searchTerm]);
 
