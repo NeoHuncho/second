@@ -1,4 +1,4 @@
-import { Card, Image, Loader, Title } from "@mantine/core";
+import { Button, Card, Image, Loader, Title } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -17,7 +17,6 @@ const Listing = ({ listing, inView }: Props) => {
   }, [inView]);
   return (
     <Card
-      onClick={() => window.open(listing.url, "_blank")}
       className="h-full cursor-pointer"
       shadow="sm"
       p="sm"
@@ -50,9 +49,20 @@ const Listing = ({ listing, inView }: Props) => {
         )}
       </Card.Section>
       <div className="flex  flex-col gap-3 ">
-        <Title lineClamp={2} className="mt-3 text-xs ">
+        <Title
+          lineClamp={2}
+          style={{ minHeight: 32 }}
+          className="mt-3 text-xs "
+        >
           {listing.title}
         </Title>
+        <Button
+          onClick={() => window.open(listing.url, "_blank")}
+          variant="outline"
+          color={"secondary"}
+        >
+          Voir l'annonce
+        </Button>
       </div>
     </Card>
   );

@@ -2,6 +2,7 @@ import type { StaticImageData } from "next/image";
 
 export type Shop = {
   name: Shops;
+  color: string;
   image: StaticImageData;
   listings: ShopListing[];
   status: LoadingTypes;

@@ -10,6 +10,7 @@ const useVinted = () => {
   const [currentShop, setCurrentShop] = useState<Shop>({
     status: "loading",
     name: "Vinted",
+    color: "#007781",
     image: vintedImage,
     listings: [],
   });

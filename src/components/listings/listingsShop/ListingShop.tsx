@@ -15,7 +15,6 @@ interface Props {
 //embla.slidesInView()
 export default function ListingShop({ shop }: Props) {
   const smallBreakpoint = useMediaQuery("(min-width: 640px)");
- 
 
   if (shop.status === "success")
     return (
@@ -34,7 +33,7 @@ export default function ListingShop({ shop }: Props) {
             freeMode
             navigation
             spaceBetween={20}
-            slidesPerView={!smallBreakpoint ? 3 : 8}
+            slidesPerView={!smallBreakpoint ? 2 : 8}
             watchSlidesProgress
           >
             {shop.listings.map((listing, index) => (

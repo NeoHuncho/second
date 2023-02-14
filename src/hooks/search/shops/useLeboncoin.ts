@@ -11,6 +11,7 @@ const useLeboncoin = () => {
     status: "loading",
     name: "Leboncoin",
     image: leboncoinImage,
+    color: "#FF6F15",
     listings: [],
   });
 
