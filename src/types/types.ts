@@ -23,7 +23,7 @@ export interface ShopListing {
 interface Images {
   urls?: string[];
   urls_thumb?: string[];
-  small_url: string;
+  url_thumb: string;
   url: string;
 }
 

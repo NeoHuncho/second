@@ -42,7 +42,7 @@ const parseVinted = (responseText: string) => {
       price: parseFloat(item.total_item_price),
       id: item.id,
       images: {
-        small_url: item.photo.thumbnails?.[2]?.url || "",
+        url_thumb: item.photo.thumbnails?.[2]?.url || "",
         url: item.photo.url,
       },
       title: item.title,

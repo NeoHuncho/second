@@ -24,7 +24,9 @@ export default function ListingShop({ shop }: Props) {
           Array.from(
             new Set([
               ...slidesInView,
-              ...new Set((embla.slidesInView() || []).sort()),
+              ...new Set(
+                (embla.slidesInView().map((slide) => slide * 2) || []).sort()
+              ),
             ])
           )
         );
@@ -33,15 +35,9 @@ export default function ListingShop({ shop }: Props) {
         Array.from(
           new Set([
             ...slidesInView,
-            ...new Set((embla.slidesInView() || []).sort()),
-          ])
-        );
-      });
-      embla.on("scroll", () => {
-        Array.from(
-          new Set([
-            ...slidesInView,
-            ...new Set((embla.slidesInView() || []).sort()),
+            ...new Set(
+              (embla.slidesInView().map((slide) => slide * 2) || []).sort()
+            ),
           ])
         );
       });
@@ -63,16 +59,8 @@ export default function ListingShop({ shop }: Props) {
           getEmblaApi={(embla) => {
             setEmbla(embla);
           }}
-          height={!smallBreakpoint ? 320 : 350}
-          slideSize={
-            shop.name !== "Vinted"
-              ? !smallBreakpoint
-                ? "50%"
-                : "18%"
-              : !smallBreakpoint
-              ? "33%"
-              : "14%"
-          }
+          height={!smallBreakpoint ? 280 : 300}
+          slideSize={!smallBreakpoint ? "33%" : "11%"}
           slideGap={"md"}
           dragFree
           align={"start"}
@@ -84,11 +72,7 @@ export default function ListingShop({ shop }: Props) {
             <Carousel.Slide key={listing.id}>
               <Listing
                 listing={listing}
-                inView={
-                  (slidesInView?.[slidesInView.length - 1] || 0) +
-                    (!smallBreakpoint ? 10 : 4) >=
-                  index
-                }
+                inView={(slidesInView?.[slidesInView.length - 1] || 0) >= index}
               />
             </Carousel.Slide>
           ))}

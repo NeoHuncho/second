@@ -10,7 +10,7 @@ export default function NoImage() {
       className="flex w-full flex-col items-center justify-center"
     >
       <ImageIcon size={30} />
-      <Text className="text-center">Aucune image</Text>
+      <Text className="text-center text-sm">Aucune image</Text>
     </div>
   );
 }

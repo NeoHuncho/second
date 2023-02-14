@@ -1,5 +1,6 @@
 import { Card, Image, Loader, Title } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
+import { useRouter } from "next/router";
 import type { ShopListing } from "../../../../types/types";
 import NoImage from "./NoImage";
 
@@ -9,16 +10,23 @@ type Props = {
 };
 const Listing = ({ listing, inView }: Props) => {
   const smallBreakpoint = useMediaQuery("(min-width: 640px)");
+  const router = useRouter();
   return (
-    <Card className="h-full" shadow="sm" p="sm" radius="md" withBorder>
+    <Card
+      onClick={() => window.open(listing.url, "_blank")}
+      className="h-full cursor-pointer"
+      shadow="sm"
+      p="sm"
+      radius="md"
+      withBorder
+    >
       <Card.Section>
         {inView ? (
-          listing.images?.small_url ? (
+          listing.images?.url_thumb ? (
             <Image
               height={!smallBreakpoint ? 150 : 200}
-              src={listing.images.small_url}
+              src={listing.images.url_thumb}
               alt={listing.title}
-              fit="scale-down"
             />
           ) : (
             <NoImage />
@@ -37,8 +45,8 @@ const Listing = ({ listing, inView }: Props) => {
           } €`}</Title>
         )}
       </Card.Section>
-      <div className="flex h-full flex-col gap-3 ">
-        <Title lineClamp={2} className="mt-3 text-sm sm:text-lg">
+      <div className="flex  flex-col gap-3 ">
+        <Title lineClamp={2} className="mt-3 text-xs ">
           {listing.title}
         </Title>
       </div>

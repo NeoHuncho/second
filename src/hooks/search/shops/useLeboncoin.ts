@@ -19,7 +19,6 @@ const useLeboncoin = () => {
     const response = await axios.get<ShopRes>(
       `${apiUrl}/stores/leboncoin?text=${encodedSearchTerm}`
     );
-
     setCurrentShop({
       ...currentShop,
       status: "success",
