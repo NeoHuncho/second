@@ -61,7 +61,7 @@ const Listing = ({ listing, inView }: Props) => {
           variant="outline"
           color={"secondary"}
         >
-          Voir l'annonce
+          {`Voir l'annonce`}
         </Button>
       </div>
     </Card>
