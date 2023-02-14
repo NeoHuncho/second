@@ -1,6 +1,7 @@
 import { Card, Image, Loader, Title } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import type { ShopListing } from "../../../../types/types";
 import NoImage from "./NoImage";
 
@@ -10,7 +11,10 @@ type Props = {
 };
 const Listing = ({ listing, inView }: Props) => {
   const smallBreakpoint = useMediaQuery("(min-width: 640px)");
-  const router = useRouter();
+  const [hasBeenSeen, setHasBeenSeen] = useState(false);
+  useEffect(() => {
+    if (inView && !hasBeenSeen) setHasBeenSeen(true);
+  }, [inView]);
   return (
     <Card
       onClick={() => window.open(listing.url, "_blank")}
@@ -21,10 +25,10 @@ const Listing = ({ listing, inView }: Props) => {
       withBorder
     >
       <Card.Section>
-        {inView ? (
+        {hasBeenSeen ? (
           listing.images?.url_thumb ? (
             <Image
-              height={!smallBreakpoint ? 150 : 200}
+              height={200}
               src={listing.images.url_thumb}
               alt={listing.title}
             />

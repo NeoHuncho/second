@@ -9,8 +9,7 @@ const AppHeader = () => {
     <div className="grid h-full w-full grid-cols-mobileHeader items-center px-3 sm:grid-cols-3 ">
       <Title
         color="primary"
-        order={1}
-        className="cursor-pointer text-sm sm:text-4xl"
+        className="cursor-pointer text-md sm:text-4xl"
         onClick={() => void router.push("/")}
       >
         Second
