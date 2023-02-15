@@ -16,6 +16,7 @@ const useVinted = () => {
   });
 
   const getAndSetListings = async () => {
+    if (!searchTerm || !encodedSearchTerm) return;
     setCurrentShop({ ...currentShop, status: "loading" });
     const response = await axios.get<ShopRes>(
       `${apiUrl}/stores/vinted?text=${encodedSearchTerm}`

@@ -26,6 +26,7 @@ const useSearch = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const onSubmit = (searchTermOverride?: string) => {
+    if (!searchTermOverride && !searchTerm) return;
     void router.push(`/search?query=${searchTermOverride || searchTerm}`);
     setSearchTerm(searchTermOverride || searchTerm);
     setCompletionResults([]);
