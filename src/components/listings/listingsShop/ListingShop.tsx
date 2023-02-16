@@ -30,6 +30,7 @@ export default function ListingShop({ shop }: Props) {
           <Swiper
             modules={[FreeMode, Navigation, Thumbs]}
             freeMode
+            cssMode={breakpoints.xsBreakpoint || breakpoints.xxsBreakpoint}
             navigation
             spaceBetween={20}
             slidesPerView={
