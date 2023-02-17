@@ -11,6 +11,7 @@ import { useRef, useState } from "react";
 import useCarousel from "../../../hooks/carousel/useCarousel";
 import { Loader } from "@mantine/core";
 import useShops from "../../../hooks/search/shops/useShops";
+import SwipperNavButton from "./sub/SwipperNavButton";
 
 interface Props {
   shop: Shop;
@@ -36,7 +37,7 @@ export default function ListingShop({ shop }: Props) {
     ? 6
     : !breakpoints.xxlBreakpoint
     ? 7
-    :8;
+    : 8;
 
   if (shop.status === "success")
     return (
@@ -54,16 +55,19 @@ export default function ListingShop({ shop }: Props) {
         </div>
         <div className="2 flex w-full flex-wrap">
           <Swiper
-            modules={[FreeMode, Navigation, Thumbs]}
-            freeMode
+            className="select-none"
+            modules={[Navigation, Thumbs]}
             onRealIndexChange={(swiper) => {
               handleIndexChange(swiper.realIndex);
             }}
-            cssMode={breakpoints.isMobile}
-            navigation
+            navigation={{
+              prevEl: "#custom-prev-button",
+              nextEl: "#custom-next-button",
+            }}
             spaceBetween={10}
             slidesPerView={slidesPerView}
             watchSlidesProgress
+            cssMode={breakpoints.isMobile}
             onSwiper={(swiper) => {
               swiperRef.current = swiper;
             }}
@@ -73,6 +77,8 @@ export default function ListingShop({ shop }: Props) {
                 <Listing listing={listing} />
               </SwiperSlide>
             ))}
+            <SwipperNavButton type="prev" />
+            <SwipperNavButton type="next" />
           </Swiper>
         </div>
       </div>

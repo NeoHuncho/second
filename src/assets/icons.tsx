@@ -5,6 +5,8 @@ import {
   AiFillWarning,
   AiFillFileImage,
   AiOutlineLink,
+  AiOutlineArrowLeft,
+  AiOutlineArrowRight,
 } from "react-icons/ai";
 
 export const SearchIcon = ({ size, className, onClick }: IconProps) => (
@@ -55,6 +57,23 @@ export const LinkIcon = ({ size, className, onClick, color }: IconProps) => (
   />
 );
 
+export const BackIcon = ({ size, className, onClick, color }: IconProps) => (
+  <AiOutlineArrowLeft
+    className={className}
+    size={size}
+    onClick={onClick}
+    color={color}
+  />
+);
+
+export const ForwardIcon = ({ size, className, onClick, color }: IconProps) => (
+  <AiOutlineArrowRight
+    className={className}
+    size={size}
+    onClick={onClick}
+    color={color}
+  />
+);
 type IconProps = {
   size?: number;
   className?: string;
