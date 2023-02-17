@@ -67,7 +67,7 @@ export default function ListingShop({ shop }: Props) {
             spaceBetween={10}
             slidesPerView={slidesPerView}
             watchSlidesProgress
-            cssMode={breakpoints.isMobile}
+            // cssMode={breakpoints.isMobile}
             onSwiper={(swiper) => {
               swiperRef.current = swiper;
             }}
