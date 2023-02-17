@@ -20,6 +20,7 @@ export default function ListingShop({ shop }: Props) {
   const { loadMoreSlides, handleIndexChange, slides, swiperRef } = useCarousel(
     shop.name
   );
+  console.log("time", slides.length);
   const { shops } = useShops();
   const slidesPerView = !breakpoints.xxsBreakpoint
     ? 1
@@ -28,14 +29,14 @@ export default function ListingShop({ shop }: Props) {
     : !breakpoints.smBreakpoint
     ? 3
     : !breakpoints.mdBreakpoint
-    ? 3
-    : !breakpoints.lgBreakpoint
     ? 4
-    : !breakpoints.xlBreakpoint
+    : !breakpoints.lgBreakpoint
     ? 5
-    : !breakpoints.xxlBreakpoint
+    : !breakpoints.xlBreakpoint
     ? 6
-    : 7;
+    : !breakpoints.xxlBreakpoint
+    ? 7
+    :8;
 
   if (shop.status === "success")
     return (
@@ -60,7 +61,7 @@ export default function ListingShop({ shop }: Props) {
             }}
             cssMode={breakpoints.isMobile}
             navigation
-            spaceBetween={20}
+            spaceBetween={10}
             slidesPerView={slidesPerView}
             watchSlidesProgress
             onSwiper={(swiper) => {
@@ -68,7 +69,7 @@ export default function ListingShop({ shop }: Props) {
             }}
           >
             {slides.map((listing) => (
-              <SwiperSlide className="!mr-0 pr-5" key={listing.id}>
+              <SwiperSlide key={listing.id}>
                 <Listing listing={listing} />
               </SwiperSlide>
             ))}
