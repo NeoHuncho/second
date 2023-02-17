@@ -1,4 +1,3 @@
-
 type Props = {
   store: string;
   page: number;
@@ -12,7 +11,7 @@ const formatStoreUrl = ({ store, page }: Props) => {
     return;
   }
 
-  return `${apiUrl}/stores/${store}?text=${searchTerm}${
+  return `${apiUrl}/stores/${store + "Change"}?text=${searchTerm}${
     page ? `&page=${page}` : ""
   }`;
 };
