@@ -6,6 +6,9 @@ export type Shop = {
   image: StaticImageData;
   listings: ShopListing[];
   status: LoadingTypes;
+  page: number;
+  hasFetchedAll: boolean;
+  loadingNextPage: boolean;
 };
 
 export interface ShopListing {

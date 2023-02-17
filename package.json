@@ -37,7 +37,7 @@
     "tls": "^0.0.1",
     "vinted-api": "^2.9.1",
     "zod": "^3.20.2",
-    "zustand": "^4.3.2"
+    "zustand": "^4.3.3"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",

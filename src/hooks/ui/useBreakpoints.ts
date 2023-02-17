@@ -10,6 +10,7 @@ const useBreakpoints = () => {
   const xlBreakpoint = useMediaQuery(Breakpoints.xl);
   const xxlBreakpoint = useMediaQuery(Breakpoints.xxl);
 
+  const isMobile = !xsBreakpoint || !xxsBreakpoint;
   return {
     xxsBreakpoint,
     xsBreakpoint,
@@ -18,6 +19,7 @@ const useBreakpoints = () => {
     lgBreakpoint,
     xlBreakpoint,
     xxlBreakpoint,
+    isMobile,
   };
 };
 

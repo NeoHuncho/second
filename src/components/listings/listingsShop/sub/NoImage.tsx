@@ -3,7 +3,6 @@ import { useMediaQuery } from "@mantine/hooks";
 import { ImageIcon } from "../../../../assets/icons";
 
 export default function NoImage() {
-  const smallBreakpoint = useMediaQuery("(min-width: 640px)");
   return (
     <div
       style={{ height: 230 }}

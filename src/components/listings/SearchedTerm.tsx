@@ -1,9 +1,10 @@
 import { Title } from "@mantine/core";
-import useSearch from "../../hooks/search/useSearch";
+import { useRouter } from "next/router";
+
 
 function SearchTerm() {
-  const { searchTerm } = useSearch();
-
+  const router = useRouter();
+  const searchTerm = router?.query?.search || "";
   return (
     <div className="flex items-center gap-2">
       <Title className="text-lg font-light sm:text-xl">Recherche:</Title>

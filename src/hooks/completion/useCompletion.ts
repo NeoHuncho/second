@@ -12,7 +12,7 @@ export type SearchResultResponse = {
   suggestions: SearchResult[];
 };
 
-const useSearch = () => {
+const useCompletion = () => {
   const router = useRouter();
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useDebouncedState(
     "",
@@ -64,4 +64,4 @@ const useSearch = () => {
     focusHandlers,
   };
 };
-export default useSearch;
+export default useCompletion;

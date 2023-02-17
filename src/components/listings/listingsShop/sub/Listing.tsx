@@ -1,20 +1,16 @@
 import { Button, Card, Image, Loader, Title } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
-import { useEffect, useState } from "react";
+import { LinkIcon } from "../../../../assets/icons";
 import type { ShopListing } from "../../../../types/types";
+import parsePrice from "../../../../utils/parsePrice";
 import NoImage from "./NoImage";
 
 type Props = {
   listing: ShopListing;
-  inView: boolean;
 };
-const Listing = ({ listing, inView }: Props) => {
+const Listing = ({ listing }: Props) => {
   const CARD_SECTION_HEIGHT = 230;
-  const smallBreakpoint = useMediaQuery("(min-width: 640px)");
-  const [hasBeenSeen, setHasBeenSeen] = useState(false);
-  useEffect(() => {
-    if (inView && !hasBeenSeen) setHasBeenSeen(true);
-  }, [inView]);
+  
+
   return (
     <Card
       className="h-full cursor-pointer"
@@ -24,29 +20,18 @@ const Listing = ({ listing, inView }: Props) => {
       withBorder
     >
       <Card.Section>
-        {hasBeenSeen ? (
-          listing.images?.url_thumb ? (
-            <Image
-              height={CARD_SECTION_HEIGHT}
-              src={listing.images.url_thumb}
-              alt={listing.title}
-            />
-          ) : (
-            <NoImage />
-          )
+        {listing.images?.url_thumb ? (
+          <Image
+            height={CARD_SECTION_HEIGHT}
+            src={listing.images.url_thumb}
+            alt={listing.title}
+          />
         ) : (
-          <div
-            style={{ height: CARD_SECTION_HEIGHT}}
-            className="flex w-full flex-col items-center justify-center"
-          >
-            <Loader className="m-auto " />
-          </div>
+          <NoImage />
         )}
-        {listing.price && (
-          <Title className="absolute right-0 -mt-7 rounded-tl-lg bg-white px-2 text-xl">{`${
-            listing.price?.toString() || ""
-          } €`}</Title>
-        )}
+        <Title className="absolute right-0 -mt-7 rounded-tl-lg bg-white px-2 text-xl">
+          {parsePrice(listing.price)}
+        </Title>
       </Card.Section>
       <div className="flex  flex-col gap-3 ">
         <Title
@@ -60,6 +45,8 @@ const Listing = ({ listing, inView }: Props) => {
           onClick={() => window.open(listing.url, "_blank")}
           variant="outline"
           color={"secondary"}
+          leftIcon={<LinkIcon color="#156969" />}
+          styles={{ root: { padding: 10 }, leftIcon: { marginRight: 5 } }}
         >
           {`Voir l'annonce`}
         </Button>
