@@ -9,6 +9,7 @@ const defaultListing: ShopListing = {
     url: "",
     url_thumb: "",
   },
+  url: "",
   body: "placeholder",
 };
 

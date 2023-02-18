@@ -76,7 +76,6 @@ const useCarousel = (shop: Shops) => {
     else if (!breakpoints.xxlBreakpoint) setSlidesPerView(7);
     else if (breakpoints.xxlBreakpoint) setSlidesPerView(8);
   }, [breakpoints]);
-  console.log(slides);
   return {
     slides,
     loadMoreSlides,

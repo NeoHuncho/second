@@ -18,12 +18,13 @@ export interface ShopListing {
   category_id?: string;
   title: string;
   body?: string;
-  url?: string;
+  url: string;
   price: number;
   images: Images;
   attributes?: Attribute[];
   shippable?: boolean;
   condition?: string;
+  size?: string;
 }
 
 interface Images {
@@ -40,4 +41,4 @@ interface Attribute {
 }
 
 export type Shops = "Vinted" | "Leboncoin";
-export type LoadingTypes = "success" | "error" | "loading";
+export type LoadingTypes = "success" | "error" | "loading" | "no_results";

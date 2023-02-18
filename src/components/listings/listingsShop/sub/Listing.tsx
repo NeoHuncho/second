@@ -1,5 +1,10 @@
 import { Button, Card, Image, Loader, Text, Title } from "@mantine/core";
-import { DeliveryIcon, EyeIcon, LinkIcon } from "../../../../assets/icons";
+import {
+  ClothesIcon,
+  DeliveryIcon,
+  EyeIcon,
+  LinkIcon,
+} from "../../../../assets/icons";
 import type { ShopListing } from "../../../../types/types";
 import parsePrice from "../../../../utils/parsePrice";
 import NoImage from "./NoImage";
@@ -62,6 +67,14 @@ const Listing = ({ listing }: Props) => {
                 <EyeIcon className="mt-0.5" />
                 <Text lineClamp={1} className=" mt-1 text-xs ">
                   {listing.condition}
+                </Text>
+              </div>
+            ) : null}
+            {listing.size ? (
+              <div className="flex items-center gap-1">
+                <ClothesIcon className="mt-0.5" />
+                <Text lineClamp={1} className=" mt-1 text-xs ">
+                  {listing.size}
                 </Text>
               </div>
             ) : null}

@@ -1,13 +1,11 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Navigation, Thumbs } from "swiper";
+import { Navigation, Thumbs } from "swiper";
 import Image from "next/image";
 import type { Shop } from "../../../types/types";
 import Listing from "./sub/Listing";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
-import useBreakpoints from "../../../hooks/ui/useBreakpoints";
-import { useRef, useState } from "react";
 import useCarousel from "../../../hooks/carousel/useCarousel";
 import { Loader, Text } from "@mantine/core";
 import useShops from "../../../hooks/search/shops/useShops";
@@ -21,8 +19,6 @@ export default function ListingShop({ shop }: Props) {
     shop.name
   );
   const { shops } = useShops();
-  console.log(shops)
-
 
   if (shop.status === "success")
     return (

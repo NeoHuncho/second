@@ -36,6 +36,18 @@ const useShops = create<ShopState>()((set, get) => ({
       }));
     }
     const response = await axios.get<ShopRes>(url);
+    if (!listings.length && !response.data.listings.length)
+      return set((state) => ({
+        ...state,
+        shops: {
+          ...state.shops,
+          [shop]: {
+            ...state.shops[shop],
+            status: "no_results",
+          },
+        },
+      }));
+
     const newListings = [...listings, ...response.data.listings];
     set((state) => ({
       ...state,

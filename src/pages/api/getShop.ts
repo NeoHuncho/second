@@ -29,24 +29,24 @@ export default async function handler(
   }
 
   let res = null;
-  // if (env.NODE_ENV === "production")
-  res = await getWebsiteScrape(
-    parseUrl({
-      page: request.query.page,
-      text: request.query.text,
-      shop: request.query.shop as Shops,
-    })
-  );
-  // else {
-  //   if (request.query.shop === "Leboncoin")
-  //     res = await readFile("backend/static/shops/leboncoin.txt", {
-  //       encoding: "utf8",
-  //     });
-  //   else
-  //     res = await readFile("backend/static/shops/vinted.txt", {
-  //       encoding: "utf8",
-  //     });
-  // }
+  if (env.NODE_ENV === "production")
+    res = await getWebsiteScrape(
+      parseUrl({
+        page: request.query.page,
+        text: request.query.text,
+        shop: request.query.shop as Shops,
+      })
+    );
+  else {
+    if (request.query.shop === "Leboncoin")
+      res = await readFile("backend/static/shops/leboncoin.txt", {
+        encoding: "utf8",
+      });
+    else
+      res = await readFile("backend/static/shops/vinted.txt", {
+        encoding: "utf8",
+      });
+  }
 
   response.status(200).json({
     query: request.query,

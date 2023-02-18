@@ -17,8 +17,8 @@ type VintedItem = {
   total_item_price: string;
   discount: string;
   brand_title: string;
-  link: string;
-  size: string;
+  url: string;
+  size_title: string;
   photo: {
     url: string;
     thumbnails: ImageVinted[];
@@ -45,8 +45,10 @@ const parseVinted = (responseText: string) => {
         url_thumb: item.photo.thumbnails?.[2]?.url || "",
         url: item.photo.url,
       },
+      url: item.url,
       title: item.title,
       shippable: true,
+      size: item.size_title,
     });
   });
 
