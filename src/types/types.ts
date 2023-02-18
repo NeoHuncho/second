@@ -22,6 +22,8 @@ export interface ShopListing {
   price: number;
   images: Images;
   attributes?: Attribute[];
+  shippable?: boolean;
+  condition?: string;
 }
 
 interface Images {

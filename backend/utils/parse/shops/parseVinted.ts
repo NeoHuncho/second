@@ -46,6 +46,7 @@ const parseVinted = (responseText: string) => {
         url: item.photo.url,
       },
       title: item.title,
+      shippable: true,
     });
   });
 

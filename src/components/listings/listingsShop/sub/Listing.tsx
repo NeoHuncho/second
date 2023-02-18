@@ -1,5 +1,5 @@
-import { Button, Card, Image, Loader, Title } from "@mantine/core";
-import { LinkIcon } from "../../../../assets/icons";
+import { Button, Card, Image, Loader, Text, Title } from "@mantine/core";
+import { DeliveryIcon, EyeIcon, LinkIcon } from "../../../../assets/icons";
 import type { ShopListing } from "../../../../types/types";
 import parsePrice from "../../../../utils/parsePrice";
 import NoImage from "./NoImage";
@@ -9,7 +9,21 @@ type Props = {
 };
 const Listing = ({ listing }: Props) => {
   const CARD_SECTION_HEIGHT = 230;
-  
+
+  if (listing.body === "placeholder")
+    return (
+      <Card
+        className="h-full w-full "
+        shadow="sm"
+        p="sm"
+        withBorder
+        radius="md"
+      >
+        <div className="opacity-0">
+          !fixes rendering bug of placeholder card!
+        </div>
+      </Card>
+    );
 
   return (
     <Card
@@ -34,13 +48,31 @@ const Listing = ({ listing }: Props) => {
         </Title>
       </Card.Section>
       <div className="flex  flex-col gap-3 ">
-        <Title
-          lineClamp={2}
-          style={{ minHeight: 32 }}
-          className="mt-3 text-xs "
-        >
-          {listing.title}
-        </Title>
+        <div>
+          <Title
+            lineClamp={2}
+            style={{ minHeight: 32 }}
+            className="mt-3 text-xs "
+          >
+            {listing.title}
+          </Title>
+          <div style={{ minHeight: 40 }}>
+            {listing.condition ? (
+              <div className="flex items-center gap-1">
+                <EyeIcon className="mt-0.5" />
+                <Text lineClamp={1} className=" mt-1 text-xs ">
+                  {listing.condition}
+                </Text>
+              </div>
+            ) : null}
+            <div className="flex items-center gap-1">
+              <DeliveryIcon className="mt-0.5" />
+              <Text lineClamp={1} className=" mt-1 text-xs ">
+                {listing.shippable ? "Livraison possible" : "Pas de livraison"}
+              </Text>
+            </div>
+          </div>
+        </div>
         <Button
           onClick={() => window.open(listing.url, "_blank")}
           variant="outline"

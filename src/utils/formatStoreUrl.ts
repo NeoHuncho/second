@@ -11,7 +11,7 @@ const formatStoreUrl = ({ store, page }: Props) => {
     return;
   }
 
-  return `${apiUrl}/stores/${store + "Change"}?text=${searchTerm}${
+  return `${apiUrl}/getShop?shop=${store}&text=${searchTerm}${
     page ? `&page=${page}` : ""
   }`;
 };

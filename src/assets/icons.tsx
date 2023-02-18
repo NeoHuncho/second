@@ -7,7 +7,10 @@ import {
   AiOutlineLink,
   AiOutlineArrowLeft,
   AiOutlineArrowRight,
+  AiOutlineEye,
 } from "react-icons/ai";
+
+import { TbTruckDelivery } from "react-icons/tb";
 
 export const SearchIcon = ({ size, className, onClick }: IconProps) => (
   <AiOutlineSearch className={className} size={size} onClick={onClick} />
@@ -68,6 +71,29 @@ export const BackIcon = ({ size, className, onClick, color }: IconProps) => (
 
 export const ForwardIcon = ({ size, className, onClick, color }: IconProps) => (
   <AiOutlineArrowRight
+    className={className}
+    size={size}
+    onClick={onClick}
+    color={color}
+  />
+);
+
+export const EyeIcon = ({ size, className, onClick, color }: IconProps) => (
+  <AiOutlineEye
+    className={className}
+    size={size}
+    onClick={onClick}
+    color={color}
+  />
+);
+
+export const DeliveryIcon = ({
+  size,
+  className,
+  onClick,
+  color,
+}: IconProps) => (
+  <TbTruckDelivery
     className={className}
     size={size}
     onClick={onClick}

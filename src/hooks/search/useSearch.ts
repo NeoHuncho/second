@@ -9,7 +9,7 @@ const useSearch = () => {
   const [searchShops, setSearchShops] = useState(false);
 
   const updateShops = () => {
-    resetShops(); 
+    resetShops();
     Object.keys(shops).forEach((shop) => {
       updateListings(shop as Shops)
         .then(() => {

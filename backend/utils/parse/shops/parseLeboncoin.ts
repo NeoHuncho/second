@@ -40,6 +40,7 @@ interface Attribute {
   key: string;
   value: string;
   values: string[];
+  value_label: string;
 }
 const parseLeboncoin = (responseText: string) => {
   const $ = load(responseText);
@@ -50,9 +51,30 @@ const parseLeboncoin = (responseText: string) => {
     .text();
   const leboncoinRes = JSON.parse(data) as LeboncoinData;
   const formatted: ShopListing[] = [];
+  if (!leboncoinRes.props.pageProps.searchData.ads) return formatted;
+
   Object.values(leboncoinRes.props.pageProps.searchData.ads)
-    .filter((item) => item.status === "active" && item.ad_type === "offer")
+    .filter((item) => {
+      let hasFilteredAttributes = false;
+      item.attributes.forEach((attribute) => {
+        if (
+          attribute.key === "transaction_status" &&
+          (attribute.value === "sold" || attribute.value === "pending")
+        )
+          hasFilteredAttributes = true;
+        if (attribute.key === "shippable" && attribute.value !== "true")
+          hasFilteredAttributes = true;
+      });
+      return (
+        !hasFilteredAttributes &&
+        item.status === "active" &&
+        item.ad_type === "offer"
+      );
+    })
     .map((item) => {
+      const attributes = item.attributes.filter((attribute) => {
+        return attribute.key !== "condition" && attribute.key !== "shippable";
+      });
       formatted.push({
         images: {
           urls: item.images.urls,
@@ -68,6 +90,12 @@ const parseLeboncoin = (responseText: string) => {
         attributes: item.attributes,
         category_name: item.category_name,
         category_id: item.category_id,
+        condition: item.attributes.find(
+          (attribute) => attribute.key === "condition"
+        )?.value_label,
+        shippable:
+          item.attributes.find((attribute) => attribute.key === "shippable")
+            ?.value === "true",
       });
     });
   return formatted;

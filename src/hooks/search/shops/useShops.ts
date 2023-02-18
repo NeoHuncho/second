@@ -21,7 +21,6 @@ const useShops = create<ShopState>()((set, get) => ({
   },
   updateListings: async (shop: Shops) => {
     const { listings, page, name } = get().shops[shop];
-    console.log("updating listings", page);
     const url = formatStoreUrl({ store: name, page: page + 1 });
     if (!url) return;
     if (page + 1 > 1) {

@@ -9,7 +9,7 @@ import "swiper/css/navigation";
 import useBreakpoints from "../../../hooks/ui/useBreakpoints";
 import { useRef, useState } from "react";
 import useCarousel from "../../../hooks/carousel/useCarousel";
-import { Loader } from "@mantine/core";
+import { Loader, Text } from "@mantine/core";
 import useShops from "../../../hooks/search/shops/useShops";
 import SwipperNavButton from "./sub/SwipperNavButton";
 
@@ -17,27 +17,12 @@ interface Props {
   shop: Shop;
 }
 export default function ListingShop({ shop }: Props) {
-  const breakpoints = useBreakpoints();
-  const { loadMoreSlides, handleIndexChange, slides, swiperRef } = useCarousel(
+  const { handleIndexChange, slides, swiperRef, slidesPerView } = useCarousel(
     shop.name
   );
-  console.log("time", slides.length);
   const { shops } = useShops();
-  const slidesPerView = !breakpoints.xxsBreakpoint
-    ? 1
-    : !breakpoints.xsBreakpoint
-    ? 2
-    : !breakpoints.smBreakpoint
-    ? 3
-    : !breakpoints.mdBreakpoint
-    ? 4
-    : !breakpoints.lgBreakpoint
-    ? 5
-    : !breakpoints.xlBreakpoint
-    ? 6
-    : !breakpoints.xxlBreakpoint
-    ? 7
-    : 8;
+  console.log(shops)
+
 
   if (shop.status === "success")
     return (
@@ -52,6 +37,9 @@ export default function ListingShop({ shop }: Props) {
             />
           </div>
           {shops[shop.name].loadingNextPage && <Loader color={shop.color} />}
+          {shops[shop.name].hasFetchedAll && (
+            <Text color="secondary">Tout visionné</Text>
+          )}
         </div>
         <div className="2 flex w-full flex-wrap">
           <Swiper
@@ -67,7 +55,6 @@ export default function ListingShop({ shop }: Props) {
             spaceBetween={10}
             slidesPerView={slidesPerView}
             watchSlidesProgress
-            // cssMode={breakpoints.isMobile}
             onSwiper={(swiper) => {
               swiperRef.current = swiper;
             }}
