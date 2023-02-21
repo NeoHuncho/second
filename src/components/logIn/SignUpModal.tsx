@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { Modal, TextInput, Button, Group, Divider } from "@mantine/core";
 import { signIn } from "next-auth/react";
-import facebookSignUpButton from "../../assets/signUp/facebookSignUp.png";
-import googleSignUpButton from "../../assets/signUp/googleSignUp.png";
+import facebookSignUpButton from "../../assets/signIn/facebookSignUp.png";
+import googleSignUpButton from "../../assets/signIn/googleSignUp.png";
 import Image from "next/image";
-import useBreakpoints from "../../hooks/ui/useBreakpoints";
 interface SignUpModalProps {
   onClose: () => void;
   opened: boolean;
@@ -13,7 +12,6 @@ interface SignUpModalProps {
 export default function SignUpModal({ onClose, opened }: SignUpModalProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { isMobile } = useBreakpoints();
 
   const handleSignUp = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -72,11 +70,11 @@ export default function SignUpModal({ onClose, opened }: SignUpModalProps) {
             className="w-full"
           />
         </Group>
-        <Button type="submit" className=" m-auto mt-6 w-full">
+        <Button type="submit" className=" m-auto mt-3 w-full">
           Créer votre compte
         </Button>
       </form>
-      <Divider my="md" label="ou" labelPosition="center" />
+      <Divider my="lg" label="ou" labelPosition="center" />
       <div className={`flex items-center gap-5`}>
         <div className="relative h-10 w-full">
           <Image
