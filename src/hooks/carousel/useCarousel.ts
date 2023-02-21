@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import type Swiper from "swiper";
 import defaultListing from "../../static/defaultListing";
 import type { ShopListing, Shops } from "../../types/types";
-import useShops from "../search/shops/useShops";
+import useShops from "../../stores/useShops";
 import useBreakpoints from "../ui/useBreakpoints";
 
 const useCarousel = (shop: Shops) => {

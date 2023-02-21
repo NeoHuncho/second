@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import type { Shops } from "../../types/types";
-import useShops from "./shops/useShops";
+import useShops from "../../stores/useShops";
 
 const useSearch = () => {
   const router = useRouter();

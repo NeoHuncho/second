@@ -8,7 +8,7 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import useCarousel from "../../../hooks/carousel/useCarousel";
 import { Loader, Text } from "@mantine/core";
-import useShops from "../../../hooks/search/shops/useShops";
+import useShops from "../../../stores/useShops";
 import SwipperNavButton from "./sub/SwipperNavButton";
 
 interface Props {

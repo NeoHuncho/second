@@ -1,7 +1,7 @@
 import LoadingShops from "../components/listings/LoadingShops";
 import SearchTerm from "../components/listings/SearchedTerm";
 import ListingShop from "../components/listings/listingsShop/ListingShop";
-import useShops from "../hooks/search/shops/useShops";
+import useShops from "../stores/useShops";
 import useSearch from "../hooks/search/useSearch";
 
 const Search = () => {

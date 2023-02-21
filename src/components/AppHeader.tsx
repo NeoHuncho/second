@@ -1,10 +1,13 @@
 import { ActionIcon, Title } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import { useRouter } from "next/router";
 import { UserIcon } from "../assets/icons";
+import SignUpModal from "./logIn/SignUpModal";
 import SearchBar from "./search/SearchBar";
 
 const AppHeader = () => {
   const router = useRouter();
+  const [opened, modalControls] = useDisclosure(false);
   return (
     <div className="grid h-full w-full grid-cols-mobileHeader items-center px-3 sm:grid-cols-3 ">
       <Title
@@ -15,9 +18,10 @@ const AppHeader = () => {
         Second
       </Title>
       <SearchBar size="sm" />
-      <ActionIcon className="justify-self-end">
+      <ActionIcon onClick={modalControls.open} className="justify-self-end">
         <UserIcon size={40} />
       </ActionIcon>
+      <SignUpModal opened={opened} onClose={modalControls.close} />
     </div>
   );
 };

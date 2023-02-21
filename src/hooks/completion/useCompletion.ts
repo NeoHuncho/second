@@ -2,6 +2,7 @@ import { useDebouncedState, useDisclosure } from "@mantine/hooks";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import useSearchTerm from "../../stores/useSearchTerm";
 
 export type SearchResult = {
   value: string;
@@ -14,6 +15,8 @@ export type SearchResultResponse = {
 
 const useCompletion = () => {
   const router = useRouter();
+  const { setSearchTerm: setSearchTermStore, searchTerm: searchTermStore } =
+    useSearchTerm();
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useDebouncedState(
     "",
     500
@@ -23,13 +26,15 @@ const useCompletion = () => {
   );
   const [searching, setSearching] = useState<boolean>(false);
 
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(searchTermStore);
 
   const onSubmit = (searchTermOverride?: string) => {
     if (!searchTermOverride && !searchTerm) return;
     void router.push(`/search?query=${searchTermOverride || searchTerm}`);
     setSearchTerm(searchTermOverride || searchTerm);
+    setSearchTermStore(searchTermOverride || searchTerm);
     setCompletionResults([]);
+
     return;
   };
 

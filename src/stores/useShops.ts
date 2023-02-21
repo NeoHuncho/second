@@ -1,9 +1,9 @@
-import type { Shop, Shops } from "../../../types/types";
+import type { Shop, Shops } from "../types/types";
 import { create } from "zustand";
 import axios from "axios";
-import type { ShopRes } from "../../../types/api/shopsRes";
-import formatStoreUrl from "../../../utils/formatStoreUrl";
-import { defaultShops } from "../../../static/defaultShops";
+import type { ShopRes } from "../types/api/shopsRes";
+import formatStoreUrl from "../utils/formatStoreUrl";
+import { defaultShops } from "../static/defaultShops";
 
 type ShopState = {
   shops: {
