@@ -1,8 +1,8 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import { Text, Title } from "@mantine/core";
+import Image from "next/image";
 import SearchBar from "../components/search/SearchBar";
-
+import logo from "../assets/logo/logo_text_black.png";
 const Home: NextPage = () => {
   return (
     <>
@@ -12,14 +12,13 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className=" flex min-h-screen flex-col items-center bg-background-landing bg-cover bg-fixed bg-center bg-no-repeat pt-5 sm:justify-center">
+        <Image
+          src={logo}
+          alt="logo"
+          className=" absolute top-2 left-2 h-auto w-28 cursor-pointer object-contain"
+        />
         <div className="flex w-full max-w-screen-2xl flex-col items-center gap-6 pb-20">
-          <div className="flex flex-col gap-1">
-            <Title color="primary" order={1} className="text-6xl">
-              Second
-            </Title>
-            <Text className="text-center text-lg">101% seconde main</Text>
-          </div>
-          <SearchBar size="lg" inputClassName="w-5/6 sm:w-2/5" />
+          <SearchBar size="lg" inputClassName="w-5/6 sm:w-2/4" />
         </div>
       </main>
     </>
