@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Thumbs } from "swiper";
+import { FreeMode, Navigation, Thumbs } from "swiper";
 import Image from "next/image";
 import type { Shop } from "../../../types/types";
 import Listing from "./sub/Listing";
@@ -10,16 +10,21 @@ import useCarousel from "../../../hooks/carousel/useCarousel";
 import { Loader, Text } from "@mantine/core";
 import useShops from "../../../stores/useShops";
 import SwipperNavButton from "./sub/SwipperNavButton";
+import { useState } from "react";
 
 interface Props {
   shop: Shop;
 }
 export default function ListingShop({ shop }: Props) {
-  const { handleIndexChange, slides, swiperRef, slidesPerView } = useCarousel(
-    shop.name
-  );
+  const {
+    handleIndexChange,
+    slides,
+    swiperRef,
+    slidesPerView,
+    handleTouchEnd,
+    isScrolling,
+  } = useCarousel(shop.name);
   const { shops } = useShops();
-
   if (shop.status === "success")
     return (
       <div className="flex w-full flex-col gap-3 ">
@@ -39,8 +44,9 @@ export default function ListingShop({ shop }: Props) {
         </div>
         <div className="2 flex w-full flex-wrap">
           <Swiper
+            onTouchEnd={handleTouchEnd}
             className="select-none"
-            modules={[Navigation, Thumbs]}
+            modules={[Navigation, Thumbs, FreeMode]}
             onRealIndexChange={(swiper) => {
               handleIndexChange(swiper.realIndex);
             }}
@@ -48,6 +54,7 @@ export default function ListingShop({ shop }: Props) {
               prevEl: "#custom-prev-button",
               nextEl: "#custom-next-button",
             }}
+            freeMode
             spaceBetween={10}
             slidesPerView={slidesPerView}
             watchSlidesProgress
@@ -57,7 +64,7 @@ export default function ListingShop({ shop }: Props) {
           >
             {slides.map((listing) => (
               <SwiperSlide key={listing.id}>
-                <Listing listing={listing} />
+                <Listing listing={listing} isScrolling={isScrolling} />
               </SwiperSlide>
             ))}
             <SwipperNavButton type="prev" />

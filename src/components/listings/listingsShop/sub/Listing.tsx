@@ -5,14 +5,16 @@ import {
   EyeIcon,
   LinkIcon,
 } from "../../../../assets/icons";
-import type { ShopListing } from "../../../../types/types";
+import useCarousel from "../../../../hooks/carousel/useCarousel";
+import type { ShopListing, Shops } from "../../../../types/types";
 import parsePrice from "../../../../utils/parsePrice";
 import NoImage from "./NoImage";
 
 type Props = {
   listing: ShopListing;
+  isScrolling: boolean;
 };
-const Listing = ({ listing }: Props) => {
+const Listing = ({ listing, isScrolling }: Props) => {
   const CARD_SECTION_HEIGHT = 230;
 
   if (listing.body === "placeholder")
@@ -37,6 +39,7 @@ const Listing = ({ listing }: Props) => {
       p="sm"
       radius="md"
       withBorder
+      onClick={() => !isScrolling && window.open(listing.url, "_blank")}
     >
       <Card.Section>
         {listing.images?.url_thumb ? (
@@ -86,15 +89,6 @@ const Listing = ({ listing }: Props) => {
             </div>
           </div>
         </div>
-        <Button
-          onClick={() => window.open(listing.url, "_blank")}
-          variant="outline"
-          color={"secondary"}
-          leftIcon={<LinkIcon color="#156969" />}
-          styles={{ root: { padding: 10 }, leftIcon: { marginRight: 5 } }}
-        >
-          {`Voir l'annonce`}
-        </Button>
       </div>
     </Card>
   );

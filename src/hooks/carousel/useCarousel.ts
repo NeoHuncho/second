@@ -17,7 +17,8 @@ const useCarousel = (shop: Shops) => {
   } = useShops((state) => state.shops[shop]);
   const [slidesPerView, setSlidesPerView] = useState(0);
   const [slides, setSlides] = useState([] as ShopListing[]);
-
+  const [lastTouchDiff, setLastTouchDiff] = useState(0);
+  const [isScrolling, setIsSrolling] = useState(false);
   const [loadingNewSlides, setLoadingNewSlides] = useState(false);
   const swiperRef = useRef<Swiper>();
   useEffect(() => {
@@ -76,12 +77,20 @@ const useCarousel = (shop: Shops) => {
     else if (!breakpoints.xxlBreakpoint) setSlidesPerView(7);
     else if (breakpoints.xxlBreakpoint) setSlidesPerView(8);
   }, [breakpoints]);
+
+  const handleTouchEnd = (e: Swiper) => {
+    if (e.touches.diff === lastTouchDiff) return setIsSrolling(false);
+    setIsSrolling(true);
+    setLastTouchDiff(e.touches.diff);
+  };
   return {
     slides,
     loadMoreSlides,
     swiperRef,
     handleIndexChange,
     slidesPerView,
+    handleTouchEnd,
+    isScrolling,
   };
 };
 export default useCarousel;
