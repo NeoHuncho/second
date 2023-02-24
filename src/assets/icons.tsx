@@ -8,10 +8,14 @@ import {
   AiOutlineArrowLeft,
   AiOutlineArrowRight,
   AiOutlineEye,
+  AiFillFacebook,
+  AiFillGoogleCircle,
+  AiFillGoogleSquare,
 } from "react-icons/ai";
 import { VscError } from "react-icons/vsc";
 import { TbTruckDelivery } from "react-icons/tb";
 import { GiClothes } from "react-icons/gi";
+import { FaSignOutAlt } from "react-icons/fa";
 
 export const SearchIcon = ({ size, className, onClick }: IconProps) => (
   <AiOutlineSearch className={className} size={size} onClick={onClick} />
@@ -119,9 +123,42 @@ export const DeliveryIcon = ({
     color={color}
   />
 );
+export const FacebookIcon = ({
+  size,
+  className,
+  onClick,
+  color,
+}: IconProps) => (
+  <AiFillFacebook
+    className={className}
+    size={size}
+    onClick={onClick}
+    color={color || "white"}
+  />
+);
+export const GoogleIcon = ({ size, className, onClick, color }: IconProps) => (
+  <AiFillGoogleSquare
+    className={className}
+    size={size}
+    onClick={onClick}
+    color={color || "white"}
+  />
+);
+
+export const LogOut = ({ size, className, onClick, color }: IconProps) => (
+  <FaSignOutAlt
+    className={className}
+    size={size}
+    onClick={onClick}
+    color={color || "white"}
+  />
+);
+
 type IconProps = {
   size?: number;
   className?: string;
   onClick?: () => void;
   color?: string;
 };
+
+export type Icon = React.FC<IconProps>;

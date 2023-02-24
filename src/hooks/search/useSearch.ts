@@ -13,7 +13,7 @@ const useSearch = () => {
     Object.keys(shops).forEach((shop) => {
       updateListings(shop as Shops)
         .then(() => {
-          console.log("updated");
+          return null;
         })
         .catch((err) => console.log(err));
     });

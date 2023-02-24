@@ -16,6 +16,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   const router = useRouter();
   const [hasLoaded, setHasLoaded] = useState(false);
+
   //fix to fix the issue of the page flashing before the session is loaded
   useEffect(() => {
     setHasLoaded(true);
