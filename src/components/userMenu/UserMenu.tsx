@@ -1,46 +1,69 @@
 import { ActionIcon, Menu, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 import { LogOut, UserIcon } from "../../assets/icons";
+import IconAndLabel from "../header/IconAndLabel";
 import SignInModal from "../logIn/SignInModal";
 
 const UserMenu = () => {
   const [opened, modalControls] = useDisclosure(false);
-  const [menuOpened, menuControls] = useDisclosure(false);
-  const { status } = useSession();
+  const { status, data } = useSession();
+  const userImage = data?.user?.image;
+
   const onSignOut = () => {
     void signOut({ redirect: false });
   };
   if (status !== "authenticated")
     return (
-      <div className="flex justify-end">
-        <ActionIcon onClick={modalControls.open} className="justify-self-end">
-          <UserIcon size={40} />
-        </ActionIcon>
+      <>
+        <IconAndLabel
+          Icon={UserIcon}
+          label="connexion"
+          onClick={modalControls.open}
+        />
         <SignInModal opened={opened} onClose={modalControls.close} />
-      </div>
+      </>
     );
 
-    return (
-      <div className="flex justify-end">
-        <Menu trigger="hover" shadow={"lg"}>
-          <Menu.Target>
-            <ActionIcon className="justify-self-end">
-              <UserIcon size={40} />
-            </ActionIcon>
-          </Menu.Target>
-          <Menu.Dropdown>
-            <div
-              onClick={onSignOut}
-              className="flex cursor-pointer items-center gap-2"
-            >
-              <LogOut color="black" />
-              <Text>Se déconnecter</Text>
-            </div>
-          </Menu.Dropdown>
-        </Menu>
-      </div>
-    );
+  return (
+    <Menu trigger="hover" shadow={"lg"}>
+      <Menu.Target>
+        <div className="flex cursor-pointer flex-col items-center">
+          {userImage ? (
+            <>
+              <Image
+                src={userImage}
+                alt="user"
+                width={38}
+                height={38}
+                className="rounded-full"
+              />
+              <Text
+                color={"black"}
+                className="-mt-2 bg-white"
+                weight={600}
+                size="xs"
+              >
+                {data?.user?.name}
+              </Text>
+            </>
+          ) : (
+            <IconAndLabel Icon={UserIcon} label="profil" />
+          )}
+        </div>
+      </Menu.Target>
+      <Menu.Dropdown>
+        <div
+          onClick={onSignOut}
+          className="flex cursor-pointer items-center gap-2"
+        >
+          <LogOut color="black" />
+          <Text>Se déconnecter</Text>
+        </div>
+      </Menu.Dropdown>
+    </Menu>
+  );
 };
 
 export default UserMenu;

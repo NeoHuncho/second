@@ -42,3 +42,9 @@ interface Attribute {
 
 export type Shops = "Vinted" | "Leboncoin";
 export type LoadingTypes = "success" | "error" | "loading" | "no_results";
+export type Sorts =
+  | "recommended"
+  | "price_asc"
+  | "price_desc"
+  | "date_asc"
+  | "date_desc";

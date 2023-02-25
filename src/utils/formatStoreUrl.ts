@@ -5,14 +5,13 @@ type Props = {
 
 const formatStoreUrl = ({ store, page }: Props) => {
   const apiUrl = (window && `${window.location.origin}/api`) || "";
-  const searchTerm = window.location.search.split("=")[1];
-  if (!searchTerm) {
+  const searchTerms = window.location.search.split("?query")[1];
+  if (!searchTerms) {
     console.error("could not find search term in url");
     return;
   }
-
-  return `${apiUrl}/getShop?shop=${store}&text=${searchTerm}${
-    page ? `&page=${page}` : ""
+  return `${apiUrl}/getShop?shop=${store}${
+    page ? `&page=${page}&query${searchTerms}` : ""
   }`;
 };
 

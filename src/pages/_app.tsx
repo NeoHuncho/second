@@ -39,7 +39,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
             padding="md"
             header={
               router.pathname !== "/" ? (
-                <Header height={60}>
+                <Header height={65}>
                   <AppHeader />
                 </Header>
               ) : undefined

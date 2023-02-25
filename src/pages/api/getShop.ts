@@ -1,8 +1,9 @@
-import { readFile } from "fs/promises";
+import { readFile, writeFile } from "fs/promises";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { env } from "process";
 import getWebsiteScrape from "../../../backend/api/getZyte";
-import parseUrl from "../../../backend/utils/parse/parseUrl";
+import formatQueriesToStoreUrl from "../../../backend/utils/parse/formatQueriesToStoreUrl";
+
 import parseLeboncoin from "../../../backend/utils/parse/shops/parseLeboncoin";
 import parseVinted from "../../../backend/utils/parse/shops/parseVinted";
 import type { Shops } from "../../types/types";
@@ -11,11 +12,11 @@ export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse
 ) {
-  if (typeof request.query.text !== "string") {
+  if (!typeof request.query.params?.includes("query=")) {
     return response.status(400).json({
       query: request.query,
       cookies: request.cookies,
-      errorCode: "TEXT_PARAM_NOT_PROVIDED",
+      errorCode: "QUERY_PARAM_NOT_PROVIDED",
       error: "searched text has not been provided or is not a string",
     });
   }
@@ -31,11 +32,9 @@ export default async function handler(
   let res = null;
   if (env.NODE_ENV === "production")
     res = await getWebsiteScrape(
-      parseUrl({
-        page: request.query.page,
-        text: request.query.text,
-        shop: request.query.shop as Shops,
-      })
+      formatQueriesToStoreUrl(
+        request.query as Partial<{ [key: string]: string }>
+      )
     );
   else {
     if (request.query.shop === "Leboncoin")
@@ -55,5 +54,8 @@ export default async function handler(
       request.query.shop === "Leboncoin"
         ? parseLeboncoin(res)
         : parseVinted(res),
+    requestedUrl: formatQueriesToStoreUrl(
+      request.query as Partial<{ [key: string]: string }>
+    ),
   });
 }

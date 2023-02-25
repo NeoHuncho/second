@@ -1,8 +1,8 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import SearchBar from "../components/search/SearchBar";
-import logo from "../assets/logo/logo_text_black_no_bg.png";
+import SearchBar from "../components/common/SearchBar";
+import logo from "../assets/logo/logo_text_black.png";
 const Home: NextPage = () => {
   return (
     <>
@@ -26,4 +26,3 @@ const Home: NextPage = () => {
 };
 
 export default Home;
-

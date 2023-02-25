@@ -1,17 +1,20 @@
-import type { Shop, Shops } from "../types/types";
+import type { Shop, Shops, Sorts } from "../types/types";
 import { create } from "zustand";
 import axios from "axios";
 import type { ShopRes } from "../types/api/shopsRes";
 import formatStoreUrl from "../utils/formatStoreUrl";
 import { defaultShops } from "../static/defaultShops";
+import type { NextRouter } from "next/router";
 
 type ShopState = {
   shops: {
     Vinted: Shop;
     Leboncoin: Shop;
   };
+  sort: Sorts;
   updateListings: (shop: Shops) => Promise<void>;
   resetShops: () => void;
+  setSort: (sort: Sorts, router: NextRouter) => void;
 };
 
 const useShops = create<ShopState>()((set, get) => ({
@@ -19,6 +22,7 @@ const useShops = create<ShopState>()((set, get) => ({
     Leboncoin: defaultShops.Leboncoin,
     Vinted: defaultShops.Vinted,
   },
+  sort: "recommended",
   updateListings: async (shop: Shops) => {
     const { listings, page, name } = get().shops[shop];
     const url = formatStoreUrl({ store: name, page: page + 1 });
@@ -72,6 +76,13 @@ const useShops = create<ShopState>()((set, get) => ({
         Vinted: defaultShops.Vinted,
       },
     }));
+  },
+  setSort: (sort, router) => {
+    void router.push({
+      pathname: router.pathname,
+      query: { ...router.query, sort: sort },
+    });
+    set({ sort: sort });
   },
 }));
 

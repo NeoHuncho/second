@@ -20,6 +20,7 @@ const useSearch = () => {
   };
 
   useEffect(() => {
+    console.log("useSearch useEffect");
     if (!router.query?.query) return;
     setSearchShops(true);
   }, [router.query]);

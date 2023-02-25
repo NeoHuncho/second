@@ -154,7 +154,7 @@ export const LogOut = ({ size, className, onClick, color }: IconProps) => (
   />
 );
 
-type IconProps = {
+export type IconProps = {
   size?: number;
   className?: string;
   onClick?: () => void;

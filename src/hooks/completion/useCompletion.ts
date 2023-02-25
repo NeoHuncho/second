@@ -30,7 +30,10 @@ const useCompletion = () => {
 
   const onSubmit = (searchTermOverride?: string) => {
     if (!searchTermOverride && !searchTerm) return;
-    void router.push(`/search?query=${searchTermOverride || searchTerm}`);
+    void router.push({
+      pathname: "/search",
+      query: { query: searchTermOverride || searchTerm },
+    });
     setSearchTerm(searchTermOverride || searchTerm);
     setSearchTermStore(searchTermOverride || searchTerm);
     setCompletionResults([]);
