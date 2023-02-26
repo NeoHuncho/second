@@ -22,7 +22,11 @@ const useShops = create<ShopState>()((set, get) => ({
     Leboncoin: defaultShops.Leboncoin,
     Vinted: defaultShops.Vinted,
   },
-  sort: "recommended",
+  //get the value of the sort query param or default to "recommended"
+  sort:
+    ((typeof window !== "undefined" &&
+      new URLSearchParams(window.location.search).get("sort")) as Sorts) ||
+    "recommended",
   updateListings: async (shop: Shops) => {
     const { listings, page, name } = get().shops[shop];
     const url = formatStoreUrl({ store: name, page: page + 1 });
@@ -78,6 +82,7 @@ const useShops = create<ShopState>()((set, get) => ({
     }));
   },
   setSort: (sort, router) => {
+    if (!Object.keys(router.query).length) return;
     void router.push({
       pathname: router.pathname,
       query: { ...router.query, sort: sort },

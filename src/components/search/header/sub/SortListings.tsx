@@ -55,14 +55,14 @@ const SortListings = () => {
             color="black"
             variant="outline"
           >
-            Plus récentes
+            Date récente
           </Button>
           <Button
             onClick={() => handlesortChange("date_asc")}
             color="black"
             variant="outline"
           >
-            Plus anciennes
+            Date ancienne
           </Button>
           <Button
             onClick={() => handlesortChange("recommended")}

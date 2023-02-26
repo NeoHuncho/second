@@ -53,7 +53,7 @@ export default async function handler(
     listings:
       request.query.shop === "Leboncoin"
         ? parseLeboncoin(res)
-        : parseVinted(res),
+        : parseVinted(res, request.query.sort as string | undefined),
     requestedUrl: formatQueriesToStoreUrl(
       request.query as Partial<{ [key: string]: string }>
     ),

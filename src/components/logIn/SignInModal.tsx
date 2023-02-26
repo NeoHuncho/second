@@ -28,7 +28,7 @@ export default function SignInModal({ onClose, opened }: SignInModalProps) {
     loading,
   } = useSignIn({ onClose });
   const { data, status } = useSession();
-  console.log(data, status);
+
   return (
     <Modal
       opened={opened}

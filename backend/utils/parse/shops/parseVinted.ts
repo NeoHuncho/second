@@ -8,6 +8,9 @@ type vintedData = {
       byId: {
         [key: string]: VintedItem;
       };
+      searchParams: {
+        [key: string]: VintedItem;
+      };
     };
   };
 };
@@ -28,7 +31,11 @@ type ImageVinted = {
   url: string;
 };
 
-const parseVinted = (responseText: string) => {
+type SearchParam = {
+  score: number;
+};
+
+const parseVinted = (responseText: string, sortBy: string | undefined) => {
   const $ = load(responseText);
   const data = $("script")
     .filter((i, el) => {
@@ -52,7 +59,18 @@ const parseVinted = (responseText: string) => {
     });
   });
 
-  return formatted;
+  if (sortBy && sortBy.includes("price")) {
+    if (sortBy.includes("asc"))
+      return formatted.sort((a, b) => a.price - b.price);
+    else return formatted.sort((a, b) => b.price - a.price);
+  }
+
+  const searchParams = vintedData.items.catalogItems.searchParams;
+  return formatted.sort((a, b) => {
+    const aScore = (searchParams[a.id] as unknown as SearchParam).score;
+    const bScore = (searchParams[b.id] as unknown as SearchParam).score;
+    return bScore - aScore;
+  });
 };
 
 export default parseVinted;
