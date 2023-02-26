@@ -12,9 +12,20 @@ type ShopState = {
     Leboncoin: Shop;
   };
   sort: Sorts;
+  filters: Record<string, string>;
   updateListings: (shop: Shops) => Promise<void>;
   resetShops: () => void;
   setSort: (sort: Sorts, router: NextRouter) => void;
+  setFilters: ({
+    key,
+    value,
+  }: {
+    key: string;
+    value: string;
+    router: NextRouter;
+  }) => void;
+  removeFilter: (key: string) => void;
+  resetFilters: () => void;
 };
 
 const useShops = create<ShopState>()((set, get) => ({
@@ -22,11 +33,11 @@ const useShops = create<ShopState>()((set, get) => ({
     Leboncoin: defaultShops.Leboncoin,
     Vinted: defaultShops.Vinted,
   },
-  //get the value of the sort query param or default to "recommended"
   sort:
     ((typeof window !== "undefined" &&
       new URLSearchParams(window.location.search).get("sort")) as Sorts) ||
     "recommended",
+  filters: {},
   updateListings: async (shop: Shops) => {
     const { listings, page, name } = get().shops[shop];
     const url = formatStoreUrl({ store: name, page: page + 1 });
@@ -88,6 +99,37 @@ const useShops = create<ShopState>()((set, get) => ({
       query: { ...router.query, sort: sort },
     });
     set({ sort: sort });
+  },
+
+  setFilters: ({ key, value, router }) => {
+    set((state) => ({
+      ...state,
+      filters: {
+        ...state.filters,
+        [key]: value,
+      },
+    }));
+    void router.push({
+      pathname: router.pathname,
+      query: { ...router.query, [key]: value },
+    });
+  },
+  removeFilter: (key) => {
+    set((state) => {
+      const filters = { ...state.filters };
+      delete filters[key];
+      return {
+        ...state,
+        filters,
+      };
+    });
+  },
+  resetFilters: () => {
+    console.log("resetting filters");
+    set((state) => ({
+      ...state,
+      filters: {},
+    }));
   },
 }));
 

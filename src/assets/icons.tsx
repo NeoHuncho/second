@@ -11,6 +11,8 @@ import {
   AiFillFacebook,
   AiFillGoogleCircle,
   AiFillGoogleSquare,
+  AiFillCaretDown,
+  AiFillCaretUp,
 } from "react-icons/ai";
 import { VscError } from "react-icons/vsc";
 import { TbTruckDelivery } from "react-icons/tb";
@@ -147,6 +149,24 @@ export const GoogleIcon = ({ size, className, onClick, color }: IconProps) => (
 
 export const LogOut = ({ size, className, onClick, color }: IconProps) => (
   <FaSignOutAlt
+    className={className}
+    size={size}
+    onClick={onClick}
+    color={color || "white"}
+  />
+);
+
+export const ArrowDown = ({ size, className, onClick, color }: IconProps) => (
+  <AiFillCaretDown
+    className={className}
+    size={size}
+    onClick={onClick}
+    color={color || "white"}
+  />
+);
+
+export const ArrowUp = ({ size, className, onClick, color }: IconProps) => (
+  <AiFillCaretUp
     className={className}
     size={size}
     onClick={onClick}

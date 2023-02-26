@@ -21,10 +21,9 @@ const IconAndLabel = ({ Icon, label, onClick }: IconAndLabelProps) => {
       <Icon size={30} />
       <Text
         style={{ backgroundColor: hovering ? "blue" : "black" }}
-        className={`-mt-1 rounded-full border bg-black px-1 transition-colors duration-300`}
+        className={`-mt-1 rounded-full border bg-black px-1 text-xs transition-colors duration-300`}
         color={"white"}
         weight={600}
-        size="xs"
       >
         {label}
       </Text>

@@ -11,7 +11,7 @@ const SortListings = () => {
   const router = useRouter();
   const { sort, setSort } = useShops();
   const [menuOpened, setMenuOpened] = useState(false);
-  const handlesortChange = (sort: Sorts) => {
+  const handleSortChange = (sort: Sorts) => {
     setSort(sort, router);
     setMenuOpened(false);
   };
@@ -38,34 +38,34 @@ const SortListings = () => {
         <div className="flex flex-col gap-2">
           <Button
             color="black"
-            onClick={() => handlesortChange("price_asc")}
+            onClick={() => handleSortChange("price_asc")}
             variant="outline"
           >
             Prix croissant
           </Button>
           <Button
             color="black"
-            onClick={() => handlesortChange("price_desc")}
+            onClick={() => handleSortChange("price_desc")}
             variant="outline"
           >
             Prix décroissant
           </Button>
           <Button
-            onClick={() => handlesortChange("date_desc")}
+            onClick={() => handleSortChange("date_desc")}
             color="black"
             variant="outline"
           >
             Date récente
           </Button>
           <Button
-            onClick={() => handlesortChange("date_asc")}
+            onClick={() => handleSortChange("date_asc")}
             color="black"
             variant="outline"
           >
             Date ancienne
           </Button>
           <Button
-            onClick={() => handlesortChange("recommended")}
+            onClick={() => handleSortChange("recommended")}
             color="black"
             variant="outline"
           >
