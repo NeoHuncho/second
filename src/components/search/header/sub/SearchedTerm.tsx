@@ -1,15 +1,15 @@
-import { Title } from "@mantine/core";
+import { Text, Title } from "@mantine/core";
 import { useRouter } from "next/router";
 
 function SearchTerm() {
   const router = useRouter();
 
   return (
-    <div className="flex items-center gap-2">
-      <Title className="text-lg font-light sm:text-xl">Recherche:</Title>
-      <Title className="text-lg font-normal  sm:text-xl">
+    <div className="flex flex-col flex-wrap overflow-hidden sm:flex-row sm:items-center sm:gap-1">
+      <Title className="text-xs font-light sm:text-xl">Recherche:</Title>
+      <Text lineClamp={1} className="text-sm font-normal  sm:text-xl">
         {router?.query?.query || ""}
-      </Title>
+      </Text>
     </div>
   );
 }

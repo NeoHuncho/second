@@ -15,7 +15,7 @@ type Props = {
   isScrolling: boolean;
 };
 const Listing = ({ listing, isScrolling }: Props) => {
-  const CARD_SECTION_HEIGHT = 230;
+  const CARD_SECTION_HEIGHT = 240;
 
   if (listing.body === "placeholder")
     return (

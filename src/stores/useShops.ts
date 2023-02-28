@@ -125,7 +125,6 @@ const useShops = create<ShopState>()((set, get) => ({
     });
   },
   resetFilters: () => {
-    console.log("resetting filters");
     set((state) => ({
       ...state,
       filters: {},

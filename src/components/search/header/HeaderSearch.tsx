@@ -4,7 +4,7 @@ import SortListings from "./sub/SortListings";
 
 const HeaderSearch = () => {
   return (
-    <div>
+    <div className="flex flex-col gap-3 sm:gap-2">
       <div className="flex w-full justify-between">
         <SearchTerm />
         <div className="flex">

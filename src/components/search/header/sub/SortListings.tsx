@@ -23,8 +23,12 @@ const SortListings = () => {
       width={176}
     >
       <Menu.Target>
-        <Button className="h-12 w-44" color="secondary" variant="outline">
-          <div className="align-center flex flex-col justify-center">
+        <Button
+          className="w-44 p-0 sm:h-12"
+           color="secondary"
+          variant="outline"
+        >
+          <div className="align-center flex justify-center gap-1 sm:flex-col sm:gap-0">
             <Text weight={300} color="black" align="center">
               Trier par
             </Text>
