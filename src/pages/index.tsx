@@ -10,6 +10,7 @@ const Home: NextPage = () => {
         <title>Second</title>
         <meta name="description" content="Find second hand products" />
         <link rel="icon" href="/favicon.ico" />
+        <link rel="manifest" href="/manifest.json" />
       </Head>
       <main className=" flex min-h-screen flex-col items-center bg-background-landing bg-cover bg-fixed bg-center bg-no-repeat pt-5 sm:justify-center">
         <Image

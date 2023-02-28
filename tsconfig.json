@@ -24,6 +24,6 @@
     "**/*.cjs",
     "**/*.mjs",
     "backend/static/shops/leboncoin.js"
-  ],
+, "sw.ts"  ],
   "exclude": ["node_modules"]
 }
