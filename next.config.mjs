@@ -11,7 +11,7 @@ import withPWA from "next-pwa";
 
 const withCustomPWA = withPWA({
   dest: "public",
-  disable: process.env.NODE_ENV === "development",
+  // disable: process.env.NODE_ENV === "development",
 });
 const config = {
   reactStrictMode: true,
