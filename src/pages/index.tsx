@@ -2,7 +2,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import SearchBar from "../components/common/SearchBar";
-import logo from "../../public/assets/logo/logo_text_black.png";
+import logo from "../assets/logo/logo_text_black.png";
 const Home: NextPage = () => {
   return (
     <>
