@@ -1,6 +1,6 @@
 import { Text } from "@mantine/core";
 import { useState } from "react";
-import type { Icon } from "../../../assets/icons";
+import type { Icon } from "../../../types/icons";
 
 type Props = {
   color: string;

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 import SearchBar from "./common/SearchBar";
-import logo from "../assets/logo/logo_text_black.png";
+import logo from "../../public/assets/logo/logo_text_black.png";
 import UserMenu from "./userMenu/UserMenu";
 import { useSession } from "next-auth/react";
 const AppHeader = () => {

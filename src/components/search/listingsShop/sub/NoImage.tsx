@@ -1,6 +1,6 @@
 import { Text } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import { ImageIcon } from "../../../../assets/icons";
+import { ImageIcon } from "../../../../types/icons";
 
 export default function NoImage() {
   return (

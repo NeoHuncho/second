@@ -1,5 +1,5 @@
-import leboncoinImage from "../assets/shops/leboncoin.webp";
-import vintedImage from "../assets/shops/vinted.webp";
+import leboncoinImage from "../../public/assets/shops/leboncoin.webp";
+import vintedImage from "../../public/assets/shops/vinted.webp";
 import type { Shop } from "../types/types";
 const defaultVinted: Shop = {
   status: "loading",

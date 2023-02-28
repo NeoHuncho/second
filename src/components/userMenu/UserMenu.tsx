@@ -2,7 +2,7 @@ import { ActionIcon, Menu, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
-import { LogOut, UserIcon } from "../../assets/icons";
+import { LogOut, UserIcon } from "../../types/icons";
 import IconAndLabel from "../header/IconAndLabel";
 import SignInModal from "../logIn/SignInModal";
 

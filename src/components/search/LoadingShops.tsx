@@ -2,7 +2,7 @@ import { Card, Loader } from "@mantine/core";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { appearMotion } from "../../animate/Animate";
-import { CheckIcon, CrossIcon, ErrorIcon } from "../../assets/icons";
+import { CheckIcon, CrossIcon, ErrorIcon } from "../../types/icons";
 import type { Shop } from "../../types/types";
 
 type Props = {

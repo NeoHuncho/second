@@ -10,8 +10,8 @@ import {
 
 import useSignIn from "../../hooks/account/useSignIn";
 
-import { GoogleIcon } from "../../assets/icons";
-import { FacebookIcon } from "../../assets/icons";
+import { GoogleIcon } from "../../types/icons";
+import { FacebookIcon } from "../../types/icons";
 import ProviderButton from "./sub/ProviderButton";
 import { useSession } from "next-auth/react";
 interface SignInModalProps {

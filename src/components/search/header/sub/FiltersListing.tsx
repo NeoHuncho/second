@@ -1,7 +1,7 @@
 import { Badge, Popover, Text, TextInput } from "@mantine/core";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { ArrowDown, ArrowUp } from "../../../../assets/icons";
+import { ArrowDown, ArrowUp } from "../../../../types/icons";
 import useShops from "../../../../stores/useShops";
 
 interface DropDownInterface {

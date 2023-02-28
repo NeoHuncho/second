@@ -1,7 +1,7 @@
 import type { MantineSize } from "@mantine/core";
 import { Popover, Text, TextInput } from "@mantine/core";
 import { getHotkeyHandler, useMediaQuery } from "@mantine/hooks";
-import { SearchIcon } from "../../assets/icons";
+import { SearchIcon } from "../../types/icons";
 import useCompletion from "../../hooks/completion/useCompletion";
 
 type PropTypes = {

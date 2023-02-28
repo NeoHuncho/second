@@ -4,7 +4,7 @@ import {
   DeliveryIcon,
   EyeIcon,
   LinkIcon,
-} from "../../../../assets/icons";
+} from "../../../../types/icons";
 import useCarousel from "../../../../hooks/carousel/useCarousel";
 import type { ShopListing, Shops } from "../../../../types/types";
 import parsePrice from "../../../../utils/parsePrice";
