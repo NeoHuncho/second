@@ -1,2 +1,18 @@
 @tailwind components;
 @tailwind utilities;
+
+@media (max-aspect-ratio: 1/1) {
+  /* Only apply these styles on mobile devices */
+  html {
+    height: 100%;
+  }
+
+  body {
+    height: calc(var(--vh, 1vh) * 100);
+  }
+
+  /* Define the variable */
+  :root {
+    --vh: 1vh;
+  }
+}
