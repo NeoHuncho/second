@@ -2,22 +2,19 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import type { Shops } from "../../types/types";
 import useShops from "../../stores/useShops";
-import { object } from "zod";
 
 const useSearch = () => {
   const router = useRouter();
   const { updateListings, shops, resetShops, setSort, resetFilters } =
     useShops();
-  const [searchShops, setSearchShops] = useState(false);
-  const [loading, setLoading] = useState(false);
+
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
   const updateShops = () => {
-    setLoading(true);
-    console.log("resetting shops");
     resetShops();
     Object.keys(shops).forEach((shop) => {
       updateListings(shop as Shops)
         .then(() => {
-          setLoading(false);
+          console.log("updated listings");
         })
         .catch((err) => console.log(err));
     });
@@ -30,14 +27,11 @@ const useSearch = () => {
       !Object.keys(router.query).includes("priceMax")
     )
       resetFilters();
-    setSearchShops(true);
-  }, [router.query]);
-
-  useEffect(() => {
-    if (!searchShops) return;
+    if (isFirstLoad) {
+      setIsFirstLoad(false);
+      return;
+    }
     updateShops();
-    setSearchShops(false);
-  }, [searchShops]);
-  return { loading };
+  }, [router.query]);
 };
 export default useSearch;

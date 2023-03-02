@@ -24,7 +24,7 @@ type ShopState = {
     value: string;
     router: NextRouter;
   }) => void;
-  removeFilter: (key: string) => void;
+  removeFilter: ({ key, router }: { key: string; router: NextRouter }) => void;
   resetFilters: () => void;
 };
 
@@ -114,7 +114,8 @@ const useShops = create<ShopState>()((set, get) => ({
       query: { ...router.query, [key]: value },
     });
   },
-  removeFilter: (key) => {
+  removeFilter: ({ key, router }) => {
+    console.log("ckd");
     set((state) => {
       const filters = { ...state.filters };
       delete filters[key];
@@ -122,6 +123,11 @@ const useShops = create<ShopState>()((set, get) => ({
         ...state,
         filters,
       };
+    });
+    const { [key]: value, ...queryWithoutParam } = router.query;
+    void router.push({
+      pathname: router.pathname,
+      query: queryWithoutParam,
     });
   },
   resetFilters: () => {

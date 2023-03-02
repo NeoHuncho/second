@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { ArrowDown, ArrowUp } from "../../../../types/icons";
 import useShops from "../../../../stores/useShops";
+import { useDebouncedState } from "@mantine/hooks";
 
 interface DropDownInterface {
   setFilterText: (text: string) => void;
@@ -10,31 +11,84 @@ interface DropDownInterface {
 const PriceDropdown = ({ setFilterText }: DropDownInterface) => {
   const router = useRouter();
   const { filters, setFilters, removeFilter } = useShops();
+  const [firstLoadMin, setFirstLoadMin] = useState(true);
+  const [firstLoadMax, setFirstLoadMax] = useState(true);
+  const [priceMinDebounced, setPriceMinDebounced] = useDebouncedState(
+    filters.priceMin,
+    400
+  );
+  const [priceMaxDebounced, setPriceMaxDebounced] = useDebouncedState(
+    filters.priceMax,
+    400
+  );
+  const [priceMin, setPriceMin] = useState(filters.priceMin);
+  const [priceMax, setPriceMax] = useState(filters.priceMax);
 
   const onChange = (type: string, value: string) => {
-    if (!value) {
-      removeFilter(type);
-      if (type === "priceMin" && filters.priceMax)
-        return setFilterText(`min ${filters.priceMax}€`);
-      if (type === "priceMax" && filters.priceMin)
-        return setFilterText(`${filters.priceMin}€ max`);
-      else return setFilterText("Prix");
+    console.log(type, value);
+    if (!value) removeFilter({ key: type, router: router });
+    if (type === "priceMin") {
+      setPriceMinDebounced(value);
+      setPriceMin(value);
     }
+    if (type === "priceMax") {
+      setPriceMaxDebounced(value);
+      setPriceMax(value);
+    }
+    const hasMin = !!filters.priceMin;
+    const hasMax = !!filters.priceMax;
+    const hasValue = !!value;
 
-    if (type === "priceMin")
-      if (!filters.priceMax) setFilterText(`min ${value}€`);
-      else setFilterText(`${value}€ - ${filters.priceMax || ""}€`);
-    if (type === "priceMax")
-      if (!filters.priceMin) setFilterText(`${value}€ max`);
-      else setFilterText(`${filters.priceMin || ""}€ - ${value}€`);
+    switch (type) {
+      case "priceMin": {
+        if (!hasValue) {
+          const text = hasMax ? `min ${filters.priceMax as string}€` : "Prix";
+          setFilterText(text);
+        } else {
+          const text = hasMax
+            ? `${value}€ - ${filters.priceMax as string}€`
+            : `min ${value}€`;
+          setFilterText(text);
+        }
+        break;
+      }
 
-    setFilters({ key: type, value: value, router: router });
+      case "priceMax": {
+        if (!hasValue) {
+          const text = hasMin ? `${filters.priceMin as string}€ max` : "Prix";
+          setFilterText(text);
+        } else {
+          const text = hasMin
+            ? `${filters.priceMin as string}€ - ${value}€`
+            : `${value}€ max`;
+          setFilterText(text);
+        }
+        break;
+      }
+
+      default:
+        removeFilter({ key: type, router: router });
+        setFilterText("Prix");
+        break;
+    }
   };
+
+  useEffect(() => {
+    if (firstLoadMin) return setFirstLoadMin(false);
+    if (priceMinDebounced)
+      setFilters({ key: "priceMin", value: priceMinDebounced, router: router });
+  }, [priceMinDebounced]);
+
+  useEffect(() => {
+    if (firstLoadMax) return setFirstLoadMax(false);
+    if (priceMaxDebounced)
+      setFilters({ key: "priceMax", value: priceMaxDebounced, router: router });
+  }, [priceMaxDebounced]);
 
   return (
     <div className="flex flex-row gap-2">
       <TextInput
-        value={filters.priceMin}
+        value={priceMin}
         onChange={(e) =>
           (/^\d+$/.test(e.target.value) || e.target.value === "") &&
           onChange("priceMin", e.target.value)
@@ -43,7 +97,7 @@ const PriceDropdown = ({ setFilterText }: DropDownInterface) => {
         label="prix minimum"
       />
       <TextInput
-        value={filters.priceMax}
+        value={priceMax}
         onChange={(e) =>
           (/^\d+$/.test(e.target.value) || e.target.value === "") &&
           onChange("priceMax", e.target.value)
