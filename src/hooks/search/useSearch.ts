@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import type { Shops } from "../../types/types";
 import useShops from "../../stores/useShops";
+import defaultFilters from "../../static/defaultFilters";
 
 const useSearch = () => {
   const router = useRouter();
@@ -12,19 +13,17 @@ const useSearch = () => {
   const updateShops = () => {
     resetShops();
     Object.keys(shops).forEach((shop) => {
-      updateListings(shop as Shops)
-        .then(() => {
-          console.log("updated listings");
-        })
-        .catch((err) => console.log(err));
+      void updateListings(shop as Shops);
     });
   };
 
   useEffect(() => {
-    if (!router.query?.sort) setSort("recommended", router);
+    if (!window.location.search.includes("sort"))
+      setSort("recommended", router);
     if (
-      !Object.keys(router.query).includes("priceMin") &&
-      !Object.keys(router.query).includes("priceMax")
+      Object.keys(defaultFilters).every(
+        (key) => window.location.search.includes(key) === false
+      )
     )
       resetFilters();
     if (isFirstLoad) {

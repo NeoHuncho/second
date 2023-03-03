@@ -2,9 +2,10 @@ import type { Shop, Shops, Sorts } from "../types/types";
 import { create } from "zustand";
 import axios from "axios";
 import type { ShopRes } from "../types/api/shopsRes";
-import formatStoreUrl from "../utils/formatStoreUrl";
+import formatStoreUrl from "../utils/url/formatStoreUrl";
 import { defaultShops } from "../static/defaultShops";
 import type { NextRouter } from "next/router";
+import getFiltersFromUrl from "../utils/url/getFiltersFromUrl";
 
 type ShopState = {
   shops: {
@@ -37,10 +38,14 @@ const useShops = create<ShopState>()((set, get) => ({
     ((typeof window !== "undefined" &&
       new URLSearchParams(window.location.search).get("sort")) as Sorts) ||
     "recommended",
-  filters: {},
+  filters:
+    typeof window !== "undefined"
+      ? getFiltersFromUrl(window.location.search)
+      : {},
   updateListings: async (shop: Shops) => {
     const { listings, page, name } = get().shops[shop];
     const url = formatStoreUrl({ store: name, page: page + 1 });
+
     if (!url) return;
     if (page + 1 > 1) {
       set((state) => ({
@@ -67,7 +72,10 @@ const useShops = create<ShopState>()((set, get) => ({
         },
       }));
 
-    const newListings = [...listings, ...response.data.listings];
+    const newListings =
+      page === 1
+        ? response.data.listings
+        : [...listings, ...response.data.listings];
     set((state) => ({
       ...state,
       shops: {
@@ -115,7 +123,6 @@ const useShops = create<ShopState>()((set, get) => ({
     });
   },
   removeFilter: ({ key, router }) => {
-    console.log("ckd");
     set((state) => {
       const filters = { ...state.filters };
       delete filters[key];

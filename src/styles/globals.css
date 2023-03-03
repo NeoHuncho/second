@@ -10,7 +10,10 @@
   body {
     height: calc(var(--vh, 1vh) * 100);
   }
-
+  html,
+  body {
+    overscroll-behavior-y: contain;
+  }
   /* Define the variable */
   :root {
     --vh: 1vh;

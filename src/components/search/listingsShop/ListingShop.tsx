@@ -10,7 +10,6 @@ import useCarousel from "../../../hooks/carousel/useCarousel";
 import { Loader, Text } from "@mantine/core";
 import useShops from "../../../stores/useShops";
 import SwipperNavButton from "./sub/SwipperNavButton";
-import { useState } from "react";
 
 interface Props {
   shop: Shop;

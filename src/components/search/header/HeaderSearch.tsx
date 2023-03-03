@@ -1,4 +1,4 @@
-import FiltersListing from "./sub/FiltersListing";
+import FiltersListing from "./filters/FiltersListing";
 import SearchTerm from "./sub/SearchedTerm";
 import SortListings from "./sub/SortListings";
 

@@ -14,6 +14,7 @@ const useCarousel = (shop: Shops) => {
     listings,
     name: shopName,
     hasFetchedAll,
+    status,
   } = useShops((state) => state.shops[shop]);
   const [slidesPerView, setSlidesPerView] = useState(0);
   const [slides, setSlides] = useState([] as ShopListing[]);
@@ -23,7 +24,7 @@ const useCarousel = (shop: Shops) => {
   const swiperRef = useRef<Swiper>();
   useEffect(() => {
     setLoadingNewSlides(false);
-
+    if (status === "loading") return;
     if (slides.length) {
       return setSlides([
         ...slides,
