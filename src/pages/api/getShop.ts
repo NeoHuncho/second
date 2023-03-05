@@ -6,6 +6,8 @@ import formatQueriesToStoreUrl from "../../../backend/utils/parseUrl/formatQueri
 
 import parseLeboncoin from "../../../backend/utils/parseUrl/shops/parseLeboncoin";
 import parseVinted from "../../../backend/utils/parseUrl/shops/parseVinted";
+import getStaticShop from "../../../backend/utils/static/getStaticShop";
+import type { ShopName } from "../../../common/types/types";
 
 export default async function handler(
   request: NextApiRequest,
@@ -31,27 +33,28 @@ export default async function handler(
   const formattedStoreUrl = formatQueriesToStoreUrl(
     request.query as Partial<{ [key: string]: string }>
   );
-  let res = null;
+
+  let res = "";
   if (env.NODE_ENV === "production")
     res = await getWebsiteScrape(formattedStoreUrl);
-  else {
-    if (request.query.shop === "Leboncoin")
-      res = await readFile("backend/static/shops/leboncoin.txt", {
-        encoding: "utf8",
-      });
-    else
-      res = await readFile("backend/static/shops/vinted.txt", {
-        encoding: "utf8",
-      });
-  }
+  else res = await getStaticShop(request.query.shop as ShopName);
+
+  //! TODO why does vinted have the sort and not leboncoin?
+  const formatListings = (shopName: ShopName) => {
+    switch (shopName) {
+      case "Leboncoin":
+        return parseLeboncoin(res);
+      case "Vinted":
+        return parseVinted(res, request.query.sort as string | undefined);
+      default:
+        return [];
+    }
+  };
 
   response.status(200).json({
     query: request.query,
     cookies: request.cookies,
-    listings:
-      request.query.shop === "Leboncoin"
-        ? parseLeboncoin(res)
-        : parseVinted(res, request.query.sort as string | undefined),
+    listings: formatListings(request.query.shop as ShopName),
     url: formattedStoreUrl,
   });
 }

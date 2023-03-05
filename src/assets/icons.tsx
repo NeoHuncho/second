@@ -11,6 +11,7 @@ export type IconProps = {
   className?: string;
   onClick?: () => void;
   color?: string;
+  style?: React.CSSProperties;
 };
 
 export type IconType = React.FC<IconProps & { name: keyof typeof icons }>;

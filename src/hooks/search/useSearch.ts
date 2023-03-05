@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import type { Shops } from "../../types/types";
 import useShops from "../../stores/useShops";
 import defaultFilters from "../../static/defaultFilters";
+import type { ShopName } from "../../../common/types/types";
 
 const useSearch = () => {
   const router = useRouter();
@@ -13,7 +13,7 @@ const useSearch = () => {
   const updateShops = () => {
     resetShops();
     Object.keys(shops).forEach((shop) => {
-      void updateListings(shop as Shops);
+      void updateListings(shop as ShopName);
     });
   };
 

@@ -1,4 +1,4 @@
-import type { Shop, Shops, Sorts } from "../types/types";
+import type { Shop, Sort } from "../types/types";
 import { create } from "zustand";
 import axios from "axios";
 import type { ShopRes } from "../types/api/shopsRes";
@@ -6,17 +6,16 @@ import formatStoreUrl from "../utils/url/formatStoreUrl";
 import { defaultShops } from "../static/defaultShops";
 import type { NextRouter } from "next/router";
 import getFiltersFromUrl from "../utils/url/getFiltersFromUrl";
+import type { ShopName } from "../../common/types/types";
+import { Shops } from "../../common/types/keys";
 
 type ShopState = {
-  shops: {
-    Vinted: Shop;
-    Leboncoin: Shop;
-  };
-  sort: Sorts;
+  shops: Record<ShopName, Shop>;
+  sort: Sort;
   filters: Record<string, string>;
-  updateListings: (shop: Shops) => Promise<void>;
+  updateListings: (shop: ShopName) => Promise<void>;
   resetShops: () => void;
-  setSort: (sort: Sorts, router: NextRouter) => void;
+  setSort: (sort: Sort, router: NextRouter) => void;
   setFilters: ({
     key,
     value,
@@ -27,27 +26,24 @@ type ShopState = {
   }) => void;
   removeFilter: ({ key, router }: { key: string; router: NextRouter }) => void;
   resetFilters: () => void;
-  lastListingUpdate: Record<Shops, number>;
+  lastListingUpdate: Record<ShopName, number>;
 };
 
 const useShops = create<ShopState>()((set, get) => ({
-  shops: {
-    Leboncoin: defaultShops.Leboncoin,
-    Vinted: defaultShops.Vinted,
-  },
+  shops: defaultShops,
   sort:
     ((typeof window !== "undefined" &&
-      new URLSearchParams(window.location.search).get("sort")) as Sorts) ||
+      new URLSearchParams(window.location.search).get("sort")) as Sort) ||
     "recommended",
   filters:
     typeof window !== "undefined"
       ? getFiltersFromUrl(window.location.search)
       : {},
-  lastListingUpdate: {
-    Leboncoin: 0,
-    Vinted: 0,
-  },
-  updateListings: async (shop: Shops) => {
+  lastListingUpdate: Object.keys(Shops).reduce(
+    (acc, shop) => ({ ...acc, [shop]: 0 }),
+    {}
+  ) as Record<ShopName, number>,
+  updateListings: async (shop: ShopName) => {
     const { listings, page, name } = get().shops[shop];
     const url = formatStoreUrl({ store: name, page: page + 1 });
     const currentDate = Date.now();
@@ -140,10 +136,7 @@ const useShops = create<ShopState>()((set, get) => ({
   resetShops: () => {
     set((state) => ({
       ...state,
-      shops: {
-        Leboncoin: defaultShops.Leboncoin,
-        Vinted: defaultShops.Vinted,
-      },
+      shops: defaultShops,
     }));
   },
   setSort: (sort, router) => {

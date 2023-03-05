@@ -2,20 +2,18 @@ import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import type Swiper from "swiper";
 import defaultListing from "../../static/defaultListing";
-import type { ShopListing, Shops } from "../../types/types";
+import type { ShopListing } from "../../types/types";
 import useShops from "../../stores/useShops";
 import useBreakpoints from "../ui/useBreakpoints";
+import type { ShopName } from "../../../common/types/types";
 
-const useCarousel = (shop: Shops) => {
+const useCarousel = (shop: ShopName) => {
   const router = useRouter();
   const breakpoints = useBreakpoints();
   const { updateListings } = useShops();
-  const {
-    listings,
-    name: shopName,
-    hasFetchedAll,
-    status,
-  } = useShops((state) => state.shops[shop]);
+  const { listings, name, hasFetchedAll, status } = useShops(
+    (state) => state.shops[shop]
+  );
   const [slidesPerView, setSlidesPerView] = useState(0);
   const [slides, setSlides] = useState([] as ShopListing[]);
   const [lastTouchDiff, setLastTouchDiff] = useState(0);
@@ -60,7 +58,7 @@ const useCarousel = (shop: Shops) => {
       if (hasFetchedAll) return;
       if (!loadingNewSlides) {
         setLoadingNewSlides(true);
-        void updateListings(shopName);
+        void updateListings(name);
       }
     }
     if (currentIndex > slides.length - 9) {

@@ -5,13 +5,13 @@ import { useState } from "react";
 import defaultSorts from "../../../../static/defaultSorts";
 
 import useShops from "../../../../stores/useShops";
-import type { Sorts } from "../../../../types/types";
+import type { Sort } from "../../../../types/types";
 
 const SortListings = () => {
   const router = useRouter();
   const { sort, setSort } = useShops();
   const [menuOpened, setMenuOpened] = useState(false);
-  const handleSortChange = (sort: Sorts) => {
+  const handleSortChange = (sort: Sort) => {
     setSort(sort, router);
     setMenuOpened(false);
   };

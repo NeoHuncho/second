@@ -1,11 +1,12 @@
 import type { StaticImageData } from "next/image";
+import type { ShopName } from "../../common/types/types";
 
 export type Shop = {
-  name: Shops;
+  name: ShopName;
   color: string;
   image: StaticImageData;
   listings: ShopListing[];
-  status: LoadingTypes;
+  status: LoadingStatus;
   page: number;
   hasFetchedAll: boolean;
   loadingNextPage: boolean;
@@ -40,9 +41,8 @@ interface Attribute {
   values: string[];
 }
 
-export type Shops = "Vinted" | "Leboncoin";
-export type LoadingTypes = "success" | "error" | "loading" | "no_results";
-export type Sorts =
+export type LoadingStatus = "success" | "error" | "loading" | "no_results";
+export type Sort =
   | "recommended"
   | "price_asc"
   | "price_desc"

@@ -1,7 +1,7 @@
-import type { Sorts } from "../types/types";
+import type { Sort } from "../types/types";
 
 type Type = {
-  [key in Sorts]: string;
+  [key in Sort]: string;
 };
 const defaultSorts: Type = {
   recommended: "Pertinence",

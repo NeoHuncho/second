@@ -1,4 +1,4 @@
-import type { Shops } from "../../../src/types/types";
+import type { ShopName } from "../../../common/types/types";
 import formatLeboncoin from "./formatStoreUrl/stores/formatLeboncoin";
 import formatVinted from "./formatStoreUrl/stores/formatVinted";
 
@@ -12,7 +12,7 @@ export type formatStoreParams = {
 
 const formatQueriesToStoreUrl = (query: Partial<{ [key: string]: string }>) => {
   const params = {
-    shop: query.shop as Shops,
+    shop: query.shop as ShopName,
     text: query.query as string,
     page: query.page as string,
     sort: query.sort,
