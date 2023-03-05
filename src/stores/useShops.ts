@@ -72,17 +72,31 @@ const useShops = create<ShopState>()((set, get) => ({
       },
     }));
 
-    const response = await axios.get<ShopRes>(url).catch((err) => {
-      return set((state) => ({
-        ...state,
-        shops: {
-          ...state.shops,
-          [shop]: {
-            ...state.shops[shop],
-            status: "error",
+    const response = await axios.get<ShopRes>(url).catch(() => {
+      return set((state) => {
+        if (currentDate < get().lastListingUpdate[shop]) return state;
+        if (page + 1 === 1)
+          return {
+            ...state,
+            shops: {
+              ...state.shops,
+              [shop]: {
+                ...state.shops[shop],
+                status: "error",
+              },
+            },
+          };
+        return {
+          ...state,
+          shops: {
+            ...state.shops,
+            [shop]: {
+              ...state.shops[shop],
+              hasFetchedAll: true,
+            },
           },
-        },
-      }));
+        };
+      });
     });
     if (!response) return;
     if (currentDate < get().lastListingUpdate[shop]) return;
