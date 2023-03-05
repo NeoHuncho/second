@@ -1,5 +1,5 @@
 import { ActionIcon } from "@mantine/core";
-import { BackIcon, ForwardIcon } from "../../../../types/icons";
+import { Icon } from "../../../../assets/icons";
 
 type Props = {
   type: "prev" | "next";
@@ -15,7 +15,11 @@ const SwipperNavButton = (props: Props) => {
         type === "prev" ? "left-4" : "right-4"
       }`}
     >
-      {type === "prev" ? <BackIcon size={50} /> : <ForwardIcon size={50} />}
+      {type === "prev" ? (
+        <Icon name="OutlineArrowLeft" size={50} color="white" />
+      ) : (
+        <Icon name="OutlineArrowRight" size={50} color="white" />
+      )}
     </ActionIcon>
   );
 };

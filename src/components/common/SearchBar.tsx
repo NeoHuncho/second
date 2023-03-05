@@ -1,8 +1,12 @@
 import type { MantineSize } from "@mantine/core";
 import { Popover, Text, TextInput } from "@mantine/core";
 import { getHotkeyHandler, useMediaQuery } from "@mantine/hooks";
-import { SearchIcon } from "../../types/icons";
+import { useState } from "react";
+import { Icon } from "../../assets/icons";
 import useCompletion from "../../hooks/completion/useCompletion";
+import useBreakpoints from "../../hooks/ui/useBreakpoints";
+import useColorScheme from "../../hooks/ui/useColorTheme";
+import Searchitem from "./SearchItem";
 
 type PropTypes = {
   size?: MantineSize;
@@ -10,7 +14,8 @@ type PropTypes = {
 };
 
 const SearchBar = ({ size = "md", inputClassName }: PropTypes) => {
-  const smallBreakout = useMediaQuery("(min-width: 640px)");
+  const { isMobile } = useBreakpoints();
+
   const {
     completionResults,
     setDebouncedSearchTerm,
@@ -24,13 +29,7 @@ const SearchBar = ({ size = "md", inputClassName }: PropTypes) => {
   return (
     <Popover
       width={
-        size === "lg"
-          ? smallBreakout
-            ? "35%"
-            : "80%"
-          : smallBreakout
-          ? "25%"
-          : "60%"
+        size === "lg" ? (!isMobile ? "35%" : "80%") : !isMobile ? "25%" : "60%"
       }
       opened={!!completionResults.length && inputInFocus}
       position="bottom"
@@ -47,7 +46,8 @@ const SearchBar = ({ size = "md", inputClassName }: PropTypes) => {
           className={inputClassName || "w-full"}
           onKeyDown={getHotkeyHandler([["Enter", () => onSubmit()]])}
           rightSection={
-            <SearchIcon
+            <Icon
+              name="OutlineSearch"
               onClick={() => onSubmit()}
               className="mr-3 cursor-pointer"
               size={size === "lg" ? 32 : 25}
@@ -63,15 +63,7 @@ const SearchBar = ({ size = "md", inputClassName }: PropTypes) => {
       <Popover.Dropdown>
         <div className="flex flex-col ">
           {completionResults.map((product, index) => (
-            <div
-              key={index}
-              className="flex cursor-pointer flex-col gap-2 py-1 hover:bg-slate-50"
-              onClick={() => {
-                onSubmit(product.value);
-              }}
-            >
-              <Text>{product.value}</Text>
-            </div>
+            <Searchitem key={index} text={product.value} onSubmit={onSubmit} />
           ))}
         </div>
       </Popover.Dropdown>

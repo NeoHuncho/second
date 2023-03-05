@@ -10,8 +10,6 @@ import {
 
 import useSignIn from "../../hooks/account/useSignIn";
 
-import { GoogleIcon } from "../../types/icons";
-import { FacebookIcon } from "../../types/icons";
 import ProviderButton from "./sub/ProviderButton";
 import { useSession } from "next-auth/react";
 interface SignInModalProps {
@@ -37,13 +35,13 @@ export default function SignInModal({ onClose, opened }: SignInModalProps) {
     >
       <div className={`flex items-center gap-5`}>
         <ProviderButton
-          Icon={FacebookIcon}
+          iconName="FillFacebook"
           name="Facebook"
           color="rgb(30 64 175)"
           onClick={handleFacebookSignIn}
         />
         <ProviderButton
-          Icon={GoogleIcon}
+          iconName="FillGoogleSquare"
           name="Google"
           color="rgb(220 38 38)"
           onClick={handleGoogleSignIn}

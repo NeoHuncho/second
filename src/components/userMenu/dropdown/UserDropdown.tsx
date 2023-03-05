@@ -1,7 +1,7 @@
 import { Switch, Text } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
 import { signOut } from "next-auth/react";
-import { LogOut, MoonIcon } from "../../../types/icons";
+import { Icon } from "../../../assets/icons";
 
 const UserDropdown = () => {
   const onSignOut = () => {
@@ -15,7 +15,7 @@ const UserDropdown = () => {
     <div className="flex w-max flex-col  gap-3 px-3 py-1">
       <div className="flex cursor-pointer items-center justify-between gap-4 ">
         <div className="flex  items-center gap-2">
-          <MoonIcon />
+          <Icon name="MoonFill" />
           <Text>Dark Mode</Text>
         </div>
         <Switch
@@ -31,7 +31,7 @@ const UserDropdown = () => {
         onClick={onSignOut}
         className="flex cursor-pointer items-center gap-2"
       >
-        <LogOut color="black" />
+        <Icon name="SignOutAlt" />
         <Text>Se déconnecter</Text>
       </div>
     </div>

@@ -4,7 +4,6 @@ import SearchBar from "./common/SearchBar";
 import logo from "../assets/logo/logo_text_black.png";
 import logoDark from "../assets/logo/logo_text.png";
 import UserMenu from "./userMenu/UserMenu";
-import { useSession } from "next-auth/react";
 import { useLocalStorage } from "@mantine/hooks";
 const AppHeader = () => {
   const router = useRouter();

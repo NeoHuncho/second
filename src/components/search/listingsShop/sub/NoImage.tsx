@@ -1,6 +1,5 @@
 import { Text } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
-import { ImageIcon } from "../../../../types/icons";
+import { Icon } from "../../../../assets/icons";
 
 export default function NoImage() {
   return (
@@ -8,7 +7,7 @@ export default function NoImage() {
       style={{ height: 230 }}
       className="flex w-full flex-col items-center justify-center"
     >
-      <ImageIcon size={30} />
+      <Icon name="FillFileImage" size={30} />
       <Text className="text-center text-sm">Aucune image</Text>
     </div>
   );

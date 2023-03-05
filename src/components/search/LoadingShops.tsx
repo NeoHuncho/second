@@ -2,7 +2,8 @@ import { Card, Loader } from "@mantine/core";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { appearMotion } from "../../animate/Animate";
-import { CheckIcon, CrossIcon, ErrorIcon } from "../../types/icons";
+import { Icon } from "../../assets/icons";
+
 import type { Shop } from "../../types/types";
 
 type Props = {
@@ -35,7 +36,7 @@ const LoadingShops = ({ values }: Props) => {
                   className="flex items-center justify-center"
                   {...appearMotion}
                 >
-                  <CheckIcon color="green" size={35} />
+                  <Icon name="FillCheckCircle" color="green" size={35} />
                 </motion.div>
               ) : value.status === "no_results" ? (
                 <motion.div
@@ -43,14 +44,14 @@ const LoadingShops = ({ values }: Props) => {
                   className="flex items-center justify-center"
                   {...appearMotion}
                 >
-                  <CrossIcon size={35} />
+                  <Icon name="Error" size={35} />
                 </motion.div>
               ) : (
                 <motion.div
                   className="flex items-center justify-center"
                   {...appearMotion}
                 >
-                  <ErrorIcon size={35} />
+                  <Icon name="FillWarning" size={35} />
                 </motion.div>
               )}
             </div>

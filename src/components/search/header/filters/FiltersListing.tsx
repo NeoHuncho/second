@@ -1,8 +1,9 @@
 import { Badge, Popover, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { Icon } from "../../../../assets/icons";
 import useShops from "../../../../stores/useShops";
-import { ArrowDown, ArrowUp } from "../../../../types/icons";
+
 import priceText from "../../../../utils/filterText/priceText";
 import PriceDropdown from "./filter/Price";
 
@@ -42,10 +43,15 @@ const Filter = ({ text, DropDown, keys }: FilterProps) => {
               {filterText}
             </Text>
             {opened ? (
-              <ArrowUp color={text === "Prix" ? "black" : "white"} size={15} />
+              <Icon
+                name={"FillCaretDown"}
+                color={text === "Prix" ? undefined : "white"}
+                size={15}
+              />
             ) : (
-              <ArrowDown
-                color={text === "Prix" ? "black" : "white"}
+              <Icon
+                name={"FillCaretUp"}
+                color={text === "Prix" ? undefined : "white"}
                 size={15}
               />
             )}

@@ -1,14 +1,15 @@
 import { Text } from "@mantine/core";
 import { useState } from "react";
-import type { Icon } from "../../../types/icons";
+import type { IconNames } from "../../../assets/icons";
+import { Icon } from "../../../assets/icons";
 
 type Props = {
   color: string;
-  Icon: Icon;
   name: string;
   onClick: () => void;
+  iconName: IconNames;
 };
-const ProviderButton = ({ color, Icon, name, onClick }: Props) => {
+const ProviderButton = ({ color, iconName, name, onClick }: Props) => {
   const [onHover, setOnHover] = useState(false);
   const nameContainerStyle = {
     backgroundColor: onHover ? color : "white",
@@ -24,7 +25,7 @@ const ProviderButton = ({ color, Icon, name, onClick }: Props) => {
         style={{ backgroundColor: color }}
         className="flex h-10 w-11 items-center justify-center rounded-l-md py-1.5"
       >
-        <Icon size={20} />
+        <Icon name={iconName} size={20} />
       </div>
       <Text
         onMouseOver={() => setOnHover(true)}

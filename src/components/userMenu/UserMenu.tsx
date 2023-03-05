@@ -2,7 +2,6 @@ import { Menu, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { UserIcon } from "../../types/icons";
 import IconAndLabel from "../header/IconAndLabel";
 import SignInModal from "../logIn/SignInModal";
 import UserDropdown from "./dropdown/UserDropdown";
@@ -16,7 +15,7 @@ const UserMenu = () => {
     return (
       <>
         <IconAndLabel
-          Icon={UserIcon}
+          iconName="OutlineUser"
           label="connexion"
           onClick={modalControls.open}
         />
@@ -39,7 +38,7 @@ const UserMenu = () => {
               />
               <Text
                 color={"black"}
-                className="-mt-2 bg-white"
+                className="-mt-2 rounded-md bg-white px-1"
                 weight={600}
                 size="xs"
               >
@@ -47,7 +46,7 @@ const UserMenu = () => {
               </Text>
             </>
           ) : (
-            <IconAndLabel Icon={UserIcon} label="profil" />
+            <IconAndLabel iconName="OutlineUser" label="profil" />
           )}
         </div>
       </Menu.Target>

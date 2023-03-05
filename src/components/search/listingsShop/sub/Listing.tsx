@@ -1,12 +1,6 @@
-import { Button, Card, Image, Loader, Text, Title } from "@mantine/core";
-import {
-  ClothesIcon,
-  DeliveryIcon,
-  EyeIcon,
-  LinkIcon,
-} from "../../../../types/icons";
-import useCarousel from "../../../../hooks/carousel/useCarousel";
-import type { ShopListing, Shops } from "../../../../types/types";
+import { Card, Image, Text, Title } from "@mantine/core";
+import { Icon } from "../../../../assets/icons";
+import type { ShopListing } from "../../../../types/types";
 import parsePrice from "../../../../utils/parsePrice";
 import NoImage from "./NoImage";
 
@@ -51,7 +45,7 @@ const Listing = ({ listing, isScrolling }: Props) => {
         ) : (
           <NoImage />
         )}
-        <Title className="absolute right-0 -mt-7 rounded-tl-lg bg-white px-2 text-xl">
+        <Title className="absolute right-0 -mt-7 rounded-tl-lg bg-white px-2 text-xl text-black">
           {parsePrice(listing.price)}
         </Title>
       </Card.Section>
@@ -67,7 +61,7 @@ const Listing = ({ listing, isScrolling }: Props) => {
           <div style={{ minHeight: 40 }}>
             {listing.condition ? (
               <div className="flex items-center gap-1">
-                <EyeIcon className="mt-0.5" />
+                <Icon name="OutlineEye" className="mt-0.5" />
                 <Text lineClamp={1} className=" mt-1 text-xs ">
                   {listing.condition}
                 </Text>
@@ -75,14 +69,14 @@ const Listing = ({ listing, isScrolling }: Props) => {
             ) : null}
             {listing.size ? (
               <div className="flex items-center gap-1">
-                <ClothesIcon className="mt-0.5" />
+                <Icon name="Clothes" className="mt-0.5" />
                 <Text lineClamp={1} className=" mt-1 text-xs ">
                   {listing.size}
                 </Text>
               </div>
             ) : null}
             <div className="flex items-center gap-1">
-              <DeliveryIcon className="mt-0.5" />
+              <Icon name="TruckDelivery" className="mt-0.5" />
               <Text lineClamp={1} className=" mt-1 text-xs ">
                 {listing.shippable ? "Livraison possible" : "Pas de livraison"}
               </Text>
