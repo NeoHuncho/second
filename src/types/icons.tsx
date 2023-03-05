@@ -18,7 +18,7 @@ import { VscError } from "react-icons/vsc";
 import { TbTruckDelivery } from "react-icons/tb";
 import { GiClothes } from "react-icons/gi";
 import { FaSignOutAlt } from "react-icons/fa";
-
+import { BsMoonFill } from "react-icons/bs";
 export const SearchIcon = ({ size, className, onClick }: IconProps) => (
   <AiOutlineSearch className={className} size={size} onClick={onClick} />
 );
@@ -167,6 +167,15 @@ export const ArrowDown = ({ size, className, onClick, color }: IconProps) => (
 
 export const ArrowUp = ({ size, className, onClick, color }: IconProps) => (
   <AiFillCaretUp
+    className={className}
+    size={size}
+    onClick={onClick}
+    color={color || "white"}
+  />
+);
+
+export const MoonIcon = ({ size, className, onClick, color }: IconProps) => (
+  <BsMoonFill
     className={className}
     size={size}
     onClick={onClick}

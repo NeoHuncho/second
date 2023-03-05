@@ -38,7 +38,7 @@ const Filter = ({ text, DropDown, keys }: FilterProps) => {
           size="lg"
         >
           <div className="flex flex-row items-center gap-1">
-            <Text color={text === "Prix" ? "black" : "white"} align="center">
+            <Text color={text === "Prix" ? undefined : "white"} align="center">
               {filterText}
             </Text>
             {opened ? (

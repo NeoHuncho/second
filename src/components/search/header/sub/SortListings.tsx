@@ -25,14 +25,14 @@ const SortListings = () => {
       <Menu.Target>
         <Button
           className="w-44 p-0 sm:h-12"
-           color="secondary"
+          color="secondary"
           variant="outline"
         >
           <div className="align-center flex justify-center gap-1 sm:flex-col sm:gap-0">
-            <Text weight={300} color="black" align="center">
+            <Text weight={400} align="center">
               Trier par
             </Text>
-            <Text align="center" weight={700}>
+            <Text align="center" weight={800}>
               {defaultSorts[sort]}
             </Text>
           </div>

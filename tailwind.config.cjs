@@ -4,7 +4,9 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        "background-landing": "url('~/src/assets/images/background-landing-min.jpg')",
+        landing: "url('~/src/assets/images/background-landing-min.jpg')",
+        "landing-dark":
+          "url('~/src/assets/images/background-landing-dark-min.jpg')",
       },
       gridTemplateColumns: {
         mobileHeader: "1fr 3fr 1fr ",

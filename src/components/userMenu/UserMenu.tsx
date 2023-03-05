@@ -1,19 +1,17 @@
-import { ActionIcon, Menu, Text } from "@mantine/core";
+import { Menu, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { LogOut, UserIcon } from "../../types/icons";
+import { UserIcon } from "../../types/icons";
 import IconAndLabel from "../header/IconAndLabel";
 import SignInModal from "../logIn/SignInModal";
+import UserDropdown from "./dropdown/UserDropdown";
 
 const UserMenu = () => {
   const [opened, modalControls] = useDisclosure(false);
   const { status, data } = useSession();
   const userImage = data?.user?.image;
 
-  const onSignOut = () => {
-    void signOut({ redirect: false });
-  };
   if (status !== "authenticated")
     return (
       <>
@@ -54,13 +52,7 @@ const UserMenu = () => {
         </div>
       </Menu.Target>
       <Menu.Dropdown>
-        <div
-          onClick={onSignOut}
-          className="flex cursor-pointer items-center gap-2"
-        >
-          <LogOut color="black" />
-          <Text>Se déconnecter</Text>
-        </div>
+        <UserDropdown />
       </Menu.Dropdown>
     </Menu>
   );

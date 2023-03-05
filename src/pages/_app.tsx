@@ -9,6 +9,7 @@ import { AppShell, Header, MantineProvider } from "@mantine/core";
 import { useRouter } from "next/router";
 import AppHeader from "../components/AppHeader";
 import { useEffect, useState } from "react";
+import { useLocalStorage } from "@mantine/hooks";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -16,7 +17,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   const router = useRouter();
   const [hasLoaded, setHasLoaded] = useState(false);
-
+  const [theme] = useLocalStorage({
+    key: "color-scheme",
+  });
   //fix to fix the issue of the page flashing before the session is loaded
   useEffect(() => {
     setHasLoaded(true);
@@ -28,6 +31,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
           withGlobalStyles
           withNormalizeCSS
           theme={{
+            colorScheme: theme === "dark" ? "dark" : "light",
             colors: {
               ...colors,
             },

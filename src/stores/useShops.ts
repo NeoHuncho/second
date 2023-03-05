@@ -27,6 +27,7 @@ type ShopState = {
   }) => void;
   removeFilter: ({ key, router }: { key: string; router: NextRouter }) => void;
   resetFilters: () => void;
+  lastListingUpdate: Record<Shops, number>;
 };
 
 const useShops = create<ShopState>()((set, get) => ({
@@ -42,10 +43,14 @@ const useShops = create<ShopState>()((set, get) => ({
     typeof window !== "undefined"
       ? getFiltersFromUrl(window.location.search)
       : {},
+  lastListingUpdate: {
+    Leboncoin: 0,
+    Vinted: 0,
+  },
   updateListings: async (shop: Shops) => {
     const { listings, page, name } = get().shops[shop];
     const url = formatStoreUrl({ store: name, page: page + 1 });
-
+    const currentDate = Date.now();
     if (!url) return;
     if (page + 1 > 1) {
       set((state) => ({
@@ -59,7 +64,35 @@ const useShops = create<ShopState>()((set, get) => ({
         },
       }));
     }
-    const response = await axios.get<ShopRes>(url);
+    set((state) => ({
+      ...state,
+      lastListingUpdate: {
+        ...state.lastListingUpdate,
+        [shop]: currentDate,
+      },
+    }));
+
+    const response = await axios.get<ShopRes>(url).catch((err) => {
+      return set((state) => ({
+        ...state,
+        shops: {
+          ...state.shops,
+          [shop]: {
+            ...state.shops[shop],
+            status: "error",
+          },
+        },
+      }));
+    });
+    if (!response) return;
+    if (currentDate < get().lastListingUpdate[shop]) return;
+    set((state) => ({
+      ...state,
+      lastListingUpdate: {
+        ...state.lastListingUpdate,
+        [shop]: currentDate,
+      },
+    }));
     if (!listings.length && !response.data.listings.length)
       return set((state) => ({
         ...state,
@@ -71,9 +104,8 @@ const useShops = create<ShopState>()((set, get) => ({
           },
         },
       }));
-
     const newListings =
-      page === 1
+      page === 0
         ? response.data.listings
         : [...listings, ...response.data.listings];
     set((state) => ({
