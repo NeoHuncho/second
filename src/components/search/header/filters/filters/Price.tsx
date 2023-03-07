@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import useShops from "../../../../../stores/useShops";
 import { useDebouncedState } from "@mantine/hooks";
 import priceText from "../../../../../utils/filterText/priceText";
+import { Filters } from "../../../../../../common/types/keys";
 
 const PriceDropdown = ({ setFilterText }: DropDownInterface) => {
   const router = useRouter();
@@ -57,7 +58,7 @@ const PriceDropdown = ({ setFilterText }: DropDownInterface) => {
           onChange("priceMin", e.target.value)
         }
         className="w-32"
-        label="prix minimum"
+        label={Filters.priceMin}
       />
       <TextInput
         value={priceMax}
@@ -66,7 +67,7 @@ const PriceDropdown = ({ setFilterText }: DropDownInterface) => {
           onChange("priceMax", e.target.value)
         }
         className="w-32"
-        label="prix maximum"
+        label={Filters.priceMax}
       />
     </div>
   );

@@ -2,7 +2,7 @@ import { Button, Menu, Text } from "@mantine/core";
 
 import { useRouter } from "next/router";
 import { useState } from "react";
-import defaultSorts from "../../../../static/defaultSorts";
+import { Sorts } from "../../../../../common/types/keys";
 
 import useShops from "../../../../stores/useShops";
 import type { Sort } from "../../../../types/types";
@@ -33,7 +33,7 @@ const SortListings = () => {
               Trier par
             </Text>
             <Text align="center" weight={800}>
-              {defaultSorts[sort]}
+              {Sorts[sort]}
             </Text>
           </div>
         </Button>

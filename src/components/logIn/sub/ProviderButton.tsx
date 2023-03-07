@@ -25,7 +25,7 @@ const ProviderButton = ({ color, iconName, name, onClick }: Props) => {
         style={{ backgroundColor: color }}
         className="flex h-10 w-11 items-center justify-center rounded-l-md py-1.5"
       >
-        <Icon name={iconName} size={20} />
+        <Icon name={iconName} color="white" size={20} />
       </div>
       <Text
         onMouseOver={() => setOnHover(true)}

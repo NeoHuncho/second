@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useShops from "../../stores/useShops";
-import defaultFilters from "../../static/defaultFilters";
 import type { ShopName } from "../../../common/types/types";
+import { Filters } from "../../../common/types/keys";
 
 const useSearch = () => {
   const router = useRouter();
@@ -21,7 +21,7 @@ const useSearch = () => {
     if (!window.location.search.includes("sort"))
       setSort("recommended", router);
     if (
-      Object.keys(defaultFilters).every(
+      Object.keys(Filters).every(
         (key) => window.location.search.includes(key) === false
       )
     )

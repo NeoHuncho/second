@@ -6,7 +6,7 @@ import formatQueriesToStoreUrl from "../../../backend/utils/parseUrl/formatQueri
 
 import parseLeboncoin from "../../../backend/utils/parseUrl/shops/parseLeboncoin";
 import parseVinted from "../../../backend/utils/parseUrl/shops/parseVinted";
-import getStaticShop from "../../../backend/utils/static/getStaticShop";
+import getStaticListings from "../../../backend/utils/static/getStaticListings";
 import type { ShopName } from "../../../common/types/types";
 
 export default async function handler(
@@ -37,13 +37,13 @@ export default async function handler(
   let res = "";
   if (env.NODE_ENV === "production")
     res = await getWebsiteScrape(formattedStoreUrl);
-  else res = await getStaticShop(request.query.shop as ShopName);
+  else res = await getStaticListings(request.query.shop as ShopName);
 
-  //! TODO why does vinted have the sort and not leboncoin?
   const formatListings = (shopName: ShopName) => {
     switch (shopName) {
       case "Leboncoin":
         return parseLeboncoin(res);
+      //vinted has additional parameter for sorting because the sorting does not work on the website
       case "Vinted":
         return parseVinted(res, request.query.sort as string | undefined);
       default:
