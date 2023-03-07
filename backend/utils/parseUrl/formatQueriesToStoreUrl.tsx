@@ -10,6 +10,7 @@ export type formatStoreParams = {
 };
 
 const formatQueriesToStoreUrl = (query: Partial<{ [key: string]: string }>) => {
+  query.text = query.query;
   if (!query.text) return "";
   if (query.shop === "Leboncoin")
     return formatLeboncoin(query as formatStoreParams);
