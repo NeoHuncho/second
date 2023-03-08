@@ -11,8 +11,10 @@
     height: calc(var(--vh, 1vh) * 100);
   }
   html,
+  /*this stops the page from scrolling when you scroll past the top or bottom of the page*/
   body {
     overscroll-behavior-y: contain;
+    overscroll-behavior-x: contain;
   }
   /* Define the variable */
   :root {
