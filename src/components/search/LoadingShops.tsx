@@ -13,7 +13,7 @@ type Props = {
 const LoadingShops = ({ values }: Props) => {
   return (
     <div className="flex w-full justify-center">
-      <Card className="w-fit" shadow="sm" p="lg" radius="md" withBorder>
+      <Card className="w-fit" shadow="sm" p="md" radius="md" withBorder>
         <div className="flex  items-center justify-center gap-12">
           {values.map((value) => (
             <div
