@@ -36,7 +36,8 @@ export default function ListingShop({ shop }: Props) {
               alt={shop.name}
             />
           </div>
-          {shops[shop.name].loadingNextPage && <Loader color={shop.color} />}
+          {shops[shop.name].loadingNextPage &&
+            !shops[shop.name].hasFetchedAll && <Loader color={shop.color} />}
           {shops[shop.name].hasFetchedAll && (
             <Text color="secondary">Tout visionné</Text>
           )}
