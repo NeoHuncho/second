@@ -33,7 +33,7 @@ export default async function handler(
   const formattedStoreUrl = formatQueriesToStoreUrl(
     request.query as Partial<{ [key: string]: string }>
   );
-
+  console.log(formattedStoreUrl);
   let res = "";
   if (env.NODE_ENV === "production")
     res = await getWebsiteScrape(formattedStoreUrl);

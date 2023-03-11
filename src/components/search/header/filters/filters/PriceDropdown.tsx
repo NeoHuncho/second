@@ -8,6 +8,36 @@ import priceText from "../../../../../utils/filterText/priceText";
 import { Filters } from "../../../../../../common/types/keys";
 
 const PriceDropdown = ({ setFilterText }: DropDownInterface) => {
+  const { priceMin, priceMax, onChange } = usePrice({ setFilterText });
+  return (
+    <div className="flex flex-row gap-2">
+      <TextInput
+        value={priceMin}
+        onChange={(e) =>
+          (/^\d+$/.test(e.target.value) || e.target.value === "") &&
+          onChange("priceMin", e.target.value)
+        }
+        className="w-32"
+        label={Filters.priceMin}
+      />
+      <TextInput
+        value={priceMax}
+        onChange={(e) =>
+          (/^\d+$/.test(e.target.value) || e.target.value === "") &&
+          onChange("priceMax", e.target.value)
+        }
+        className="w-32"
+        label={Filters.priceMax}
+      />
+    </div>
+  );
+};
+
+const usePrice = ({
+  setFilterText,
+}: {
+  setFilterText: (text: string) => void;
+}) => {
   const router = useRouter();
   const { filters, setFilters, removeFilter } = useShops();
   const [firstLoadMin, setFirstLoadMin] = useState(true);
@@ -23,7 +53,7 @@ const PriceDropdown = ({ setFilterText }: DropDownInterface) => {
   const [priceMin, setPriceMin] = useState(filters.priceMin);
   const [priceMax, setPriceMax] = useState(filters.priceMax);
 
-  const onChange = (type: string, value: string) => {
+  const onChange = (type: "priceMin" | "priceMax", value: string) => {
     if (!value) removeFilter({ key: type, router: router });
     if (type === "priceMin") {
       setPriceMinDebounced(value);
@@ -48,28 +78,6 @@ const PriceDropdown = ({ setFilterText }: DropDownInterface) => {
     if (priceMaxDebounced)
       setFilters({ key: "priceMax", value: priceMaxDebounced, router: router });
   }, [priceMaxDebounced]);
-
-  return (
-    <div className="flex flex-row gap-2">
-      <TextInput
-        value={priceMin}
-        onChange={(e) =>
-          (/^\d+$/.test(e.target.value) || e.target.value === "") &&
-          onChange("priceMin", e.target.value)
-        }
-        className="w-32"
-        label={Filters.priceMin}
-      />
-      <TextInput
-        value={priceMax}
-        onChange={(e) =>
-          (/^\d+$/.test(e.target.value) || e.target.value === "") &&
-          onChange("priceMax", e.target.value)
-        }
-        className="w-32"
-        label={Filters.priceMax}
-      />
-    </div>
-  );
+  return { priceMin, priceMax, onChange };
 };
 export default PriceDropdown;

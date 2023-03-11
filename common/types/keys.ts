@@ -6,4 +6,19 @@ export const Sorts = {
   date_asc: "Date ancienne",
   date_desc: "Date récente",
 };
-export const Filters = { priceMin: "Prix minimum", priceMax: "Prix maximum" };
+
+export const Filters = {
+  priceMin: "Prix minimum",
+  priceMax: "Prix maximum",
+  conditionNewWithTags: "Neuf avec étiquette",
+  conditionNew: "Neuf",
+  conditionReconditioned: "Reconditionné",
+  conditionVeryGood: "Très bon état",
+  conditionGood: "Bon état",
+  conditionAcceptable: "État satisfaisant",
+  conditionParts: "Pour pièces",
+};
+
+export const MultiKeyFilterTypes = {
+  condition: "condition",
+};

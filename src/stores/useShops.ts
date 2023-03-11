@@ -6,13 +6,17 @@ import formatStoreUrl from "../utils/url/formatStoreUrl";
 import { defaultShops } from "../static/defaultShops";
 import type { NextRouter } from "next/router";
 import getFiltersFromUrl from "../utils/url/getFiltersFromUrl";
-import type { ShopName } from "../../common/types/types";
-import { Shops } from "../../common/types/keys";
+import type {
+  Filter,
+  MultiKeyFilterType,
+  ShopName,
+} from "../../common/types/types";
+import { MultiKeyFilterTypes, Shops } from "../../common/types/keys";
 
 type ShopState = {
   shops: Record<ShopName, Shop>;
   sort: Sort;
-  filters: Record<string, string>;
+  filters: Partial<Record<Filter, string>>;
   updateListings: (shop: ShopName) => Promise<void>;
   resetShops: () => void;
   setSort: (sort: Sort, router: NextRouter) => void;
@@ -21,10 +25,10 @@ type ShopState = {
     value,
   }: {
     key: string;
-    value: string;
+    value?: string;
     router: NextRouter;
   }) => void;
-  removeFilter: ({ key, router }: { key: string; router: NextRouter }) => void;
+  removeFilter: ({ key, router }: { key: Filter; router: NextRouter }) => void;
   resetFilters: () => void;
   lastListingUpdate: Record<ShopName, number>;
 };
@@ -149,13 +153,29 @@ const useShops = create<ShopState>()((set, get) => ({
   },
 
   setFilters: ({ key, value, router }) => {
+    //value is optional. This is for multi key filters where the value is the key. In this cas we just set the value to true
     set((state) => ({
       ...state,
       filters: {
         ...state.filters,
-        [key]: value,
+        [key]: value || true,
       },
     }));
+    if (
+      Object.keys(MultiKeyFilterTypes).some((filter) => filter.includes(key))
+    ) {
+      const key = Object.keys(MultiKeyFilterTypes).find((filter) =>
+        filter.includes(key)
+      ) as MultiKeyFilterType;
+      const prevValue = router.query[key] as string | undefined;
+      return void router.push({
+        pathname: router.pathname,
+        query: {
+          ...router.query,
+          [key]: prevValue ? `${prevValue}+${key}` : key,
+        },
+      });
+    }
     void router.push({
       pathname: router.pathname,
       query: { ...router.query, [key]: value },
@@ -170,6 +190,26 @@ const useShops = create<ShopState>()((set, get) => ({
         filters,
       };
     });
+    if (
+      Object.keys(MultiKeyFilterTypes).some((filter) => filter.includes(key))
+    ) {
+      const key = Object.keys(MultiKeyFilterTypes).find((filter) =>
+        filter.includes(key)
+      ) as MultiKeyFilterType;
+      const prevValue = router.query[key] as string | undefined;
+      if (!prevValue) return;
+      const newValue = prevValue
+        .split("+")
+        .filter((value) => value !== key)
+        .join("+");
+      return void router.push({
+        pathname: router.pathname,
+        query: {
+          ...router.query,
+          [key]: newValue,
+        },
+      });
+    }
     const { [key]: value, ...queryWithoutParam } = router.query;
     void router.push({
       pathname: router.pathname,

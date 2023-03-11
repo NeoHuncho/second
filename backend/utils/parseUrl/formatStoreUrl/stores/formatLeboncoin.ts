@@ -1,6 +1,6 @@
 import type { formatStoreParams } from "../../formatQueriesToStoreUrl";
 import { sortLeboncoin } from "../parsingFunctions/sort";
-import { priceLeboncoin } from "../parsingFunctions/price";
+import { filtersLeboncoin } from "../parsingFunctions/filters";
 import formatStoreUrl from "../formatStoreUrl";
 
 const formatLeboncoin = (params: formatStoreParams) => {
@@ -8,7 +8,7 @@ const formatLeboncoin = (params: formatStoreParams) => {
     storeUrl: "https://www.leboncoin.fr/recherche?text=",
     params,
     sortQuery: sortLeboncoin,
-    formatPrice: priceLeboncoin,
+    formatFilters: filtersLeboncoin,
   });
 };
 export default formatLeboncoin;

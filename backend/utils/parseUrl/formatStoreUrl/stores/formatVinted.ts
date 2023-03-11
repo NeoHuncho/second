@@ -1,6 +1,6 @@
 import type { formatStoreParams } from "../../formatQueriesToStoreUrl";
 import formatStoreUrl from "../formatStoreUrl";
-import { priceVinted } from "../parsingFunctions/price";
+import { filtersVinted } from "../parsingFunctions/filters";
 import { sortVinted } from "../parsingFunctions/sort";
 
 const formatVinted = (params: formatStoreParams) => {
@@ -8,7 +8,7 @@ const formatVinted = (params: formatStoreParams) => {
     storeUrl: "https://www.vinted.fr/vetements?search_text=",
     params,
     sortQuery: sortVinted,
-    formatPrice: priceVinted,
+    formatFilters: filtersVinted,
   });
 };
 export default formatVinted;

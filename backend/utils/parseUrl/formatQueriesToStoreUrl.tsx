@@ -1,13 +1,8 @@
+import type { QueryUrl } from "../../../common/types/types";
 import formatLeboncoin from "./formatStoreUrl/stores/formatLeboncoin";
 import formatVinted from "./formatStoreUrl/stores/formatVinted";
 
-export type formatStoreParams = {
-  text: string;
-  page: string;
-  sort?: string;
-  priceMin?: string;
-  priceMax?: string;
-};
+export type formatStoreParams = Record<QueryUrl, string>;
 
 const formatQueriesToStoreUrl = (query: Partial<{ [key: string]: string }>) => {
   query.text = query.query;

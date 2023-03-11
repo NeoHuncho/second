@@ -1,12 +1,15 @@
 interface Props {
-  filters: Record<string, string>;
+  filters?: Record<string, string>;
   value?: string | number;
   type?: string;
 }
 const priceText = ({ filters, value, type }: Props) => {
+  if (!filters) return "Prix";
   const hasMin = !!filters.priceMin;
   const hasMax = !!filters.priceMax;
   const hasValue = !!value;
+
+  //this will run on first render
   if (!type) {
     return filters.priceMax && filters.priceMin
       ? `${filters.priceMin}€ - ${filters.priceMax}€`
