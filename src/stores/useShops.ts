@@ -161,18 +161,19 @@ const useShops = create<ShopState>()((set, get) => ({
         [key]: value || true,
       },
     }));
+
     if (
-      Object.keys(MultiKeyFilterTypes).some((filter) => filter.includes(key))
+      Object.keys(MultiKeyFilterTypes).some((filter) => key.includes(filter))
     ) {
-      const key = Object.keys(MultiKeyFilterTypes).find((filter) =>
-        filter.includes(key)
+      const typeKey = Object.keys(MultiKeyFilterTypes).find((filter) =>
+        key.includes(filter)
       ) as MultiKeyFilterType;
-      const prevValue = router.query[key] as string | undefined;
+      const prevValue = router.query[typeKey] as string | undefined;
       return void router.push({
         pathname: router.pathname,
         query: {
           ...router.query,
-          [key]: prevValue ? `${prevValue}+${key}` : key,
+          [typeKey]: prevValue ? `${prevValue}+${key}` : key,
         },
       });
     }
@@ -191,13 +192,14 @@ const useShops = create<ShopState>()((set, get) => ({
       };
     });
     if (
-      Object.keys(MultiKeyFilterTypes).some((filter) => filter.includes(key))
+      Object.keys(MultiKeyFilterTypes).some((filter) => key.includes(filter))
     ) {
-      const key = Object.keys(MultiKeyFilterTypes).find((filter) =>
-        filter.includes(key)
+      const typeKey = Object.keys(MultiKeyFilterTypes).find((filter) =>
+        key.includes(filter)
       ) as MultiKeyFilterType;
-      const prevValue = router.query[key] as string | undefined;
+      const prevValue = router.query[typeKey] as string | undefined;
       if (!prevValue) return;
+
       const newValue = prevValue
         .split("+")
         .filter((value) => value !== key)
@@ -206,7 +208,7 @@ const useShops = create<ShopState>()((set, get) => ({
         pathname: router.pathname,
         query: {
           ...router.query,
-          [key]: newValue,
+          [typeKey]: newValue,
         },
       });
     }

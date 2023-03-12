@@ -2,6 +2,7 @@ import { Badge, Popover, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { MultiKeyFilterTypes } from "../../../../../common/types/keys";
+import { Filter } from "../../../../../common/types/types";
 import { Icon } from "../../../../assets/icons";
 import type { DropDownInterface } from "./FiltersListing";
 
@@ -9,8 +10,9 @@ type FilterProps = {
   DropDown: ({ setFilterText }: DropDownInterface) => JSX.Element;
   text: string;
   keys: string[];
-  multiValues?: [string, string][];
+  multiValues?: [Filter, string][];
   initialText: string;
+  typeKey?: string;
 };
 
 const useFilter = ({ text, keys }: { text: string; keys: string[] }) => {
@@ -37,12 +39,12 @@ const Filter = ({
   DropDown,
   keys,
   multiValues,
+  typeKey,
 }: FilterProps) => {
   const { opened, setOpened, filterText, setFilterText } = useFilter({
     text,
     keys,
   });
-  console.log(text);
   return (
     <Popover position="bottom" opened={opened} onChange={setOpened} shadow="md">
       <Popover.Target>
@@ -75,7 +77,11 @@ const Filter = ({
         </Badge>
       </Popover.Target>
       <Popover.Dropdown>
-        <DropDown setFilterText={setFilterText} multiValues={multiValues} />
+        <DropDown
+          setFilterText={setFilterText}
+          multiValues={multiValues || []}
+          typeKey={typeKey}
+        />
       </Popover.Dropdown>
     </Popover>
   );

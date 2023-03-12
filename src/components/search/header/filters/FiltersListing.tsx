@@ -1,4 +1,5 @@
 import { Filters } from "../../../../../common/types/keys";
+import type { Filter as FilterKey } from "../../../../../common/types/types";
 import useShops from "../../../../stores/useShops";
 import multiText from "../../../../utils/filterText/multiText";
 
@@ -9,7 +10,8 @@ import PriceDropdown from "./filters/PriceDropdown";
 
 export interface DropDownInterface {
   setFilterText: (text: string) => void;
-  multiValues?: [string, string][];
+  multiValues?: [FilterKey, string][];
+  typeKey?: string;
 }
 
 const FiltersListing = () => {
@@ -31,9 +33,15 @@ const FiltersListing = () => {
         text={multiText({ filters: conditionKeys, key: "condition" })}
         DropDown={MultiDropDown}
         keys={conditionKeys}
-        multiValues={Object.entries(filters).filter((key) =>
-          key[0].includes("condition")
-        )}
+        multiValues={
+          Object.keys(Filters)
+            .filter((key) => key.includes("condition"))
+            .map((key) => [key, Filters[key as keyof typeof Filters]]) as [
+            FilterKey,
+            string
+          ][]
+        }
+        typeKey="condition"
       />
     </div>
   );
