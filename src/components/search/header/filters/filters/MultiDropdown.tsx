@@ -58,9 +58,7 @@ const MultiDropDown = ({
       {multiValues.map(([key, value]) => (
         <Checkbox
           checked={filters?.includes(key)}
-          onChange={(event) =>
-            onChange(key as Filter, event.currentTarget.checked)
-          }
+          onChange={(event) => onChange(key, event.currentTarget.checked)}
           label={value}
           key={key}
         />
