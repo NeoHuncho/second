@@ -40,7 +40,7 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
-/backend/static
+/backend/static/shops
 
 #PWA
 public/sw.js
