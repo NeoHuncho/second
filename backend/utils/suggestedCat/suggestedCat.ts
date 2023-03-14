@@ -1,13 +1,15 @@
-import { readFile } from "fs/promises";
+import brands from "../../static/keyWords/clothesShoes/brands";
+import clothingTypes from "../../static/keyWords/clothesShoes/clothingTypes";
+import shoeModels from "../../static/keyWords/clothesShoes/shoeModels";
+import shoeTypes from "../../static/keyWords/clothesShoes/shoeTypes";
 
 type KeyWordMatch = {
   longKeyWords: string[];
   shortKeyWords: string[];
 };
 
-const parseKeyWordString = (keyWordString: string): KeyWordMatch => {
+const parseKeyWordString = (keyWordString: string[]): KeyWordMatch => {
   const [longKeyWords, shortKeyWords] = keyWordString
-    .split(",")
     .map((keyWord) => keyWord.trim())
     .filter((keyWord) => keyWord.length > 0)
     .reduce(
@@ -21,17 +23,10 @@ const parseKeyWordString = (keyWordString: string): KeyWordMatch => {
   return { longKeyWords, shortKeyWords };
 };
 
-const suggestedCat = async (text: string) => {
-  const [brands, clothingTypes, shoesTypes, shoeModels] = await Promise.all([
-    readFile("./public/keyWords/clothesShoes/brands.txt", "utf8"),
-    readFile("./public/keyWords/clothesShoes/clothingTypes.txt", "utf8"),
-    readFile("./public/keyWords/clothesShoes/shoeTypes.txt", "utf8"),
-    readFile("./public/keyWords/clothesShoes/shoeModels.txt", "utf8"),
-  ]);
-
+const suggestedCat = (text: string) => {
   const brandsArray = parseKeyWordString(brands);
   const clothingTypesArray = parseKeyWordString(clothingTypes);
-  const shoeTypesArray = parseKeyWordString(shoesTypes);
+  const shoeTypesArray = parseKeyWordString(shoeTypes);
   const shoeModelsArray = parseKeyWordString(shoeModels);
   type KeyWordsCat = (typeof keyWordsArray)[number][0];
   const keyWordsArray = [

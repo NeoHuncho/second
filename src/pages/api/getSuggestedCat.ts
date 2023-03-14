@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import suggestedCat from "../../../backend/utils/suggestedCat/suggestedCat";
 
-export default async function handler(
+export default function handler(
   request: NextApiRequest,
   response: NextApiResponse
 ) {
@@ -13,6 +13,6 @@ export default async function handler(
       error: "page number has not been provided or is not a string",
     });
   }
-  const data = await suggestedCat(request.query.text);
+  const data = suggestedCat(request.query.text);
   response.status(200).json(data);
 }
