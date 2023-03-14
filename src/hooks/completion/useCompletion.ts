@@ -3,6 +3,8 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useSearchTerm from "../../stores/useSearchTerm";
+import useSuggestedCat from "../../stores/useSuggestedCat";
+import formatApiUrl from "../../utils/url/formatApiUrl";
 
 export type SearchResult = {
   value: string;
@@ -13,14 +15,21 @@ export type SearchResultResponse = {
   suggestions: SearchResult[];
 };
 
+export type suggestedCatResponse = {
+  suggestedCat: string;
+  suggest: boolean;
+};
+
 const useCompletion = () => {
   const router = useRouter();
   const { setSearchTerm: setSearchTermStore, searchTerm: searchTermStore } =
     useSearchTerm();
+
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useDebouncedState(
     "",
     500
   );
+  const { setSuggestedCat, setSuggest } = useSuggestedCat();
   const [completionResults, setCompletionResults] = useState<SearchResult[]>(
     []
   );
@@ -28,17 +37,23 @@ const useCompletion = () => {
 
   const [searchTerm, setSearchTerm] = useState(searchTermStore);
 
-  const onSubmit = (searchTermOverride?: string) => {
+  const onSubmit = async (searchTermOverride?: string) => {
     if (!searchTermOverride && !searchTerm) return;
+    const suggestedCat = await axios.get<suggestedCatResponse>(
+      formatApiUrl({
+        routeName: "getSuggestedCat",
+        params: `text=${searchTerm}`,
+      })
+    );
+    setSearchTerm(searchTermOverride || searchTerm);
+    setSearchTermStore(searchTermOverride || searchTerm);
+    setCompletionResults([]);
+    setSuggestedCat(suggestedCat.data.suggestedCat);
+    setSuggest(suggestedCat.data.suggest);
     void router.push({
       pathname: "/search",
       query: { query: searchTermOverride || searchTerm },
     });
-    setSearchTerm(searchTermOverride || searchTerm);
-    setSearchTermStore(searchTermOverride || searchTerm);
-    setCompletionResults([]);
-
-    return;
   };
 
   const search = async (term: string) => {

@@ -16,6 +16,7 @@ export interface DropDownInterface {
 
 const FiltersListing = () => {
   const { filters } = useShops();
+
   const priceKeys = Object.keys(filters).filter((key) => key.includes("price"));
   const conditionKeys = Object.keys(filters).filter((key) =>
     key.includes("condition")

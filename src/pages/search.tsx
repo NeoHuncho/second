@@ -7,7 +7,6 @@ import useSearch from "../hooks/search/useSearch";
 
 const Search = () => {
   const shops = useShops();
-  //! KEEP THIS
   useSearch();
   return (
     <div className="m-auto flex max-w-screen-2xl flex-col gap-4 sm:gap-2 ">

@@ -17,6 +17,7 @@ export const Filters = {
   conditionGood: "Bon état",
   conditionAcceptable: "État satisfaisant",
   conditionParts: "Pour pièces",
+  category: "Catégorie",
 };
 
 export const MultiKeyFilterTypes = {

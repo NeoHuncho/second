@@ -13,8 +13,6 @@ export default async function handler(
       error: "page number has not been provided or is not a string",
     });
   }
-  const res = await suggestedCat(request.query.text);
-  response.status(200).json({
-    res,
-  });
+  const data = await suggestedCat(request.query.text);
+  response.status(200).json(data);
 }

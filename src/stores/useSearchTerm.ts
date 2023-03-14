@@ -1,5 +1,3 @@
-//create a zustand store which stores a search term (string) and has a action to set it
-
 type StoreType = {
   searchTerm: string;
   setSearchTerm: (searchTerm: string) => void;
