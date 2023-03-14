@@ -1,10 +1,14 @@
+import { MultiKeyFilterTypes } from "../../../common/types/keys";
+
 type Props = {
   filters?: string[];
   key: string;
 };
 const multiText = ({ filters, key }: Props) => {
-  if (!filters || !filters.length) return key;
+  const multiKeyValue =
+    MultiKeyFilterTypes[key as keyof typeof MultiKeyFilterTypes];
+  if (!filters || !filters.length) return multiKeyValue;
   const count = filters.length;
-  return `${key} (${count})`;
+  return `${multiKeyValue} (${count})`;
 };
 export default multiText;

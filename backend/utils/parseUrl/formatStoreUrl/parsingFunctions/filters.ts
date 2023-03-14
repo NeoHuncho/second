@@ -1,4 +1,9 @@
-import type { Filter, QueryUrl } from "../../../../../common/types/types";
+import type {
+  Category,
+  Filter,
+  QueryUrl,
+} from "../../../../../common/types/types";
+import { categoriesLeboncoin, categoriesVinted } from "../static/category";
 import { conditionsLeboncoin, conditionsVinted } from "../static/condition";
 
 const multiChoiceFilterParser = ({
@@ -21,7 +26,7 @@ const multiChoiceFilterParser = ({
 };
 
 const filtersLeboncoin = (filters: Record<QueryUrl, string>) => {
-  const { priceMin, priceMax } = filters;
+  const { priceMin, priceMax, category } = filters;
   let filtersString = "";
 
   if (priceMin && priceMax) filtersString = `&price=${priceMin}-${priceMax}`;
@@ -36,11 +41,15 @@ const filtersLeboncoin = (filters: Record<QueryUrl, string>) => {
     });
     filtersString += `&item_condition=${conditions.join("%2C")}`;
   }
+
+  if (category)
+    filtersString += `&category=${categoriesLeboncoin[category as Category]}`;
+
   return filtersString;
 };
 
 const filtersVinted = (filters: Record<QueryUrl, string>) => {
-  const { priceMin, priceMax } = filters;
+  const { priceMin, priceMax, category } = filters;
   let filtersString = "";
 
   if (priceMin && priceMax)
@@ -57,6 +66,9 @@ const filtersVinted = (filters: Record<QueryUrl, string>) => {
     });
     filtersString += `&${conditions.join("&")}`;
   }
+
+  if (category) filtersString += `&${categoriesVinted[category as Category]}`;
+
   return filtersString;
 };
 export { filtersLeboncoin, filtersVinted };

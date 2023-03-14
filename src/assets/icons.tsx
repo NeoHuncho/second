@@ -1,7 +1,7 @@
 import * as AiIcons from "react-icons/ai";
 import { VscError } from "react-icons/vsc";
 import { TbTruckDelivery } from "react-icons/tb";
-import { GiClothes } from "react-icons/gi";
+import { GiClothes, GiConverseShoe } from "react-icons/gi";
 import { FaSignOutAlt } from "react-icons/fa";
 import { BsMoonFill } from "react-icons/bs";
 import useColorScheme from "../hooks/ui/useColorTheme";
@@ -35,10 +35,12 @@ const icons = {
   FillCaretDown: AiIcons.AiFillCaretDown,
   FillCaretUp: AiIcons.AiFillCaretUp,
   MoonFill: BsMoonFill,
+  Shoes: GiConverseShoe,
 };
 export const Icon: React.FC<IconProps & { name: keyof typeof icons }> = ({
   name,
   color,
+  className,
   ...props
 }) => {
   const { isLight } = useColorScheme();
@@ -46,6 +48,7 @@ export const Icon: React.FC<IconProps & { name: keyof typeof icons }> = ({
   return (
     <IconComponent
       color={color ? color : isLight ? "black" : "white"}
+      className={className}
       {...props}
     />
   );

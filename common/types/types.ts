@@ -1,4 +1,10 @@
-import type { Sorts, Shops, Filters, MultiKeyFilterTypes } from "./keys";
+import type {
+  Sorts,
+  Shops,
+  Filters,
+  MultiKeyFilterTypes,
+  Categories,
+} from "./keys";
 
 export type ShopName = keyof typeof Shops;
 export type Sort = keyof typeof Sorts;
@@ -10,4 +16,6 @@ export type QueryUrl =
   | "sort"
   | "priceMin"
   | "priceMax"
-  | "condition";
+  | "condition"
+  | "category";
+export type Category = keyof typeof Categories;

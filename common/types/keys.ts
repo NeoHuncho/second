@@ -21,5 +21,10 @@ export const Filters = {
 };
 
 export const MultiKeyFilterTypes = {
-  condition: "condition",
+  condition: "État",
+};
+
+export const Categories = {
+  clothes: "Vêtements",
+  shoes: "Chaussures",
 };

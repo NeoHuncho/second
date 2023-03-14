@@ -19,7 +19,6 @@ const useSearch = () => {
   const { suggestedCat, suggest, setSuggestedCat } = useSuggestedCat();
 
   const updateShops = () => {
-    console.log("cld", router.query);
     resetShops();
     Object.keys(shops).forEach((shop) => {
       void updateListings(shop as ShopName);

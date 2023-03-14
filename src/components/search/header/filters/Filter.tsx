@@ -30,6 +30,10 @@ const useFilter = ({ text, keys }: { text: string; keys: string[] }) => {
     }
     if (keys.every((key) => !router.query[key])) setFilterText(text);
   }, [router.query]);
+
+  useEffect(() => {
+    if (filterText !== text) setFilterText(text);
+  }, [text]);
   return { opened, setOpened, filterText, setFilterText };
 };
 
@@ -45,6 +49,7 @@ const Filter = ({
     text,
     keys,
   });
+  typeKey === "category" && console.log("filterText", text, initialText);
   return (
     <Popover position="bottom" opened={opened} onChange={setOpened} shadow="md">
       <Popover.Target>
