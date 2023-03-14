@@ -48,7 +48,8 @@ const SearchBar = ({ size = "md", inputClassName }: PropTypes) => {
           rightSection={
             <Icon
               name="OutlineSearch"
-              onClick={() => void onSubmit()}
+              // eslint-disable-next-line @typescript-eslint/no-misused-promises
+              onClick={onSubmit}
               className="mr-3 cursor-pointer"
               size={size === "lg" ? 32 : 25}
             />
@@ -63,11 +64,8 @@ const SearchBar = ({ size = "md", inputClassName }: PropTypes) => {
       <Popover.Dropdown>
         <div className="flex flex-col ">
           {completionResults.map((product, index) => (
-            <Searchitem
-              key={index}
-              text={product.value}
-              onSubmit={() => void onSubmit}
-            />
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
+            <Searchitem key={index} text={product.value} onSubmit={onSubmit} />
           ))}
         </div>
       </Popover.Dropdown>
