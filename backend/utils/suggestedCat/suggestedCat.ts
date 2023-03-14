@@ -23,13 +23,10 @@ const parseKeyWordString = (keyWordString: string): KeyWordMatch => {
 
 const suggestedCat = async (text: string) => {
   const [brands, clothingTypes, shoesTypes, shoeModels] = await Promise.all([
-    readFile("./backend/static/keyWords/clothesShoes/brands.txt", "utf8"),
-    readFile(
-      "./backend/static/keyWords/clothesShoes/clothingTypes.txt",
-      "utf8"
-    ),
-    readFile("./backend/static/keyWords/clothesShoes/shoeTypes.txt", "utf8"),
-    readFile("./backend/static/keyWords/clothesShoes/shoeModels.txt", "utf8"),
+    readFile("backend/static/keyWords/clothesShoes/brands.txt", "utf8"),
+    readFile("backend/static/keyWords/clothesShoes/clothingTypes.txt", "utf8"),
+    readFile("backend/static/keyWords/clothesShoes/shoeTypes.txt", "utf8"),
+    readFile("backend/static/keyWords/clothesShoes/shoeModels.txt", "utf8"),
   ]);
 
   const brandsArray = parseKeyWordString(brands);
