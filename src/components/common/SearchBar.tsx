@@ -48,7 +48,7 @@ const SearchBar = ({ size = "md", inputClassName }: PropTypes) => {
           rightSection={
             <Icon
               name="OutlineSearch"
-              onClick={() => onSubmit()}
+              onClick={() => void onSubmit()}
               className="mr-3 cursor-pointer"
               size={size === "lg" ? 32 : 25}
             />
@@ -63,7 +63,11 @@ const SearchBar = ({ size = "md", inputClassName }: PropTypes) => {
       <Popover.Dropdown>
         <div className="flex flex-col ">
           {completionResults.map((product, index) => (
-            <Searchitem key={index} text={product.value} onSubmit={onSubmit} />
+            <Searchitem
+              key={index}
+              text={product.value}
+              onSubmit={() => void onSubmit}
+            />
           ))}
         </div>
       </Popover.Dropdown>
