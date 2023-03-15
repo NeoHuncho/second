@@ -17,5 +17,6 @@ export type QueryUrl =
   | "priceMin"
   | "priceMax"
   | "condition"
-  | "category";
+  | "category"
+  | "size";
 export type Category = keyof typeof Categories;
