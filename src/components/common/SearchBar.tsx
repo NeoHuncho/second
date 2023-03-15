@@ -49,7 +49,7 @@ const SearchBar = ({ size = "md", inputClassName }: PropTypes) => {
             <Icon
               name="OutlineSearch"
               // eslint-disable-next-line @typescript-eslint/no-misused-promises
-              onClick={onSubmit}
+              onClick={() => onSubmit()}
               className="mr-3 cursor-pointer"
               size={size === "lg" ? 32 : 25}
             />
