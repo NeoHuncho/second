@@ -29,6 +29,7 @@ EMAIL_SERVER_PORT: z.string(),
 EMAIL_SERVER_USER: z.string(),
 EMAIL_SERVER_PASS: z.string(),
 EMAIL_FROM: z.string(),
+GOOGLE_MAPS_API_KEY: z.string()
 });
 
 /**
@@ -59,6 +60,7 @@ const processEnv = {
   EMAIL_SERVER_USER: process.env.EMAIL_SERVER_USER,
   EMAIL_SERVER_PASS: process.env.EMAIL_SERVER_PASS,
   EMAIL_FROM: process.env.EMAIL_FROM,
+  GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 };
 

@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import suggestedCat from "../../../backend/utils/suggestedCat/suggestedCat";
+import suggestedCat from "../../../../backend/utils/suggestedCat/suggestedCat";
 
 export default function handler(
   request: NextApiRequest,
@@ -9,8 +9,8 @@ export default function handler(
     return response.status(400).json({
       query: request.query,
       cookies: request.cookies,
-      errorCode: "PAGE_PARAM_NOT_PROVIDED",
-      error: "page number has not been provided or is not a string",
+      errorCode: "TEXT_NOT_PROVIDED",
+      error: "text has not been provided or is not a string",
     });
   }
   const data = suggestedCat(request.query.text);

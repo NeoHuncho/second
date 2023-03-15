@@ -1,13 +1,12 @@
-import { readFile } from "fs/promises";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { env } from "process";
-import getWebsiteScrape from "../../../backend/api/getZyte";
-import formatQueriesToStoreUrl from "../../../backend/utils/parseUrl/formatQueriesToStoreUrl";
+import getWebsiteScrape from "../../../../backend/api/getZyte";
+import formatQueriesToStoreUrl from "../../../../backend/utils/parseUrl/formatQueriesToStoreUrl";
 
-import parseLeboncoin from "../../../backend/utils/parseUrl/shops/parseLeboncoin";
-import parseVinted from "../../../backend/utils/parseUrl/shops/parseVinted";
-import getStaticListings from "../../../backend/utils/static/getStaticListings";
-import type { ShopName } from "../../../common/types/types";
+import parseLeboncoin from "../../../../backend/utils/parseUrl/shops/parseLeboncoin";
+import parseVinted from "../../../../backend/utils/parseUrl/shops/parseVinted";
+import getStaticListings from "../../../../backend/utils/static/getStaticListings";
+import type { ShopName } from "../../../../common/types/types";
 
 export default async function handler(
   request: NextApiRequest,

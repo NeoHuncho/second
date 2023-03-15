@@ -30,7 +30,7 @@ const getWebsiteScrape = async (websiteUrl: string) => {
     ).toString();
     return httpResponseBody;
   } catch (error) {
-    //redo request
+    console.log("reRequest on ", +data.url);
     const response = await axios.post<ResponseData>(API_URL, data, { headers });
     const httpResponseBody = Buffer.from(
       response.data.httpResponseBody,

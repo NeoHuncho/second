@@ -10,7 +10,7 @@ const formatStoreUrl = ({ store, page }: Props) => {
     console.error("could not find search term in url");
     return;
   }
-  return `${apiUrl}/getShop?shop=${store}${
+  return `${apiUrl}/search/getShop?shop=${store}${
     page ? `&page=${page}&query${searchTerms}` : ""
   }`;
 };

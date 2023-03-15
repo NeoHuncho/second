@@ -41,7 +41,7 @@ const useCompletion = () => {
     if (!searchTermOverride && !searchTerm) return;
     const suggestedCat = await axios.get<suggestedCatResponse>(
       formatApiUrl({
-        routeName: "getSuggestedCat",
+        routeName: "search/getSuggestedCat",
         params: `text=${searchTerm}`,
       })
     );
