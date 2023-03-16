@@ -1,4 +1,4 @@
-import { Categories, Filters } from "../../../common/types/keys";
+import { Categories, Filters } from "../../../common/keys/keys";
 import useShops from "../../stores/useShops";
 type Props = {
   filters?: Record<string, string>;

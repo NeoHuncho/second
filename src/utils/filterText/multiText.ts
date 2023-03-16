@@ -1,4 +1,4 @@
-import { MultiKeyFilterTypes } from "../../../common/types/keys";
+import { MultiKeyFilterTypes } from "../../../common/keys/keys";
 
 type Props = {
   filters?: string[];

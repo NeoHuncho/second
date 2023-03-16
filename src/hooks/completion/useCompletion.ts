@@ -2,23 +2,11 @@ import { useDebouncedState, useDisclosure } from "@mantine/hooks";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { getSuggestedCat } from "../../requests/backend";
+import type { SearchResult } from "../../requests/services";
+import { getSearchAutocomplete } from "../../requests/services";
 import useSearchTerm from "../../stores/useSearchTerm";
 import useSuggestedCat from "../../stores/useSuggestedCat";
-import formatApiUrl from "../../utils/url/formatApiUrl";
-
-export type SearchResult = {
-  value: string;
-  id: string;
-};
-
-export type SearchResultResponse = {
-  suggestions: SearchResult[];
-};
-
-export type suggestedCatResponse = {
-  suggestedCat: string;
-  suggest: boolean;
-};
 
 const useCompletion = () => {
   const router = useRouter();
@@ -39,11 +27,8 @@ const useCompletion = () => {
 
   const onSubmit = async (searchTermOverride?: string) => {
     if (!searchTermOverride && !searchTerm) return;
-    const suggestedCat = await axios.get<suggestedCatResponse>(
-      formatApiUrl({
-        routeName: "search/getSuggestedCat",
-        params: `text=${searchTerm}`,
-      })
+    const suggestedCat = await getSuggestedCat(
+      searchTermOverride || searchTerm
     );
     setSearchTerm(searchTermOverride || searchTerm);
     setSearchTermStore(searchTermOverride || searchTerm);
@@ -58,9 +43,7 @@ const useCompletion = () => {
 
   const search = async (term: string) => {
     setSearching(true);
-    const results = await axios.get<SearchResultResponse>(
-      `https://completion.amazon.fr/api/2017/suggestions?limit=6&prefix=${term}&alias=aps&last-prefix=heliu&mid=A13V1IB3VIYZZH&site-variant=desktop`
-    );
+    const results = await getSearchAutocomplete(term);
     setSearching(false);
     return results.data.suggestions;
   };

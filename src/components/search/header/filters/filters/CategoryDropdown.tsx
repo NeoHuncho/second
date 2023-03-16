@@ -1,6 +1,6 @@
 import { Checkbox } from "@mantine/core";
 import { useRouter } from "next/router";
-import { Categories } from "../../../../../../common/types/keys";
+import { Categories } from "../../../../../../common/keys/keys";
 import useShops from "../../../../../stores/useShops";
 import categoryText from "../../../../../utils/filterText/categoryText";
 import type { DropDownInterface } from "../FiltersListing";

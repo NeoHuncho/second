@@ -1,4 +1,4 @@
-import { Filters, MultiKeyFilterTypes } from "../../../common/types/keys";
+import { Filters, MultiKeyFilterTypes } from "../../../common/keys/keys";
 import type { Filter } from "../../../common/types/types";
 
 const getFiltersFromUrl = (url: string) => {

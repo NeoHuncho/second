@@ -2,7 +2,7 @@ import { Button, Menu, Text } from "@mantine/core";
 
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { Sorts } from "../../../../../common/types/keys";
+import { Sorts } from "../../../../../common/keys/keys";
 
 import useShops from "../../../../stores/useShops";
 import type { Sort } from "../../../../types/types";

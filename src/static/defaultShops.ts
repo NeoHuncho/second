@@ -1,5 +1,5 @@
 import type { StaticImageData } from "next/image";
-import { Shops } from "../../common/types/keys";
+import { Shops } from "../../common/keys/keys";
 import type { ShopName } from "../../common/types/types";
 import leboncoinImage from "../assets/shops/leboncoin.webp";
 import vintedImage from "../assets/shops/vinted.webp";

@@ -1,15 +1,9 @@
-export const Shops = { Leboncoin: "Leboncoin", Vinted: "Vinted" };
-export const Sorts = {
-  recommended: "Pertinence",
-  price_asc: "Prix croissant",
-  price_desc: "Prix décroissant",
-  date_asc: "Date ancienne",
-  date_desc: "Date récente",
-};
-
-export const Filters = {
+const priceFilters = {
   priceMin: "Prix minimum",
   priceMax: "Prix maximum",
+};
+
+const conditionFilters = {
   conditionNewWithTags: "Neuf avec étiquette",
   conditionNew: "Neuf",
   conditionReconditioned: "Reconditionné",
@@ -17,7 +11,9 @@ export const Filters = {
   conditionGood: "Bon état",
   conditionAcceptable: "État satisfaisant",
   conditionParts: "Pour pièces",
-  category: "Catégorie",
+};
+
+const sizeMan = {
   sizeManXS: "XS",
   sizeManS: "S",
   sizeManM: "M",
@@ -30,6 +26,26 @@ export const Filters = {
   sizeMan6XL: "6XL",
   sizeMan7XL: "7XL",
   sizeMan8XL: "8XL",
+
+  sizeManShoes38: "38",
+  sizeManShoes39: "39",
+  sizeManShoes40: "40",
+  sizeManShoes41: "41",
+  sizeManShoes42: "42",
+  sizeManShoes42_5: "42.5",
+  sizeManShoes43: "43",
+  sizeManShoes43_5: "43.5",
+  sizeManShoes44: "44",
+  sizeManShoes44_5: "44.5",
+  sizeManShoes45: "45",
+  sizeManShoes45_5: "45.5",
+  sizeManShoes46: "46",
+  sizeManShoes47: "47",
+  sizeManShoes48: "48",
+  sizeManShoes49: "49",
+};
+
+const sizeWoman = {
   sizeWomanXXXS: "XXXS / 30 /2",
   sizeWomanXXS: "XXS / 32 / 4",
   sizeWomanXS: "XS / 34 / 6",
@@ -46,6 +62,28 @@ export const Filters = {
   sizeWoman8XL: "8XL / 56 / 28",
   sizeWoman9XL: "9XL / 58 / 30",
   sizeWomanUnique: "Taille unique",
+
+  sizeWomanShoes35: "35",
+  sizeWomanShoes35_5: "35.5",
+  sizeWomanShoes36: "36",
+  sizeWomanShoes36_5: "36.5",
+  sizeWomanShoes37: "37",
+  sizeWomanShoes37_5: "37.5",
+  sizeWomanShoes38: "38",
+  sizeWomanShoes38_5: "38.5",
+  sizeWomanShoes39: "39",
+  sizeWomanShoes39_5: "39.5",
+  sizeWomanShoes40: "40",
+  sizeWomanShoes40_5: "40.5",
+  sizeWomanShoes41: "41",
+  sizeWomanShoes41_5: "41.5",
+  sizeWomanShoes42: "42",
+  sizeWomanShoes43: "43",
+  sizeWomanUniversal: "Universel",
+  sizeWomanOther: "Autre",
+};
+
+const sizeChild = {
   sizeChildPremature: "Prématuré, jusqu'à 44cm",
   sizeChildBorn: "Né, Nouveau né / 44-50 cm",
   sizeChild1M: "Jusqu'à 1 mois / 50-56 cm",
@@ -71,42 +109,6 @@ export const Filters = {
   sizeChild16Y: "16 ans / 170-176 cm",
   sizeChild18Y: "18 ans / 176-182 cm",
   sizeChildUnique: "Taille unique",
-
-  sizeManShoes38: "38",
-  sizeManShoes39: "39",
-  sizeManShoes40: "40",
-  sizeManShoes41: "41",
-  sizeManShoes42: "42",
-  sizeManShoes42_5: "42.5",
-  sizeManShoes43: "43",
-  sizeManShoes43_5: "43.5",
-  sizeManShoes44: "44",
-  sizeManShoes44_5: "44.5",
-  sizeManShoes45: "45",
-  sizeManShoes45_5: "45.5",
-  sizeManShoes46: "46",
-  sizeManShoes47: "47",
-  sizeManShoes48: "48",
-  sizeManShoes49: "49",
-
-  sizeWomanShoes35: "35",
-  sizeWomanShoes35_5: "35.5",
-  sizeWomanShoes36: "36",
-  sizeWomanShoes36_5: "36.5",
-  sizeWomanShoes37: "37",
-  sizeWomanShoes37_5: "37.5",
-  sizeWomanShoes38: "38",
-  sizeWomanShoes38_5: "38.5",
-  sizeWomanShoes39: "39",
-  sizeWomanShoes39_5: "39.5",
-  sizeWomanShoes40: "40",
-  sizeWomanShoes40_5: "40.5",
-  sizeWomanShoes41: "41",
-  sizeWomanShoes41_5: "41.5",
-  sizeWomanShoes42: "42",
-  sizeWomanShoes43: "43",
-  sizeWomanUniversal: "Universel",
-  sizeWomanOther: "Autre",
 
   sizeChildShoes12: "12",
   sizeChildShoes13: "13",
@@ -139,11 +141,4 @@ export const Filters = {
   sizeChildShoes40: "40",
 };
 
-export const MultiKeyFilterTypes = {
-  condition: "État",
-};
-
-export const Categories = {
-  clothes: "Vêtements",
-  shoes: "Chaussures",
-};
+export { conditionFilters, priceFilters, sizeChild, sizeMan, sizeWoman };

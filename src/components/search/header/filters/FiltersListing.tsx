@@ -1,4 +1,4 @@
-import { Filters } from "../../../../../common/types/keys";
+import { Filters } from "../../../../../common/keys/keys";
 import type { Filter as FilterKey } from "../../../../../common/types/types";
 import useShops from "../../../../stores/useShops";
 import categoryText from "../../../../utils/filterText/categoryText";

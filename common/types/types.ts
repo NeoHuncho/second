@@ -4,7 +4,7 @@ import type {
   Filters,
   MultiKeyFilterTypes,
   Categories,
-} from "./keys";
+} from "../keys/keys";
 
 export type ShopName = keyof typeof Shops;
 export type Sort = keyof typeof Sorts;

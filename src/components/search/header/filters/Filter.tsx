@@ -1,7 +1,7 @@
 import { Badge, Popover, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { MultiKeyFilterTypes } from "../../../../../common/types/keys";
+import { MultiKeyFilterTypes } from "../../../../../common/keys/keys";
 import { Filter } from "../../../../../common/types/types";
 import { Icon } from "../../../../assets/icons";
 import type { DropDownInterface } from "./FiltersListing";

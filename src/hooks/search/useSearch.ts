@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useShops from "../../stores/useShops";
 import type { ShopName } from "../../../common/types/types";
-import { Filters } from "../../../common/types/keys";
+import { Filters } from "../../../common/keys/keys";
 
 import useSuggestedCat from "../../stores/useSuggestedCat";
 

@@ -11,7 +11,8 @@ import type {
   MultiKeyFilterType,
   ShopName,
 } from "../../common/types/types";
-import { MultiKeyFilterTypes, Shops } from "../../common/types/keys";
+import { MultiKeyFilterTypes, Shops } from "../../common/keys/keys";
+import { getShopListings } from "../requests/backend";
 
 type ShopState = {
   shops: Record<ShopName, Shop>;
@@ -49,9 +50,8 @@ const useShops = create<ShopState>()((set, get) => ({
   ) as Record<ShopName, number>,
   updateListings: async (shop: ShopName) => {
     const { listings, page, name } = get().shops[shop];
-    const url = formatStoreUrl({ store: name, page: page + 1 });
     const currentDate = Date.now();
-    if (!url) return;
+    if (!name) return;
     if (page + 1 > 1) {
       set((state) => ({
         ...state,
@@ -72,32 +72,34 @@ const useShops = create<ShopState>()((set, get) => ({
       },
     }));
 
-    const response = await axios.get<ShopRes>(url).catch(() => {
-      return set((state) => {
-        if (currentDate < get().lastListingUpdate[shop]) return state;
-        if (page + 1 === 1)
+    const response = await getShopListings({ name, page: page + 1 }).catch(
+      () => {
+        return set((state) => {
+          if (currentDate < get().lastListingUpdate[shop]) return state;
+          if (page + 1 === 1)
+            return {
+              ...state,
+              shops: {
+                ...state.shops,
+                [shop]: {
+                  ...state.shops[shop],
+                  status: "error",
+                },
+              },
+            };
           return {
             ...state,
             shops: {
               ...state.shops,
               [shop]: {
                 ...state.shops[shop],
-                status: "error",
+                hasFetchedAll: true,
               },
             },
           };
-        return {
-          ...state,
-          shops: {
-            ...state.shops,
-            [shop]: {
-              ...state.shops[shop],
-              hasFetchedAll: true,
-            },
-          },
-        };
-      });
-    });
+        });
+      }
+    );
     if (!response) return;
     if (currentDate < get().lastListingUpdate[shop]) return;
     set((state) => ({

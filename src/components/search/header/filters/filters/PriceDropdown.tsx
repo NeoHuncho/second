@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import useShops from "../../../../../stores/useShops";
 import { useDebouncedState } from "@mantine/hooks";
 import priceText from "../../../../../utils/filterText/priceText";
-import { Filters } from "../../../../../../common/types/keys";
+import { Filters } from "../../../../../../common/keys/keys";
 
 const PriceDropdown = ({ setFilterText }: DropDownInterface) => {
   const { priceMin, priceMax, onChange } = usePrice({ setFilterText });
