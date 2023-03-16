@@ -7,6 +7,12 @@ type suggestedCatResponse = {
   suggest: boolean;
 };
 
+type placeAutocomplete = {
+  title: string;
+  placeId: string;
+};
+type placeAutocompleteResponse = placeAutocomplete[];
+
 const getSuggestedCat = async (searchTerm: string) =>
   await axios.get<suggestedCatResponse>(
     formatApiUrl({
@@ -27,4 +33,27 @@ const getShopListings = async ({
   return await axios.get<ShopRes>(url);
 };
 
-export { getSuggestedCat, getShopListings };
+const getPlaceAutocomplete = async (searchTerm: string) => {
+  await axios.get<placeAutocompleteResponse>(
+    formatApiUrl({
+      routeName: "place",
+      params: `text=${searchTerm}`,
+    })
+  );
+};
+
+const getPlaceLocation = async (placeId: string) => {
+  await axios.get(
+    formatApiUrl({
+      routeName: "place/getLocation",
+      params: `placeId=${placeId}`,
+    })
+  );
+};
+
+export {
+  getSuggestedCat,
+  getShopListings,
+  getPlaceAutocomplete,
+  getPlaceLocation,
+};
