@@ -49,7 +49,7 @@ const Filter = ({
     text,
     keys,
   });
-  typeKey === "category" && console.log("filterText", text, initialText);
+
   return (
     <Popover position="bottom" opened={opened} onChange={setOpened} shadow="md">
       <Popover.Target>

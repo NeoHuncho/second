@@ -9,6 +9,7 @@ import Filter from "./Filter";
 import CategoryDropdown from "./filters/CategoryDropdown";
 import MultiDropDown from "./filters/MultiDropdown";
 import PriceDropdown from "./filters/PriceDropdown";
+import SizeDropDown from "./filters/SizeDropDown";
 
 export interface DropDownInterface {
   setFilterText: (text: string) => void;
@@ -23,6 +24,8 @@ const FiltersListing = () => {
   const conditionKeys = Object.keys(filters).filter((key) =>
     key.includes("condition")
   );
+  const sizeKeys = Object.keys(filters).filter((key) => key.includes("size"));
+  console.log(filters)
   return (
     <div className="flex flex-wrap gap-4">
       <Filter
@@ -47,12 +50,30 @@ const FiltersListing = () => {
           Object.keys(Filters)
             .filter((key) => key.includes("condition"))
             .map((key) => [key, Filters[key as keyof typeof Filters]]) as [
-            FilterKey,
-            string
-          ][]
+              FilterKey,
+              string
+            ][]
         }
         typeKey="condition"
       />
+      {(filters.category === 'shoes' || filters.category === 'clothes') &&
+        <Filter
+          initialText={multiText({ key: "size" })}
+          text={multiText({ filters: sizeKeys, key: "size" })}
+          DropDown={SizeDropDown}
+          keys={sizeKeys}
+          multiValues={
+            Object.keys(Filters)
+              .filter((key) => key.includes("size"))
+              .map((key) => [key, Filters[key as keyof typeof Filters]]) as [
+                FilterKey,
+                string
+              ][]
+          }
+          typeKey="size"
+        />
+      }
+
     </div>
   );
 };

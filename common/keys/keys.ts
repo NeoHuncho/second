@@ -26,9 +26,16 @@ export const Filters = {
 
 export const MultiKeyFilterTypes = {
   condition: "État",
+  size: "Taille",
 };
 
 export const Categories = {
   clothes: "Vêtements",
   shoes: "Chaussures",
 };
+
+export const SizeCategories={
+  woman: "Femmes",
+  man: "Hommes",
+  child: "Enfants",
+}

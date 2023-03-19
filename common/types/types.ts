@@ -4,6 +4,7 @@ import type {
   Filters,
   MultiKeyFilterTypes,
   Categories,
+  SizeCategories,
 } from "../keys/keys";
 
 export type ShopName = keyof typeof Shops;
@@ -20,3 +21,4 @@ export type QueryUrl =
   | "category"
   | "size";
 export type Category = keyof typeof Categories;
+export type SizeCategory = keyof typeof SizeCategories
