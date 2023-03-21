@@ -25,7 +25,7 @@ const FiltersListing = () => {
     key.includes("condition")
   );
   const sizeKeys = Object.keys(filters).filter((key) => key.includes("size"));
-  console.log(filters)
+
   return (
     <div className="flex flex-wrap gap-4">
       <Filter

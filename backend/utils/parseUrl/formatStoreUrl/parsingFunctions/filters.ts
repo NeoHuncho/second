@@ -51,7 +51,7 @@ const filtersLeboncoin = (filters: Record<QueryUrl, string>) => {
       key: "size",
       staticValues: sizesLeboncoin,
     });
-    filtersString += `&${sizes.join("&")}`;
+    filtersString += `&shoe_size=${sizes.join("%2C")}`;
   }
   return filtersString;
 };
@@ -81,7 +81,7 @@ const filtersVinted = (filters: Record<QueryUrl, string>) => {
       key: "size",
       staticValues: sizesVinted,
     });
-    filtersString += `&${sizes.join("&")}`;
+    filtersString += `&size_id%5B%5D=${sizes.join("&size_id%5B%5D=")}`;
   }
   if (category) filtersString += `&${categoriesVinted[category as Category]}`;
 

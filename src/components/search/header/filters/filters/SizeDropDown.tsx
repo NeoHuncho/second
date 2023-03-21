@@ -33,7 +33,6 @@ const useSizeDropdown = ({
     woman: getValueCategory('Woman'),
     child: getValueCategory('Child'),
   }
-  console.log(valuesCategories)
   const [categoryClicked, setCategotyClicked] = useState<SizeCategory | null>(null)
   const onClickCategory = (category: SizeCategory) => {
     setCategotyClicked(category)
@@ -74,7 +73,6 @@ const SizeDropDown = ({
     multiValues,
     typeKey,
   });
-  // console.log(categoryClicked, valuesCategories)
   if (!multiValues) return <></>;
   return (
     <div className="flex flex-col gap-2 max-h-44 overflow-y-scroll scrollbar-visible  w-36 -ml-3 -mr-3">
