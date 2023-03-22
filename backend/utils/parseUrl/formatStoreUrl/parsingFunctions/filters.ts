@@ -27,7 +27,7 @@ const multiChoiceFilterParser = ({
 };
 
 const filtersLeboncoin = (filters: Record<QueryUrl, string>) => {
-  const { priceMin, priceMax, category, size } = filters;
+  const { priceMin, priceMax, category } = filters;
   let filtersString = "";
 
   if (priceMin && priceMax) filtersString = `&price=${priceMin}-${priceMax}`;

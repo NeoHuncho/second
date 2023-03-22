@@ -35,6 +35,23 @@ const FiltersListing = () => {
         keys={["category"]}
         typeKey="category"
       />
+      {(filters.category === 'shoes' || filters.category === 'clothes') &&
+        <Filter
+          initialText={multiText({ key: "size" })}
+          text={multiText({ filters: sizeKeys, key: "size" })}
+          DropDown={SizeDropDown}
+          keys={sizeKeys}
+          multiValues={
+            Object.keys(Filters)
+              .filter((key) => key.includes("size"))
+              .map((key) => [key, Filters[key as keyof typeof Filters]]) as [
+                FilterKey,
+                string
+              ][]
+          }
+          typeKey="size"
+        />
+      }
       <Filter
         initialText={priceText({})}
         text={priceText({ filters })}
@@ -56,23 +73,7 @@ const FiltersListing = () => {
         }
         typeKey="condition"
       />
-      {(filters.category === 'shoes' || filters.category === 'clothes') &&
-        <Filter
-          initialText={multiText({ key: "size" })}
-          text={multiText({ filters: sizeKeys, key: "size" })}
-          DropDown={SizeDropDown}
-          keys={sizeKeys}
-          multiValues={
-            Object.keys(Filters)
-              .filter((key) => key.includes("size"))
-              .map((key) => [key, Filters[key as keyof typeof Filters]]) as [
-                FilterKey,
-                string
-              ][]
-          }
-          typeKey="size"
-        />
-      }
+
 
     </div>
   );

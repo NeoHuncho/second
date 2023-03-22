@@ -6,7 +6,7 @@ import type { Filter, SizeCategory } from "../../../../../../common/types/types"
 import useShops from "../../../../../stores/useShops";
 import multiText from "../../../../../utils/filterText/multiText";
 import type { DropDownInterface } from "../FiltersListing";
-
+import { Icon } from '../../../../../assets/icons'
 const useSizeDropdown = ({
   setFilterText,
   multiValues,
@@ -34,7 +34,7 @@ const useSizeDropdown = ({
     child: getValueCategory('Child'),
   }
   const [categoryClicked, setCategotyClicked] = useState<SizeCategory | null>(null)
-  const onClickCategory = (category: SizeCategory) => {
+  const onClickCategory = (category: SizeCategory | null) => {
     setCategotyClicked(category)
   }
   const [filters, setFilters] = useState(
@@ -60,7 +60,12 @@ const useSizeDropdown = ({
     });
   };
 
-  return { onChange, filters, valuesCategories, categoryClicked, onClickCategory };
+  const selectedSizes = filters?.map((key) => {
+    const value = multiValues?.find((value) => value[0] === key);
+    return value ? value : "";
+  });
+
+  return { onChange, filters, valuesCategories, categoryClicked, onClickCategory, selectedSizes };
 };
 
 const SizeDropDown = ({
@@ -68,7 +73,7 @@ const SizeDropDown = ({
   multiValues,
   typeKey,
 }: DropDownInterface) => {
-  const { onChange, filters, valuesCategories, categoryClicked, onClickCategory } = useSizeDropdown({
+  const { onChange, filters, valuesCategories, categoryClicked, onClickCategory, selectedSizes } = useSizeDropdown({
     setFilterText,
     multiValues,
     typeKey,
@@ -78,26 +83,68 @@ const SizeDropDown = ({
     <div className="flex flex-col gap-2 max-h-44 overflow-y-scroll scrollbar-visible  w-36 -ml-3 -mr-3">
       {!categoryClicked &&
         <div className="flex flex-col gap-2">
+          {selectedSizes?.length &&
+            <div className="flex flex-col gap-3">
+              {selectedSizes.map(([key, value]) => {
+                const tsKey = key as Filter;
+                return (
+                  <Checkbox
+                    checked={filters?.includes(tsKey)}
+                    onChange={(event) => onChange(tsKey, event.currentTarget.checked)}
+                    label={value}
+                    key={key}
+                    className="pl-2"
+                  />
+                )
+              })}
+            </div>
+          }
           {Object.keys(valuesCategories).map((category) => (
-            <Text
+            <div
               key={category}
               onClick={() => onClickCategory(category as SizeCategory)}
               style={{ cursor: "pointer" }}
-              className="pl-2"
+              className=" flex items-center justify-between"
+
             >
-              {SizeCategories[category as SizeCategory]}
-            </Text>
+              <Text
+                key={category}
+
+                className="pl-2"
+              >
+                {SizeCategories[category as SizeCategory]}
+              </Text>
+              <Icon name='OutlineArrowRight' className="pr-0.5" />
+            </div>
           ))}
         </div>
       }
-      {categoryClicked && valuesCategories[categoryClicked].map(([key, value]) => (
-        <Checkbox
-          checked={filters?.includes(key)}
-          onChange={(event) => onChange(key, event.currentTarget.checked)}
-          label={value}
-          key={key}
-        />
-      ))}
+      {categoryClicked &&
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center -mt-1">
+            <Icon
+              name='OutlineArrowLeft'
+              style={{ cursor: "pointer" }}
+              className="pl-0.5"
+              onClick={() => onClickCategory(null)}
+            />
+            <Text
+              key={categoryClicked}
+              className="pl-2"
+            >
+              {SizeCategories[categoryClicked]}
+            </Text>
+          </div>
+          {valuesCategories[categoryClicked].map(([key, value]) => (
+            <Checkbox
+              checked={filters?.includes(key)}
+              onChange={(event) => onChange(key, event.currentTarget.checked)}
+              label={value}
+              key={key}
+            />
+          ))}
+        </div>
+      }
     </div>
   );
 };
