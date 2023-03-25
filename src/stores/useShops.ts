@@ -1,8 +1,5 @@
 import type { Shop, Sort } from "../types/types";
 import { create } from "zustand";
-import axios from "axios";
-import type { ShopRes } from "../types/api/shopsRes";
-import formatStoreUrl from "../utils/url/formatStoreUrl";
 import { defaultShops } from "../static/defaultShops";
 import type { NextRouter } from "next/router";
 import getFiltersFromUrl from "../utils/url/getFiltersFromUrl";
@@ -199,8 +196,15 @@ const useShops = create<ShopState>()((set, get) => ({
       const typeKey = Object.keys(MultiKeyFilterTypes).find((filter) =>
         key.includes(filter)
       ) as MultiKeyFilterType;
-      const prevValue = router.query[typeKey] as string | undefined;
-      if (!prevValue) return;
+      const prevValue = router.query[typeKey] as string;
+
+      if(prevValue.split("+").length === 1) {
+        const { [typeKey]: value, ...queryWithoutParam } = router.query;
+        return void router.push({
+        pathname: router.pathname,
+        query: queryWithoutParam,
+      });
+    }
 
       const newValue = prevValue
         .split("+")

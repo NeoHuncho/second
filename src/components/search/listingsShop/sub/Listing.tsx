@@ -1,15 +1,18 @@
-import { Card, Image, Text, Title } from "@mantine/core";
+import { ActionIcon, Card, Image, Text, Title } from "@mantine/core";
 import { Icon } from "../../../../assets/icons";
 import type { ShopListing } from "../../../../types/types";
 import parsePrice from "../../../../utils/parsePrice";
 import NoImage from "./NoImage";
 
+import { useCallback, useState } from "react";
+import ExpandImage from "../../../image/ExpandImage";
 type Props = {
   listing: ShopListing;
   isScrolling: boolean;
 };
 const Listing = ({ listing, isScrolling }: Props) => {
   const CARD_SECTION_HEIGHT = 240;
+  const [isZoomed, setIsZoomed] = useState(false)
 
   if (listing.body === "placeholder")
     return (
@@ -27,64 +30,74 @@ const Listing = ({ listing, isScrolling }: Props) => {
     );
 
   return (
-    <Card
-      className="h-full cursor-pointer"
-      shadow="sm"
-      p="sm"
-      radius="md"
-      withBorder
-      onClick={() => !isScrolling && window.open(listing.url, "_blank")}
-    >
-      <Card.Section>
-        {listing.images?.url_thumb ? (
-          <Image
-            height={CARD_SECTION_HEIGHT}
-            src={listing.images.url_thumb}
-            alt={listing.title}
-          />
-        ) : (
-          <NoImage />
-        )}
-        <Title className="absolute right-0 -mt-7 rounded-tl-lg bg-white px-2 text-xl text-black">
-          {parsePrice(listing.price)}
-        </Title>
-      </Card.Section>
-      <div className="flex  flex-col gap-3 ">
-        <div>
-          <Title
-            lineClamp={2}
-            style={{ minHeight: 32 }}
-            className="mt-3 text-xs "
-          >
-            {listing.title}
+    <>
+      <Card
+        className="h-full cursor-pointer"
+        shadow="sm"
+        p="sm"
+        radius="md"
+        withBorder
+        onClick={() => !isScrolling && window.open(listing.url, "_blank")}
+      >
+        <Card.Section>
+          {listing.images?.url_thumb ? (
+            <div>
+              <ActionIcon onClick={(event) => { event.stopPropagation(); setIsZoomed(true) }} color='gray' variant="filled" className="absolute right-0 top-0 mt-2 mr-2 z-10">
+                <Icon name="Enlarge" size={14} color='white' />
+              </ActionIcon>
+
+              <Image
+                height={CARD_SECTION_HEIGHT}
+                src={listing.images.url_thumb}
+                alt={listing.title}
+              />
+
+            </div>
+          ) : (
+            <NoImage />
+          )}
+          <Title className="absolute right-0 -mt-7 rounded-tl-lg bg-white px-2 text-xl text-black">
+            {parsePrice(listing.price)}
           </Title>
-          <div style={{ minHeight: 40 }}>
-            {listing.condition ? (
+        </Card.Section>
+        <div className="flex  flex-col gap-3 ">
+          <div>
+            <Title
+              lineClamp={2}
+              style={{ minHeight: 32 }}
+              className="mt-3 text-xs "
+            >
+              {listing.title}
+            </Title>
+            <div style={{ minHeight: 40 }}>
+              {listing.condition ? (
+                <div className="flex items-center gap-1">
+                  <Icon name="OutlineEye" className="mt-0.5" />
+                  <Text lineClamp={1} className=" mt-1 text-xs ">
+                    {listing.condition}
+                  </Text>
+                </div>
+              ) : null}
+              {listing.size ? (
+                <div className="flex items-center gap-1">
+                  <Icon name="Clothes" className="mt-0.5" />
+                  <Text lineClamp={1} className=" mt-1 text-xs ">
+                    {listing.size}
+                  </Text>
+                </div>
+              ) : null}
               <div className="flex items-center gap-1">
-                <Icon name="OutlineEye" className="mt-0.5" />
+                <Icon name="TruckDelivery" className="mt-0.5" />
                 <Text lineClamp={1} className=" mt-1 text-xs ">
-                  {listing.condition}
+                  {listing.shippable ? "Livraison possible" : "Pas de livraison"}
                 </Text>
               </div>
-            ) : null}
-            {listing.size ? (
-              <div className="flex items-center gap-1">
-                <Icon name="Clothes" className="mt-0.5" />
-                <Text lineClamp={1} className=" mt-1 text-xs ">
-                  {listing.size}
-                </Text>
-              </div>
-            ) : null}
-            <div className="flex items-center gap-1">
-              <Icon name="TruckDelivery" className="mt-0.5" />
-              <Text lineClamp={1} className=" mt-1 text-xs ">
-                {listing.shippable ? "Livraison possible" : "Pas de livraison"}
-              </Text>
             </div>
           </div>
         </div>
-      </div>
-    </Card>
+      </Card>
+      {<ExpandImage alt={listing.title} opened={isZoomed} setOpened={setIsZoomed} src={listing.images.url} />}
+    </>
   );
 };
 export default Listing;

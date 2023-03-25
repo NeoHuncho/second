@@ -6,6 +6,8 @@ import { FaSignOutAlt } from "react-icons/fa";
 import { BsMoonFill } from "react-icons/bs";
 import useColorScheme from "../hooks/ui/useColorTheme";
 
+import { ImEnlarge } from "react-icons/im";
+
 export type IconProps = {
   size?: number;
   className?: string;
@@ -36,6 +38,7 @@ const icons = {
   FillCaretUp: AiIcons.AiFillCaretUp,
   MoonFill: BsMoonFill,
   Shoes: GiConverseShoe,
+  Enlarge: ImEnlarge,
 };
 export const Icon: React.FC<IconProps & { name: keyof typeof icons }> = ({
   name,

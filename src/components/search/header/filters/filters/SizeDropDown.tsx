@@ -83,9 +83,9 @@ const SizeDropDown = ({
     <div className="flex flex-col gap-2 max-h-44 overflow-y-scroll scrollbar-visible  w-36 -ml-3 -mr-3">
       {!categoryClicked &&
         <div className="flex flex-col gap-2">
-          {selectedSizes?.length &&
+          {selectedSizes?.length !== 0 &&
             <div className="flex flex-col gap-3">
-              {selectedSizes.map(([key, value]) => {
+              {selectedSizes?.map(([key, value]) => {
                 const tsKey = key as Filter;
                 return (
                   <Checkbox
