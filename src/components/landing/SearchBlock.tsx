@@ -5,7 +5,7 @@ import SearchBar from "../common/SearchBar";
 const useChangingWord = () => {
 
     const words = ["Économique", "Écologique", "Solidaire"];
-    const [typingText, setTypingText] = useState("");
+    const [typingText, setTypingText] = useState("Économique");
     const [wordIndex, setWordIndex] = useState(0);
     const [isDeleting, setIsDeleting] = useState(false);
     const [delay, setDelay] = useState<number>(100);
@@ -16,13 +16,13 @@ const useChangingWord = () => {
         if (!word) return;
         if (!isDeleting) {
             timeoutId = setTimeout(() => {
-                setTypingText(word.substring(0, typingText.length + 1));
                 if (typingText === words[wordIndex]) {
                     setTimeout(() => {
                         setIsDeleting(true);
                         setDelay(50);
                     }, 3000);
                 }
+                setTypingText(word.substring(0, typingText.length + 1));
             }, delay);
         } else {
             timeoutId = setTimeout(() => {
