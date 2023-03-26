@@ -120,7 +120,7 @@ const SizeDropDown = ({
         </div>
       }
       {categoryClicked &&
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-3">
           <div className="flex items-center -mt-1">
             <Icon
               name='OutlineArrowLeft'

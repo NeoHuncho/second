@@ -44,9 +44,9 @@ const SearchBlock = () => {
     const currentWord = useChangingWord();
 
     return (
-        <div className="flex w-full max-w-screen-2xl flex-col items-center gap-6 pb-20">
+        <div className="mt-10 flex w-full max-w-screen-2xl flex-col items-center gap-6 pb-20">
             <Title className="text-xl font-bold text-center">
-                Achetez&nbsp;
+                Achetez
                 <span
                     key={currentWord}
                     className="inline-block w-32"
@@ -54,7 +54,7 @@ const SearchBlock = () => {
                 >
                     {currentWord}
                 </span>
-                &nbsp;avec des millions de produits d&apos;occasion!
+                avec des millions de produits d&apos;occasion!
             </Title>
             <SearchBar size="lg" inputClassName="mt-10 w-5/6 sm:w-2/4 sm:mt-0" />
         </div>
