@@ -56,6 +56,7 @@ const parseVinted = (responseText: string, sortBy: string | undefined) => {
       title: item.title,
       shippable: true,
       size: item.size_title,
+      type: 'ShopListing'
     });
   });
 

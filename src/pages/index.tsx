@@ -5,6 +5,7 @@ import SearchBar from "../components/common/SearchBar";
 import logo from "../assets/logo/logo_text.png";
 import { useLocalStorage } from "@mantine/hooks";
 import SearchBlock from "../components/landing/SearchBlock";
+import ShowcaseBlock from "../components/landing/ShowcaseBlock";
 const Home: NextPage = () => {
   const [theme] = useLocalStorage({
     key: "color-scheme",
@@ -18,15 +19,18 @@ const Home: NextPage = () => {
         <link rel="manifest" href="/manifest.json" />
       </Head>
       <main
-        className={`flex min-h-screen flex-col items-center ${theme === "dark" ? "bg-landing-dark" : "bg-landing"
-          } bg-cover bg-fixed bg-center bg-no-repeat pt-5 sm:justify-center`}
+        className={`flex min-h-screen  flex-col items-center ${theme === "dark" ? "bg-landing-dark" : "bg-landing"
+          } bg-cover bg-fixed bg-center bg-no-repeat pt-5 `}
       >
         <Image
           src={logo}
           alt="logo"
           className="absolute top-4 left-4 h-auto w-28 cursor-pointer object-contain"
         />
-        <SearchBlock />
+        <div className="max-w-screen-2xl ">
+          <SearchBlock />
+          <ShowcaseBlock />
+        </div>
       </main>
     </>
   );

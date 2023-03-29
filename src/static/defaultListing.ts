@@ -10,6 +10,7 @@ const defaultListing: ShopListing = {
   },
   url: "",
   body: "placeholder",
+  type:'ShopListing'
 };
 
 export default defaultListing;

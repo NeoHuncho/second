@@ -1,8 +1,5 @@
 import Image from "next/image";
 import type { Shop } from "../../../types/types";
-import "swiper/css";
-import "swiper/css/free-mode";
-import "swiper/css/navigation";
 import useCarouselShops from "../../../hooks/carousel/useCarouselShops";
 import { Loader, Text } from "@mantine/core";
 import useShops from "../../../stores/useShops";
@@ -32,9 +29,7 @@ export default function ListingShop({ shop }: Props) {
             <Text color="secondary">Tout visionné</Text>
           )}
         </div>
-        <div className="flex w-full flex-wrap">
-          <SwiperCarousel slides={slides} type="Shop" handleIndexChange={handleIndexChange} />
-        </div>
+        <SwiperCarousel slides={slides} handleIndexChange={handleIndexChange} />
       </div>
     );
   return <></>;

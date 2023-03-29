@@ -1,9 +1,10 @@
 import * as AiIcons from "react-icons/ai";
 import { VscError } from "react-icons/vsc";
 import { TbTruckDelivery } from "react-icons/tb";
-import { GiClothes, GiConverseShoe } from "react-icons/gi";
+import { GiClothes, GiConverseShoe, GiLaptop } from "react-icons/gi";
 import { FaSignOutAlt } from "react-icons/fa";
-import { BsMoonFill } from "react-icons/bs";
+import { BsMoonFill, BsPhoneFill, BsScrewdriver } from "react-icons/bs";
+
 import useColorScheme from "../hooks/ui/useColorTheme";
 
 import { ImEnlarge } from "react-icons/im";
@@ -39,6 +40,11 @@ const icons = {
   MoonFill: BsMoonFill,
   Shoes: GiConverseShoe,
   Enlarge: ImEnlarge,
+  Phone: BsPhoneFill,
+  Laptop: GiLaptop,
+  Screwdriver: BsScrewdriver,
+
+
 };
 export const Icon: React.FC<IconProps & { name: keyof typeof icons }> = ({
   name,

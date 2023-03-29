@@ -39,3 +39,12 @@ export const SizeCategories={
   man: "Hommes",
   child: "Enfants",
 }
+
+export const showcaseTabs={
+  phone: "Téléphone",
+  laptop: "Ordinateur",
+}
+
+export const showcaseCategories={
+  repairable: "Electroménager réparable",
+}

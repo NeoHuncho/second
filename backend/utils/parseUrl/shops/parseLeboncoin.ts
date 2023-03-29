@@ -96,6 +96,7 @@ const parseLeboncoin = (responseText: string) => {
         shippable:
           item.attributes.find((attribute) => attribute.key === "shippable")
             ?.value === "true",
+        type: 'ShopListing'
       });
     });
   return formatted;

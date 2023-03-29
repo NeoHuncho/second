@@ -6,13 +6,14 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import SwipperNavButton from "../search/listingsShop/sub/SwipperNavButton";
 import useCarousel from "../../hooks/carousel/useCarousel";
-import type { ShopListing } from "../../types/types";
+import type { LandingListing, ShopListing } from "../../types/types";
+import { detectShopListing } from "../../types/TypeDetection";
 interface Props {
-    slides: ShopListing[];//! add other types of slides
-    type: 'Shop' | 'Category'
+    slides: ShopListing[] | LandingListing[]//! add other types of slides
     handleIndexChange?: (index: number) => void;
 }
-export default function SwiperCarousel({ slides, type, handleIndexChange }: Props) {
+
+export default function SwiperCarousel({ slides, handleIndexChange }: Props) {
 
     const { handleTouchEnd, isScrolling, slidesPerView, swiperRef } = useCarousel()
     return (
@@ -34,11 +35,13 @@ export default function SwiperCarousel({ slides, type, handleIndexChange }: Prop
                     swiperRef.current = swiper;
                 }}
             >
-                {type === 'Shop' && slides.map((listing: ShopListing) => (
-                    <SwiperSlide key={listing.id}>
-                        <Listing listing={listing} isScrolling={isScrolling} />
-                    </SwiperSlide>
-                ))}
+                {
+                    slides.map((listing) => (
+                        <SwiperSlide key={detectShopListing(listing) ? listing.id : listing.title}>
+                            <Listing listing={listing} isScrolling={isScrolling} enlargeButton={detectShopListing(listing) ? true : false} />
+                        </SwiperSlide>
+                    ))
+                }
                 <SwipperNavButton type="prev" />
                 <SwipperNavButton type="next" />
             </Swiper>

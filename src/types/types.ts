@@ -26,6 +26,15 @@ export interface ShopListing {
   shippable?: boolean;
   condition?: string;
   size?: string;
+  type: 'ShopListing';
+}
+
+export interface LandingListing{
+  title: string;
+  url: string;
+  image: StaticImageData;
+  body?:string
+  repairScore?: number;
 }
 
 interface Images {

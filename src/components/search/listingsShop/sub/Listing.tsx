@@ -1,19 +1,26 @@
 import { ActionIcon, Card, Image, Text, Title } from "@mantine/core";
 import { Icon } from "../../../../assets/icons";
-import type { ShopListing } from "../../../../types/types";
+import NextImage from "next/image";
+import type { LandingListing, ShopListing } from "../../../../types/types";
 import parsePrice from "../../../../utils/parsePrice";
 import NoImage from "./NoImage";
 
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import ExpandImage from "../../../image/ExpandImage";
+import { detectRepairable, detectShopListing } from "../../../../types/TypeDetection";
+import RepairScoreIcon from "../../../../assets/repair-score-icon/RepairScoreIcon";
 type Props = {
-  listing: ShopListing;
+  listing: ShopListing | LandingListing;
   isScrolling: boolean;
+  enlargeButton?: boolean;
 };
-const Listing = ({ listing, isScrolling }: Props) => {
+
+
+const Listing = ({ listing, isScrolling, enlargeButton }: Props) => {
   const CARD_SECTION_HEIGHT = 240;
   const [isZoomed, setIsZoomed] = useState(false)
-
+  const isShopListing = detectShopListing(listing)
+  const isRepairable = detectRepairable(listing)
   if (listing.body === "placeholder")
     return (
       <Card
@@ -39,64 +46,65 @@ const Listing = ({ listing, isScrolling }: Props) => {
         withBorder
         onClick={() => !isScrolling && window.open(listing.url, "_blank")}
       >
-        <Card.Section>
-          {listing.images?.url_thumb ? (
-            <div>
-              <ActionIcon onClick={(event) => { event.stopPropagation(); setIsZoomed(true) }} color='gray' variant="filled" className="absolute right-0 top-0 mt-2 mr-2 z-10">
-                <Icon name="Enlarge" size={14} color='white' />
-              </ActionIcon>
+        <Card.Section className="flex flex-col items-center">
+          {isShopListing ?
+            listing.images?.url_thumb ? (
+              <div>
+                {enlargeButton && <ActionIcon onClick={(event) => { event.stopPropagation(); setIsZoomed(true) }} color='gray' variant="filled" className="absolute right-0 top-0 mt-2 mr-2 z-10">
+                  <Icon name="Enlarge" size={14} color='white' />
+                </ActionIcon>}
 
-              <Image
-                height={CARD_SECTION_HEIGHT}
-                src={listing.images.url_thumb}
-                alt={listing.title}
-              />
+                <Image
+                  height={CARD_SECTION_HEIGHT}
+                  src={listing.images.url_thumb}
+                  alt={listing.title}
+                />
 
-            </div>
-          ) : (
-            <NoImage />
-          )}
-          <Title className="absolute right-0 -mt-7 rounded-tl-lg bg-white px-2 text-xl text-black">
+              </div>
+            ) : (
+              <NoImage />
+            ) : null}
+          {!isShopListing && <NextImage src={listing.image} alt={listing.title} height={CARD_SECTION_HEIGHT} />}
+          {isShopListing && <Title className="absolute right-0 -mt-7 rounded-tl-lg bg-white px-2 text-xl text-black">
             {parsePrice(listing.price)}
-          </Title>
+          </Title>}
         </Card.Section>
         <div className="flex  flex-col gap-3 ">
-          <div>
-            <Title
-              lineClamp={2}
-              style={{ minHeight: 32 }}
-              className="mt-3 text-xs "
-            >
-              {listing.title}
-            </Title>
-            <div style={{ minHeight: 40 }}>
-              {listing.condition ? (
-                <div className="flex items-center gap-1">
-                  <Icon name="OutlineEye" className="mt-0.5" />
-                  <Text lineClamp={1} className=" mt-1 text-xs ">
-                    {listing.condition}
-                  </Text>
-                </div>
-              ) : null}
-              {listing.size ? (
-                <div className="flex items-center gap-1">
-                  <Icon name="Clothes" className="mt-0.5" />
-                  <Text lineClamp={1} className=" mt-1 text-xs ">
-                    {listing.size}
-                  </Text>
-                </div>
-              ) : null}
+          <Title
+            lineClamp={2}
+            style={{ minHeight: 32 }}
+            className="mt-3 text-sm"
+          >
+            {listing.title}
+          </Title>
+          <div className="flex flex-col" style={{ minHeight: 40 }}>
+            {isShopListing && listing.condition ? (
               <div className="flex items-center gap-1">
-                <Icon name="TruckDelivery" className="mt-0.5" />
+                <Icon name="OutlineEye" className="mt-0.5" />
                 <Text lineClamp={1} className=" mt-1 text-xs ">
-                  {listing.shippable ? "Livraison possible" : "Pas de livraison"}
+                  {listing.condition}
                 </Text>
               </div>
-            </div>
+            ) : null}
+            {isShopListing && listing.size ? (
+              <div className="flex items-center gap-1">
+                <Icon name="Clothes" className="mt-0.5" />
+                <Text lineClamp={1} className=" mt-1 text-xs ">
+                  {listing.size}
+                </Text>
+              </div>
+            ) : null}
+            {isShopListing && <div className="flex items-center gap-1">
+              <Icon name="TruckDelivery" className="mt-0.5" />
+              <Text lineClamp={1} className=" mt-1 text-xs ">
+                {listing.shippable ? "Livraison possible" : "Pas de livraison"}
+              </Text>
+            </div>}
+            {isRepairable && <RepairScoreIcon className="absolute w-20 bottom-1 place-self-center" repairScore={listing.repairScore} />}
           </div>
         </div>
       </Card>
-      {<ExpandImage alt={listing.title} opened={isZoomed} setOpened={setIsZoomed} src={listing.images.url} />}
+      {isShopListing && <ExpandImage alt={listing.title} opened={isZoomed} setOpened={setIsZoomed} src={listing.images.url} />}
     </>
   );
 };
