@@ -46,5 +46,5 @@ export const showcaseTabs={
 }
 
 export const showcaseCategories={
-  repairable: "Electroménager réparable",
+  repairable: "Multimédia réparable",
 }

@@ -12,57 +12,66 @@ const repairablePhones: LandingListing[]=[
     title: 'Fairphone 4',
     repairScore: 9.2,
     image: fairphone4,
-    url: '/product/fairphone-4'
-
+    url: '/search?query=fairphone+4',
+    type: 'Showcase'
 },
 {
     title: 'CROSSCALL Core M5/Z5/X5',
     repairScore: 8.8,
     image: crosscallCore,
-    url: '/product/crosscall-core-m5-z5-x5'
+    url: '/search?query=crosscall+core+m5',
+    type: 'Showcase'
 },
 {
     title: 'SAMSUNG Galaxy A52',
     repairScore: 8.2,
     image: samsungA52,
-    url: '/product/samsung-galaxy-a52'
+    url: '/search?query=galaxy+a52',
+    type: 'Showcase'
 },
 
 {
     title: 'VIVO V21/Y52/X80',
     repairScore: 8,
     image: vivoV52,
-    url: '/product/vivo-v21-y52-x80'
+    url: '/search?query=vivo+y52',
+    type: 'Showcase'
 },
 {
     title: 'MOTOROLA E13',
     repairScore: 8,
     image: motorolaE13,
-    url: '/product/motorola-e13'
+    url: '/search?query=motorola+e13',
+    type: 'Showcase'
 },
 {
     title: 'REDMI NOTE 11',
     repairScore: 7.8,
     image: redmiNote11,
-    url: '/product/xiaomi-redmi-note-11'
+    url: '/search?query=redmi+note+11',
+    type: 'Showcase'
 },
 {
     title: 'APPLE iPhone 14',
     repairScore: 6.9,
     image: iphone14img,
-    url: '/product/apple-iphone-14'
+    url: '/search?query=iphone+14',
+    type: 'Showcase'
 },
 {
     title: 'APPLE iPhone 14',
     repairScore: 6.9,
     image: iphone14img,
-    url: '/product/apple-iphone-14'
+    url: '/search?query=iphone+14',
+    type: 'Showcase'
 },
 {
     title: 'APPLE iPhone 14',
     repairScore: 6.9,
     image: iphone14img,
-    url: '/product/apple-iphone-14'
-}
+    url: '/search?query=iphone+14',
+    type: 'Showcase'
+},
+
 ]
 export default repairablePhones

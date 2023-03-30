@@ -6,3 +6,7 @@ export const detectShopListing = (listing: ShopListing | LandingListing): listin
 export const detectRepairable = (listing: ShopListing | LandingListing): listing is LandingListing => {
     return (listing as LandingListing).repairScore !== undefined;
 }
+
+export const detectShowcase= (listing: ShopListing | LandingListing): listing is LandingListing => {
+    return (listing as LandingListing).type === 'Showcase';
+}

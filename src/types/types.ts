@@ -35,6 +35,7 @@ export interface LandingListing{
   image: StaticImageData;
   body?:string
   repairScore?: number;
+  type: 'Showcase'
 }
 
 interface Images {

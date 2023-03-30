@@ -9,6 +9,7 @@ import { useState } from "react";
 import ExpandImage from "../../../image/ExpandImage";
 import { detectRepairable, detectShopListing } from "../../../../types/TypeDetection";
 import RepairScoreIcon from "../../../../assets/repair-score-icon/RepairScoreIcon";
+import { useRouter } from "next/router";
 type Props = {
   listing: ShopListing | LandingListing;
   isScrolling: boolean;
@@ -17,10 +18,12 @@ type Props = {
 
 
 const Listing = ({ listing, isScrolling, enlargeButton }: Props) => {
+  const router = useRouter()
   const CARD_SECTION_HEIGHT = 240;
   const [isZoomed, setIsZoomed] = useState(false)
   const isShopListing = detectShopListing(listing)
   const isRepairable = detectRepairable(listing)
+
   if (listing.body === "placeholder")
     return (
       <Card
@@ -44,9 +47,9 @@ const Listing = ({ listing, isScrolling, enlargeButton }: Props) => {
         p="sm"
         radius="md"
         withBorder
-        onClick={() => !isScrolling && window.open(listing.url, "_blank")}
+        onClick={() => !isScrolling ? isShopListing ? window.open(listing.url, "_blank") : void router.push(listing.url) : null}
       >
-        <Card.Section className="flex flex-col items-center">
+        <Card.Section >
           {isShopListing ?
             listing.images?.url_thumb ? (
               <div>
@@ -64,10 +67,17 @@ const Listing = ({ listing, isScrolling, enlargeButton }: Props) => {
             ) : (
               <NoImage />
             ) : null}
-          {!isShopListing && <NextImage src={listing.image} alt={listing.title} height={CARD_SECTION_HEIGHT} />}
-          {isShopListing && <Title className="absolute right-0 -mt-7 rounded-tl-lg bg-white px-2 text-xl text-black">
-            {parsePrice(listing.price)}
-          </Title>}
+          {!isShopListing &&
+            <div className="w-full flex justify-center">
+              <NextImage src={listing.image} alt={listing.title} height={CARD_SECTION_HEIGHT} />
+            </div>
+          }
+          {isShopListing &&
+            <Title className="absolute right-0 -mt-7 rounded-tl-lg bg-white px-2 text-xl text-black">
+              {parsePrice(listing.price)}
+            </Title>
+          }
+
         </Card.Section>
         <div className="flex  flex-col gap-3 ">
           <Title
