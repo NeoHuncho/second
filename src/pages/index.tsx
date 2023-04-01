@@ -1,14 +1,14 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
-import SearchBar from "../components/common/SearchBar";
-import logo from "../assets/logo/logo_text.png";
-import { useLocalStorage } from "@mantine/hooks";
+import { useLocalStorage, useScrollIntoView } from "@mantine/hooks";
 import SearchBlock from "../components/landing/SearchBlock";
 import ShowcaseBlock from "../components/landing/ShowcaseBlock";
 const Home: NextPage = () => {
   const [theme] = useLocalStorage({
     key: "color-scheme",
+  });
+  const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>({
+    offset: 150,
   });
   return (
     <>
@@ -22,14 +22,10 @@ const Home: NextPage = () => {
         className={`flex min-h-screen  flex-col items-center ${theme === "dark" ? "bg-landing-dark" : "bg-landing"
           } bg-cover bg-fixed bg-center bg-no-repeat pt-5 `}
       >
-        <Image
-          src={logo}
-          alt="logo"
-          className="absolute top-4 left-4 h-auto w-28 cursor-pointer object-contain"
-        />
-        <div className="max-w-screen-2xl ">
-          <SearchBlock />
-          <ShowcaseBlock />
+
+        <div className="max-w-screen-2xl pb-10">
+          <SearchBlock scrollIntoView={scrollIntoView} />
+          <ShowcaseBlock targetRef={targetRef} />
         </div>
       </main>
     </>

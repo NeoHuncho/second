@@ -29,6 +29,7 @@ const icons = {
   OutlineLink: AiIcons.AiOutlineLink,
   OutlineArrowLeft: AiIcons.AiOutlineArrowLeft,
   OutlineArrowRight: AiIcons.AiOutlineArrowRight,
+  outlineArrowDown: AiIcons.AiOutlineArrowDown,
   OutlineEye: AiIcons.AiOutlineEye,
   Clothes: GiClothes,
   TruckDelivery: TbTruckDelivery,

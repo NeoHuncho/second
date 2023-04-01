@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Title } from "@mantine/core";
 import SearchBar from "../common/SearchBar";
+import useBreakpoints from "../../hooks/ui/useBreakpoints";
+import Logo from "../logo/logo";
+import OurRecommendations from "./OurRecommendations";
+
+
 
 const useChangingWord = () => {
 
-    const words = ["Économique", "Écologique", "Solidaire"];
+    const words = ["économique", "écologique", "solidaire"];
     const [typingText, setTypingText] = useState("Économique");
     const [wordIndex, setWordIndex] = useState(0);
     const [isDeleting, setIsDeleting] = useState(false);
@@ -40,25 +45,38 @@ const useChangingWord = () => {
 
     return typingText;
 };
-const SearchBlock = () => {
+
+interface Props {
+    scrollIntoView: (alignment?: any) => void
+}
+const SearchBlock = ({ scrollIntoView }: Props) => {
     const currentWord = useChangingWord();
+    const { isMobile } = useBreakpoints()
 
     return (
-        <div className="mt-10 flex w-full max-w-screen-2xl flex-col items-center gap-2  pb-14">
-            <Title className="text-xl font-bold text-center">
-                Achetez
-                <span
-                    key={currentWord}
-                    className="inline-block w-32"
-                    style={{ color: "#1a7474" }}
-                >
-                    {currentWord}
-                </span>
-                avec des millions de produits d&apos;occasion!
-            </Title>
-            <SearchBar size="lg" inputClassName="sm:mt-3 w-5/6 sm:w-2/4 " />
-        </div>
+        <div className="h-screen max-w-screen-lg m-auto flex flex-col items-center justify-between">
+            <div className="flex flex-col items-center cursor-pointer" style={{ paddingTop: isMobile ? '12vh' : '30vh' }}>
+                <Logo />
+                <Title className="text-2xl font-bold text-center mt-4">
+                    Achetez
+                    <span
+                        key={currentWord}
+                        className="inline-block w-36 mx-1"
+                        style={{ color: "#1a7474" }}
+                    >
+                        {currentWord}
+                    </span>
+                    avec des millions de produits d&apos;occasion!
+                </Title>
+                <SearchBar size="lg" inputClassName="w-5/6 mt-8 " />
+            </div >
+            <OurRecommendations onClick={() => scrollIntoView({
+                alignment: 'start',
+            })} />
+        </div >
     );
+
+
 };
 
 export default SearchBlock;
