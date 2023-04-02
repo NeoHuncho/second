@@ -8,7 +8,7 @@ const Home: NextPage = () => {
     key: "color-scheme",
   });
   const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>({
-    offset: 150,
+    offset: 55,
   });
   return (
     <>
