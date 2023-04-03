@@ -25,7 +25,6 @@ export default async function handler(
       error: "place id has not been provided or is not a string",
     });
   }
-  //https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJD7fiBh9u5kcRYJSMaMOCCwQ&fields=geometry&key=AIzaSyCPqxh98wA74XdYZ8sp0ahclBPLdghEHl0
   const data = await axios.get<MapsData>(
     `https://maps.googleapis.com/maps/api/place/details/json?place_id=${
       request.query.placeId

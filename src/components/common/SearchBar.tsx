@@ -8,14 +8,16 @@ import useCompletion from "../../hooks/completion/useCompletion";
 import useBreakpoints from "../../hooks/ui/useBreakpoints";
 import useColorScheme from "../../hooks/ui/useColorTheme";
 import Searchitem from "./SearchItem";
-import SearchSlider from "../searchBar/SearchSlider";
+import LocationOptions from "../searchBar/LocationOptions";
+import DeliveryMethodSelect from "../searchBar/DeliveryMethodSelect";
+import CategorySelect from "../searchBar/CategorySelect";
 
 type PropTypes = {
   size?: MantineSize;
-  inputClassName?: string;
+
 };
 
-const SearchBar = ({ size = "md", inputClassName }: PropTypes) => {
+const SearchBar = ({ size = "md" }: PropTypes) => {
   const { isMobile } = useBreakpoints();
 
 
@@ -30,8 +32,7 @@ const SearchBar = ({ size = "md", inputClassName }: PropTypes) => {
   } = useCompletion();
 
   return (
-    <div className="w-full flex flex-col items-center mt-5">
-      <SearchSlider />
+    <div className="w-full flex flex-col items-center px-4 ">
       <Popover
         width={
           size === "lg" ? (!isMobile ? "40vw" : "80%") : !isMobile ? "25%" : "60%"
@@ -39,32 +40,41 @@ const SearchBar = ({ size = "md", inputClassName }: PropTypes) => {
         opened={!!completionResults.length && inputInFocus}
         position="bottom"
       >
-        <Popover.Target>
-          <TextInput
-            onFocus={focusHandlers.open}
-            onBlur={focusHandlers.close}
-            placeholder="Rechercher"
-            size={size}
-            radius={"lg"}
-            value={searchTerm}
-            className={inputClassName || "w-full"}
-            onKeyDown={getHotkeyHandler([["Enter", () => onSubmit()]])}
-            rightSection={
-              <Icon
-                name="OutlineSearch"
-                // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                onClick={() => onSubmit()}
-                className="mr-3 cursor-pointer"
-                size={size === "lg" ? 32 : 25}
+        <div className="w-full sm:grid sm:grid-cols-searchBar flex flex-col gap-2 items-center">
+          <div className="flex w-full">
+            {!isMobile && <CategorySelect size={size} />}
+            <Popover.Target>
+              <TextInput
+                onFocus={focusHandlers.open}
+                onBlur={focusHandlers.close}
+                placeholder="Rechercher"
+                size={size}
+                radius="xs"
+                value={searchTerm}
+                style={{ width: isMobile ? '100%' : '-webkit-fill-available' }}
+
+                onKeyDown={getHotkeyHandler([["Enter", () => onSubmit()]])}
+
+                rightSection={
+                  <Icon
+                    name="OutlineSearch"
+                    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                    onClick={() => onSubmit()}
+                    className="mr-3 cursor-pointer"
+                    size={size === "lg" ? 32 : 25}
+                  />
+                }
+                rightSectionWidth={48}
+                onChange={(e) => {
+                  setDebouncedSearchTerm(e.currentTarget.value);
+                  setSearchTerm(e.currentTarget.value);
+                }}
               />
-            }
-            rightSectionWidth={48}
-            onChange={(e) => {
-              setDebouncedSearchTerm(e.currentTarget.value);
-              setSearchTerm(e.currentTarget.value);
-            }}
-          />
-        </Popover.Target>
+            </Popover.Target>
+          </div>
+          <DeliveryMethodSelect size={size} />
+        </div>
+        <LocationOptions />
         <Popover.Dropdown>
           <div className="flex flex-col ">
             {completionResults.map((product, index) => (

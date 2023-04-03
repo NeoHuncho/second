@@ -12,7 +12,7 @@ const HeaderSearch = () => {
       {isMobile && (
         <div>
           <div className="mb-4">
-            <SearchBar />
+            <SearchBar size="sm" />
           </div>
           <Divider />
         </div>

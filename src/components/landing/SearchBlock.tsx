@@ -21,12 +21,12 @@ const SearchBlock = ({ scrollIntoView }: Props) => {
         <div className="h-screen max-w-screen-lg m-auto flex flex-col items-center justify-between">
             <div className="flex flex-col items-center " style={{ paddingTop: isMobile ? '12vh' : '30vh' }}>
                 <Logo />
-                <Title className="text-lg mx-6 sm:text-2xl font-bold text-center mt-4">
+                <Title className="text-lg mx-6 sm:text-2xl font-bold text-center mt-4 mb-4">
                     Achetez
                     <TypingText />
                     avec des millions de produits d&apos;occasion!
                 </Title>
-                <SearchBar size="lg" inputClassName="mt-8 w-full" />
+                <SearchBar />
             </div >
             <OurRecommendations onClick={() => scrollIntoView({
                 alignment: 'start',

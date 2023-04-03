@@ -5,13 +5,13 @@ import { useEffect, useState } from "react";
 import { getSuggestedCat } from "../../requests/backend";
 import type { SearchResult } from "../../requests/services";
 import { getSearchAutocomplete } from "../../requests/services";
-import useSearchTerm from "../../stores/useSearchTerm";
+import useSearchParams from "../../stores/useSearchParams";
 import useSuggestedCat from "../../stores/useSuggestedCat";
 
 const useCompletion = () => {
   const router = useRouter();
   const { setSearchTerm: setSearchTermStore, searchTerm: searchTermStore } =
-    useSearchTerm();
+    useSearchParams();
 
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useDebouncedState(
     "",

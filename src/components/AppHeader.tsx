@@ -11,7 +11,7 @@ const AppHeader = () => {
 
   const { isMobile } = useBreakpoints();
   return (
-    <div className="grid h-full w-full grid-cols-2 items-center px-3 sm:grid-cols-3 ">
+    <div className="grid h-full w-full grid-cols-2 items-center px-3 sm:grid-cols-appHeader ">
       <Logo textOrder={4} className="cursor-pointer" onClick={() => void router.push("/")} />
       {!isMobile && <SearchBar size="sm" />}
       <div className="flex justify-end">

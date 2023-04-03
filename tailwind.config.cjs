@@ -9,7 +9,8 @@ module.exports = {
           "url('~/src/assets/images/background-landing-dark-min.jpg')",
       },
       gridTemplateColumns: {
-        mobileHeader: "1fr 3fr 1fr ",
+       appHeader: "1fr 3.5fr 1fr ",
+        searchBar: '2.2fr 0.7fr',
       },
       fontSize: {
         md: "1rem",

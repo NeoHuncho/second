@@ -48,3 +48,9 @@ export const showcaseTabs={
 export const showcaseCategories={
   repairable: "Multimédia réparable",
 }
+
+export const deliveryMethods = {
+  delivery: "Livraison 📦",
+  location: "Proche de moi 📍",
+  both: "Les deux 📦📍",
+}
