@@ -7,10 +7,11 @@ import { Icon } from "../../assets/icons";
 import useCompletion from "../../hooks/completion/useCompletion";
 import useBreakpoints from "../../hooks/ui/useBreakpoints";
 import useColorScheme from "../../hooks/ui/useColorTheme";
-import Searchitem from "./SearchItem";
+import SearchItem from "./SearchItem";
 import LocationOptions from "../searchBar/LocationOptions";
 import DeliveryMethodSelect from "../searchBar/DeliveryMethodSelect";
 import CategorySelect from "../searchBar/CategorySelect";
+import useSearchParams from "../../stores/useSearchParams";
 
 type PropTypes = {
   size?: MantineSize;
@@ -72,14 +73,16 @@ const SearchBar = ({ size = "md" }: PropTypes) => {
               />
             </Popover.Target>
           </div>
-          <DeliveryMethodSelect size={size} />
+          <div>
+            <DeliveryMethodSelect size={size} />
+            <LocationOptions />
+          </div>
         </div>
-        <LocationOptions />
         <Popover.Dropdown>
           <div className="flex flex-col ">
             {completionResults.map((product, index) => (
               // eslint-disable-next-line @typescript-eslint/no-misused-promises
-              <Searchitem key={index} text={product.value} onSubmit={onSubmit} />
+              <SearchItem key={index} text={product.value} onSubmit={onSubmit} />
             ))}
           </div>
         </Popover.Dropdown>

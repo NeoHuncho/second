@@ -9,7 +9,7 @@ type Props = {
     size: MantineSize;
 }
 export default function DeliveryMethodSelect({ size }: Props) {
-    const { deliveryMethod, setDeliveryMethod } = useSearchParams();
+    const { deliveryMethod, setDeliveryMethod, setDropdownOpen } = useSearchParams();
     const { isMobile } = useBreakpoints();
     const data = Object.entries(deliveryMethods).map(([key, value]) => ({
         label: value,
@@ -17,6 +17,7 @@ export default function DeliveryMethodSelect({ size }: Props) {
     }));
     return (
         <Select
+
             className="ml-2 w-44 sm:w-full"
             size={isMobile ? 'sm' : size}
             radius={"sm"}
@@ -24,6 +25,9 @@ export default function DeliveryMethodSelect({ size }: Props) {
             value={deliveryMethod}
             onChange={(value) => setDeliveryMethod(value as DeliveryMethod)}
             placeholder="Choisissez une méthode de livraison"
+            //console log when opened
+            onDropdownOpen={() => setDropdownOpen(true)}
+            onDropdownClose={() => setDropdownOpen(false)}
         />
     )
 
