@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import useShops from "../../stores/useShops";
+import useShops from "../../stores/state/useShops";
 import type { ShopName } from "../../../common/types/types";
 import { Filters } from "../../../common/keys/keys";
 
-import useSuggestedCat from "../../stores/useSuggestedCat";
+import useSuggestedCat from "../../stores/state/useSuggestedCat";
 
 const useSearch = () => {
   const router = useRouter();

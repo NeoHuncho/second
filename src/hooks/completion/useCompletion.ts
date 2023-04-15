@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import { getSuggestedCat } from "../../requests/backend";
 import type { SearchResult } from "../../requests/services";
 import { getSearchAutocomplete } from "../../requests/services";
-import useSearchParams from "../../stores/useSearchParams";
-import useSuggestedCat from "../../stores/useSuggestedCat";
+import useSearchParams from "../../stores/state/useSearchParams";
+import useSuggestedCat from "../../stores/state/useSuggestedCat";
 
 const useCompletion = () => {
   const router = useRouter();

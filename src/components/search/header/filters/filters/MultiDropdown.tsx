@@ -2,7 +2,7 @@ import { Checkbox } from "@mantine/core";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import type { Filter } from "../../../../../../common/types/types";
-import useShops from "../../../../../stores/useShops";
+import useShops from "../../../../../stores/state/useShops";
 import multiText from "../../../../../utils/filterText/multiText";
 import type { DropDownInterface } from "../FiltersListing";
 

@@ -13,6 +13,10 @@ export type placeAutocomplete = {
 };
 type placeAutocompleteResponse = placeAutocomplete[];
 
+export type placeLocation = {
+  lat: number;
+  lng: number;
+};
 const getSuggestedCat = async (searchTerm: string) =>
   await axios.get<suggestedCatResponse>(
     formatApiUrl({
@@ -42,7 +46,7 @@ const getPlaceAutocomplete = async (searchTerm: string) =>
   );
 
 const getPlaceLocation = async (placeId: string) => 
-  await axios.get(
+  await axios.get<placeLocation>(
     formatApiUrl({
       routeName: "place/getLocation",
       params: `placeId=${placeId}`,

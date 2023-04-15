@@ -2,7 +2,7 @@ import Image from "next/image";
 import type { Shop } from "../../../types/types";
 import useCarouselShops from "../../../hooks/carousel/useCarouselShops";
 import { Loader, Text } from "@mantine/core";
-import useShops from "../../../stores/useShops";
+import useShops from "../../../stores/state/useShops";
 import SwiperCarousel from "../../common/SwiperCarousel";
 
 interface Props {

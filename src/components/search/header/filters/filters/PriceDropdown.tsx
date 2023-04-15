@@ -2,7 +2,7 @@ import type { DropDownInterface } from "../FiltersListing";
 import { TextInput } from "@mantine/core";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import useShops from "../../../../../stores/useShops";
+import useShops from "../../../../../stores/state/useShops";
 import { useDebouncedState } from "@mantine/hooks";
 import priceText from "../../../../../utils/filterText/priceText";
 import { Filters } from "../../../../../../common/keys/keys";

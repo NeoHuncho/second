@@ -1,32 +1,43 @@
-import { Button, Slider, Text, TextInput } from "@mantine/core";
-import useSearchParams from "../../stores/useSearchParams";
+import { Slider, Text, } from "@mantine/core";
+import useSearchParams from "../../stores/state/useSearchParams";
 import AddressDropdown from "./AddressDropdown";
 import useColorScheme from "../../hooks/ui/useColorTheme";
+import { useEffect, useRef, useState } from "react";
+import useDeliveryParams from "../../stores/storage/useDeliveryParams";
+import AddressRangeSlider from "./AddressRangeSlider";
 
 const LocationOptions = () => {
-    const { deliveryMethod, addressConfirmed, setAddressConfirmed,dropdownOpen } = useSearchParams();
-    const { isLight, } = useColorScheme();
-    const MARKS = [
-        { value: 0, label: '0 km' },
-        { value: 15, label: '5 km' },
-        { value: 30, label: '10 km' },
-        { value: 45, label: '20 km' },
-        { value: 60, label: '30 km' },
-        { value: 75, label: '50 km' },
-        { value: 90, label: '100 km' },
-        { value: 105, label: '200 km' },
-    ]
-    if (deliveryMethod === 'delivery' || dropdownOpen) return null;
+    const { dropdownOpen, hasClickedDeliverySelect } = useSearchParams();
+    const { deliveryMethod } = useDeliveryParams();
+    const { isLight } = useColorScheme();
+    const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null)
+    useEffect(() => {
+        setIsOpen(deliveryMethod !== 'delivery' && !dropdownOpen && hasClickedDeliverySelect)
+    }, [deliveryMethod, dropdownOpen])
+
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setIsOpen(false)
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside)
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside)
+        }
+    }, [dropdownRef])
+
+
+
+    if (!isOpen) return null;
     return (
-        <div className="absolute bg-white p-4 rounded-md -ml-5 mt-2" style={!isLight ? { background: '#25262B' } : { background: '#fff' }}>
+        <div ref={dropdownRef} className="absolute bg-white p-4 rounded-md sm:-ml-5 mt-2 z-10" style={!isLight ? { background: '#25262B' } : { background: '#fff' }}>
             <div className="flex flex-col gap-5 items-center  w-full justify-center">
                 <AddressDropdown />
-                <div>
-                    <Text align="center">Proximité</Text>
-                    <Slider label={(val) => MARKS.find((mark) => mark.value === val)?.label} step={15}
-                        classNames={{ root: 'w-52', markLabel: 'hidden', }} labelAlwaysOn marks={MARKS} />
-                </div>
-                <Button color='secondary'>Confirmer</Button>
+                <AddressRangeSlider />
             </div>
         </div>
 

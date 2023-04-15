@@ -1,6 +1,6 @@
 import { Filters } from "../../../../../common/keys/keys";
 import type { Filter as FilterKey } from "../../../../../common/types/types";
-import useShops from "../../../../stores/useShops";
+import useShops from "../../../../stores/state/useShops";
 import categoryText from "../../../../utils/filterText/categoryText";
 import multiText from "../../../../utils/filterText/multiText";
 

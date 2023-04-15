@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { Sorts } from "../../../../../common/keys/keys";
 
-import useShops from "../../../../stores/useShops";
+import useShops from "../../../../stores/state/useShops";
 import type { Sort } from "../../../../types/types";
 
 const SortListings = () => {

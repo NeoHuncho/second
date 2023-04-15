@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect,  useState } from "react";
 import defaultListing from "../../static/defaultListing";
 import type { ShopListing } from "../../types/types";
-import useShops from "../../stores/useShops";
+import useShops from "../../stores/state/useShops";
 import type { ShopName } from "../../../common/types/types";
 import useCarousel from "./useCarousel";
 

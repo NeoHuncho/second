@@ -1,17 +1,14 @@
 import type { MantineSize } from "@mantine/core";
-import { Slider } from "@mantine/core";
 import { Popover, Text, TextInput } from "@mantine/core";
 import { getHotkeyHandler, useMediaQuery } from "@mantine/hooks";
-import { useState } from "react";
 import { Icon } from "../../assets/icons";
 import useCompletion from "../../hooks/completion/useCompletion";
 import useBreakpoints from "../../hooks/ui/useBreakpoints";
-import useColorScheme from "../../hooks/ui/useColorTheme";
 import SearchItem from "./SearchItem";
 import LocationOptions from "../searchBar/LocationOptions";
 import DeliveryMethodSelect from "../searchBar/DeliveryMethodSelect";
 import CategorySelect from "../searchBar/CategorySelect";
-import useSearchParams from "../../stores/useSearchParams";
+
 
 type PropTypes = {
   size?: MantineSize;

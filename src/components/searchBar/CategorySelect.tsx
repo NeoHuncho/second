@@ -1,6 +1,6 @@
 import type { MantineSize } from "@mantine/core";
 import { Select } from "@mantine/core";
-import useSearchParams from "../../stores/useSearchParams";
+import useSearchParams from "../../stores/state/useSearchParams";
 import { Categories } from "../../../common/keys/keys";
 import type { Category } from "../../../common/types/types";
 

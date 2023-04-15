@@ -1,7 +1,7 @@
 import LoadingShops from "../components/search/LoadingShops";
 
 import ListingShop from "../components/search/listingsShop/ListingShop";
-import useShops from "../stores/useShops";
+import useShops from "../stores/state/useShops";
 import HeaderSearch from "../components/search/header/HeaderSearch";
 import useSearch from "../hooks/search/useSearch";
 

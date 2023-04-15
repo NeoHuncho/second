@@ -1,15 +1,15 @@
-import type { Shop, Sort } from "../types/types";
+import type { Shop, Sort } from "../../types/types";
 import { create } from "zustand";
-import { defaultShops } from "../static/defaultShops";
+import { defaultShops } from "../../static/defaultShops";
 import type { NextRouter } from "next/router";
-import getFiltersFromUrl from "../utils/url/getFiltersFromUrl";
+import getFiltersFromUrl from "../../utils/url/getFiltersFromUrl";
 import type {
   Filter,
   MultiKeyFilterType,
   ShopName,
-} from "../../common/types/types";
-import { MultiKeyFilterTypes, Shops } from "../../common/keys/keys";
-import { getShopListings } from "../requests/backend";
+} from "../../../common/types/types";
+import { MultiKeyFilterTypes, Shops } from "../../../common/keys/keys";
+import { getShopListings } from "../../requests/backend";
 
 type ShopState = {
   shops: Record<ShopName, Shop>;

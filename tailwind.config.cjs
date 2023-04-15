@@ -10,7 +10,7 @@ module.exports = {
       },
       gridTemplateColumns: {
        appHeader: "1fr 3.5fr 1fr ",
-        searchBar: '2.2fr 0.7fr',
+        searchBar: '2.2fr 0.74fr',
       },
       fontSize: {
         md: "1rem",
