@@ -15,7 +15,7 @@ const useSizeDropdown = ({
   const router = useRouter();
   const {
     filters: storeFilters,
-    setFilters: setStoreFilters,
+    setMultiKeyFilter: setStoreFilters,
     removeFilter,
   } = useShops();
 

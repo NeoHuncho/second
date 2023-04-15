@@ -14,7 +14,7 @@ const useMultiDropdown = ({
   const router = useRouter();
   const {
     filters: storeFilters,
-    setFilters: setStoreFilters,
+    setMultiKeyFilter: setStoreFilters,
     removeFilter,
   } = useShops();
   const [filters, setFilters] = useState(

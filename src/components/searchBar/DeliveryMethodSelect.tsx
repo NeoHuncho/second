@@ -5,7 +5,7 @@ import type { DeliveryMethod } from "../../../common/types/types";
 import { deliveryMethods } from "../../../common/keys/keys";
 import useBreakpoints from "../../hooks/ui/useBreakpoints";
 import { useEffect, useState } from "react";
-import useDeliveryParams from "../../stores/storage/useDeliveryParams";
+import useDeliveryParams from "../../stores/storage/usePersistentSearchParams";
 
 type Props = {
     size: MantineSize;

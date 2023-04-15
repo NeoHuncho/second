@@ -18,12 +18,18 @@ type ShopState = {
   updateListings: (shop: ShopName) => Promise<void>;
   resetShops: () => void;
   setSort: (sort: Sort, router: NextRouter) => void;
-  setFilters: ({
+  setFilter: ({
     key,
     value,
   }: {
     key: string;
     value?: string;
+  }) => void;
+  setMultiKeyFilter: ({
+    key,
+    router,
+  }: {
+    key: string;
     router: NextRouter;
   }) => void;
   removeFilter: ({ key, router }: { key: Filter; router: NextRouter }) => void;
@@ -151,7 +157,7 @@ const useShops = create<ShopState>()((set, get) => ({
     set({ sort: sort });
   },
 
-  setFilters: ({ key, value, router }) => {
+  setFilter: ({ key, value }) => {
     //value is optional. This is for multi key filters where the value is the key. In this cas we just set the value to true
     set((state) => ({
       ...state,
@@ -160,10 +166,15 @@ const useShops = create<ShopState>()((set, get) => ({
         [key]: value || true,
       },
     }));
-
-    if (
-      Object.keys(MultiKeyFilterTypes).some((filter) => key.includes(filter))
-    ) {
+  },
+  setMultiKeyFilter: ({ key,  router }) => {
+       set((state) => ({
+      ...state,
+      filters: {
+        ...state.filters,
+        [key]: true,
+      },
+    }));
       const typeKey = Object.keys(MultiKeyFilterTypes).find((filter) =>
         key.includes(filter)
       ) as MultiKeyFilterType;
@@ -175,11 +186,6 @@ const useShops = create<ShopState>()((set, get) => ({
           [typeKey]: prevValue ? `${prevValue}+${key}` : key,
         },
       });
-    }
-    void router.push({
-      pathname: router.pathname,
-      query: { ...router.query, [key]: value },
-    });
   },
   removeFilter: ({ key, router }) => {
     set((state) => {

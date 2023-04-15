@@ -1,9 +1,8 @@
-import { Slider, Text, } from "@mantine/core";
 import useSearchParams from "../../stores/state/useSearchParams";
 import AddressDropdown from "./AddressDropdown";
 import useColorScheme from "../../hooks/ui/useColorTheme";
 import { useEffect, useRef, useState } from "react";
-import useDeliveryParams from "../../stores/storage/useDeliveryParams";
+import useDeliveryParams from "../../stores/storage/usePersistentSearchParams";
 import AddressRangeSlider from "./AddressRangeSlider";
 
 const LocationOptions = () => {

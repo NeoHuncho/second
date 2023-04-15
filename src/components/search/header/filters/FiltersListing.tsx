@@ -1,12 +1,11 @@
 import { Filters } from "../../../../../common/keys/keys";
 import type { Filter as FilterKey } from "../../../../../common/types/types";
 import useShops from "../../../../stores/state/useShops";
-import categoryText from "../../../../utils/filterText/categoryText";
 import multiText from "../../../../utils/filterText/multiText";
 
 import priceText from "../../../../utils/filterText/priceText";
 import Filter from "./Filter";
-import CategoryDropdown from "./filters/CategoryDropdown";
+
 import MultiDropDown from "./filters/MultiDropdown";
 import PriceDropdown from "./filters/PriceDropdown";
 import SizeDropDown from "./filters/SizeDropDown";
@@ -28,13 +27,7 @@ const FiltersListing = () => {
 
   return (
     <div className="flex flex-wrap gap-4">
-      <Filter
-        initialText={Filters["category"]}
-        text={categoryText({ filters })}
-        DropDown={CategoryDropdown}
-        keys={["category"]}
-        typeKey="category"
-      />
+
       {(filters.category === 'shoes' || filters.category === 'clothes') &&
         <Filter
           initialText={multiText({ key: "size" })}

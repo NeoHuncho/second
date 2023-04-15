@@ -1,5 +1,5 @@
 import { Slider, Text, } from "@mantine/core";
-import useDeliveryParams from "../../stores/storage/useDeliveryParams";
+import useDeliveryParams from "../../stores/storage/usePersistentSearchParams";
 import { useEffect, useState } from "react";
 export default function AddressRangeSlider() {
     const MARKS = [
