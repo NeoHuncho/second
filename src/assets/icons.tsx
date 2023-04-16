@@ -4,7 +4,7 @@ import { TbTruckDelivery } from "react-icons/tb";
 import { GiClothes, GiConverseShoe, GiLaptop } from "react-icons/gi";
 import { FaSignOutAlt } from "react-icons/fa";
 import { BsMoonFill, BsPhoneFill, BsScrewdriver } from "react-icons/bs";
-
+import { AiOutlineClose } from "react-icons/ai";
 import useColorScheme from "../hooks/ui/useColorTheme";
 
 import { ImEnlarge } from "react-icons/im";
@@ -44,6 +44,7 @@ const icons = {
   Phone: BsPhoneFill,
   Laptop: GiLaptop,
   Screwdriver: BsScrewdriver,
+  Close: AiOutlineClose,
 
 
 };
