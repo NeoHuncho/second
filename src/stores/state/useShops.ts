@@ -54,7 +54,6 @@ const useShops = create<ShopState>()((set, get) => ({
   updateListings: async (shop: ShopName) => {
     const { listings, page, name } = get().shops[shop];
     const currentDate = Date.now();
-    console.log("update listings", shop, page, name)
     if (!name) return;
     if (page + 1 > 1) {
       set((state) => ({

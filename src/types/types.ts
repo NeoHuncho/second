@@ -10,6 +10,7 @@ export type Shop = {
   page: number;
   hasFetchedAll: boolean;
   loadingNextPage: boolean;
+  isDeliveryOnly: boolean;
 };
 
 export interface ShopListing {

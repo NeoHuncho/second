@@ -17,12 +17,12 @@ const IconAndLabel = ({ label, onClick, iconName }: IconAndLabelProps) => {
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
       onClick={onClick}
-      className="flex cursor-pointer flex-col items-center"
+      className="flex cursor-pointer flex-col items-center select-none"
     >
       <Icon name={iconName} size={30} />
       <Text
         style={{ backgroundColor: hovering ? "blue" : "black" }}
-        className={`-mt-1 rounded-full border bg-black px-1 text-xs transition-colors duration-300`}
+        className={`-mt-1 rounded-full border bg-black px-1 text-xs transition-colors duration-300 select-none`}
         color={"white"}
         weight={600}
       >

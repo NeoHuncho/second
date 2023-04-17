@@ -27,7 +27,8 @@ const multiChoiceFilterParser = ({
 };
 
 const filtersLeboncoin = (filters: Record<QueryUrl, string>) => {
-  const { priceMin, priceMax, category } = filters;
+  console.log(filters);
+  const { priceMin, priceMax, category,lat,lng, locationRange, deliveryMethod,city } = filters;
   let filtersString = "";
 
   if (priceMin && priceMax) filtersString = `&price=${priceMin}-${priceMax}`;
@@ -52,6 +53,11 @@ const filtersLeboncoin = (filters: Record<QueryUrl, string>) => {
       staticValues: sizesLeboncoin,
     });
     filtersString += `&shoe_size=${sizes.join("%2C")}`;
+  }
+  if(deliveryMethod!=='delivery'){
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    filtersString+=`&locations=${city}__${lat}_${lng}_10000_${parseInt(locationRange)*1000}`
+    
   }
   return filtersString;
 };

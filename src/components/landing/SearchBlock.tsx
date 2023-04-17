@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Title } from "@mantine/core";
 import SearchBar from "../common/SearchBar";
 import useBreakpoints from "../../hooks/ui/useBreakpoints";
@@ -21,7 +21,7 @@ const SearchBlock = ({ scrollIntoView }: Props) => {
         <div className="h-screen max-w-screen-md m-auto flex flex-col items-center justify-between">
             <div className="w-full flex flex-col items-center " style={{ paddingTop: isMobile ? '12vh' : '30vh' }}>
                 <Logo />
-                <Title className="text-lg mx-6 sm:text-2xl font-bold text-center mt-4 mb-4">
+                <Title className="text-lg mx-6 sm:text-2xl font-bold text-center mt-4 mb-4 select-none">
                     Achetez
                     <TypingText />
                     avec des millions de produits d&apos;occasion!

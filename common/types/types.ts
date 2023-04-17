@@ -20,7 +20,13 @@ export type QueryUrl =
   | "priceMax"
   | "condition"
   | "category"
-  | "size";
+  | "size"
+  |'city'
+  |'lat'
+  |'lng'
+  |'locationRange'
+  |'deliveryMethod'
+  
 export type Category = keyof typeof Categories;
 export type SizeCategory = keyof typeof SizeCategories
 export type DeliveryMethod= keyof typeof deliveryMethods

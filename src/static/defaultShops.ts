@@ -8,7 +8,8 @@ import type { Shop } from "../types/types";
 const defaultShop = (
   name: ShopName,
   image: StaticImageData,
-  color: string
+  color: string,
+  isDeliveryOnly =false
 ): Shop => {
   return {
     status: "loading",
@@ -19,10 +20,11 @@ const defaultShop = (
     page: 0,
     hasFetchedAll: false,
     loadingNextPage: false,
+    isDeliveryOnly: isDeliveryOnly,
   };
 };
 
 export const defaultShops = {
   Leboncoin: defaultShop("Leboncoin", leboncoinImage, "#FF6F15"),
-  Vinted: defaultShop("Vinted", vintedImage, "#007781"),
+  Vinted: defaultShop("Vinted", vintedImage, "#007781",true),
 };

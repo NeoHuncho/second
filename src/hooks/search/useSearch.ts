@@ -8,30 +8,29 @@ import useSuggestedCat from "../../stores/state/useSuggestedCat";
 import useSearchParams from "../../stores/storage/usePersistentSearchParams";
 import type { ParsedUrlQuery} from "querystring";
 import { parse } from "querystring";
+import useValidShops from "./useValidShops";
 
 
 const useSearch = () => {
   const router = useRouter();
   const {
     updateListings,
-    shops,
     resetShops,
     setSort,
     resetFilters,
     setFilter,
+    shops
   } = useShops();
   const { suggestedCat, suggest, setSuggestedCat } = useSuggestedCat();
-  const {category,deliveryMethod,locationRange,addressCoords,deliveryParamsChanged}= useSearchParams()
-   
+  const {category,deliveryMethod,locationRange,addressCoords,deliveryParamsChanged,address}= useSearchParams()
+  const {validShopKeys: validShops}= useValidShops()
   useEffect(() => {
     if(!deliveryMethod) return;
     if (!window.location.search.includes("sort")) {
       setSort("recommended", router);
       return;
     }
-    console.log(1,  Object.keys(Filters).every(
-        (key) => window.location.search.includes(key) === false
-      ))
+   
     if (
       Object.keys(Filters).every(
         (key) => window.location.search.includes(key) === false
@@ -49,9 +48,9 @@ const useSearch = () => {
       setSuggestedCat("");
       return;
     }
-    console.log(3, router?.query  ?.query)
+    
     if (router.query.query) updateShops();
-    console.log(4, window.location.search)
+    
   }, [router.query]);
 
   useEffect(() => {
@@ -68,6 +67,8 @@ const useSearch = () => {
     routerUrlQuery[`lng`]=addressCoords.lng
       if(locationRange && deliveryMethod!=='delivery' )
     routerUrlQuery[`locationRange`]=locationRange
+    if(address && deliveryMethod!=='delivery' )
+    routerUrlQuery[`city`]=address
    function convertSearchToParsedUrlQuery(): ParsedUrlQuery {
     const search = window.location.search;
     const parsedSearch = parse(search.replace("?", ""));
@@ -80,13 +81,14 @@ const useSearch = () => {
         ...routerUrlQuery,
       }
     });
-    console.log(-1,router.query)
+    
   }, [router.query.query,deliveryParamsChanged]);
 
   
   const updateShops = () => {
     resetShops();
-    Object.keys(shops).forEach((shop) => {
+    
+    validShops.forEach((shop) => {
       void updateListings(shop as ShopName);
     });
   };
