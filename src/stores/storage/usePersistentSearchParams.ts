@@ -15,10 +15,10 @@ const useDeliveryParams=()=>{
     const [address,setAddress]= useLocalStorage({key:"address",defaultValue:""})
     const [addressCoords,setAddressCoords]= useLocalStorage<AddressCoords>({key:"addressCoords",defaultValue:{lat:0,lng:0}})
     const [category, setCategory] = useLocalStorage<Category|'all'>({key:"category",defaultValue:"all"})
-    const [deliveryParamsChanged,setDeliveryParamsChanged]= useState(false)
+    const [deliveryParamsChanged,setDeliveryParamsChanged]= useState(0)
     useEffect(()=>{
-        if(!deliveryParamsChanged) return setDeliveryParamsChanged(true)
-        else return},[locationRange,deliveryMethod,address,addressCoords,category,])
+      setDeliveryParamsChanged(deliveryParamsChanged+1)
+    },[locationRange,deliveryMethod,address,addressCoords,category])
     return {locationRange,setLocationRange,deliveryMethod,setDeliveryMethod,address,setAddress,addressCoords,setAddressCoords, category,setCategory,deliveryParamsChanged,setDeliveryParamsChanged}
 }
 export default useDeliveryParams

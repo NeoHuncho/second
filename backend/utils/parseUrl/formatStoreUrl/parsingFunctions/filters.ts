@@ -42,7 +42,7 @@ const filtersLeboncoin = (filters: Record<QueryUrl, string>) => {
     filtersString += `&item_condition=${conditions.join("%2C")}`;
   }
 
-  if (category)
+  if (category && category!=='all')
     filtersString += `&category=${categoriesLeboncoin[category as Category]}`;
 
   if (Object.keys(filters).some((key) => key.includes("size"))) {
@@ -83,7 +83,7 @@ const filtersVinted = (filters: Record<QueryUrl, string>) => {
     });
     filtersString += `&size_id%5B%5D=${sizes.join("&size_id%5B%5D=")}`;
   }
-  if (category) filtersString += `&${categoriesVinted[category as Category]}`;
+  if (category && category!=='all') filtersString += `&${categoriesVinted[category as Category]}`;
 
   return filtersString;
 };

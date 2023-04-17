@@ -6,6 +6,9 @@ import { Filters } from "../../../common/keys/keys";
 
 import useSuggestedCat from "../../stores/state/useSuggestedCat";
 import useSearchParams from "../../stores/storage/usePersistentSearchParams";
+import type { ParsedUrlQuery} from "querystring";
+import { parse } from "querystring";
+
 
 const useSearch = () => {
   const router = useRouter();
@@ -18,12 +21,43 @@ const useSearch = () => {
     setFilter,
   } = useShops();
   const { suggestedCat, suggest, setSuggestedCat } = useSuggestedCat();
-  const {category,deliveryMethod,locationRange,addressCoords,deliveryParamsChanged,setDeliveryParamsChanged}= useSearchParams()
+  const {category,deliveryMethod,locationRange,addressCoords,deliveryParamsChanged}= useSearchParams()
+   
+  useEffect(() => {
+    if(!deliveryMethod) return;
+    if (!window.location.search.includes("sort")) {
+      setSort("recommended", router);
+      return;
+    }
+    console.log(1,  Object.keys(Filters).every(
+        (key) => window.location.search.includes(key) === false
+      ))
+    if (
+      Object.keys(Filters).every(
+        (key) => window.location.search.includes(key) === false
+      )
+    )
+    resetFilters();
+  
+    if (suggestedCat && !category) {
+      if (suggest) return;
+      setFilter({
+        key: "category",
+        value: suggestedCat,
+      });
+
+      setSuggestedCat("");
+      return;
+    }
+    console.log(3, router?.query  ?.query)
+    if (router.query.query) updateShops();
+    console.log(4, window.location.search)
+  }, [router.query]);
 
   useEffect(() => {
-    if(!deliveryParamsChanged)  return;
-    const routerUrlQuery:Record<string,string|number>={}
   
+    const routerUrlQuery:Record<string,string|number>={}
+    if(!router.query.query) return;
     if(category)
     routerUrlQuery[`category`]=category
       if(deliveryMethod)
@@ -34,18 +68,20 @@ const useSearch = () => {
     routerUrlQuery[`lng`]=addressCoords.lng
       if(locationRange && deliveryMethod!=='delivery' )
     routerUrlQuery[`locationRange`]=locationRange
-    
-    if(routerUrlQuery)
+   function convertSearchToParsedUrlQuery(): ParsedUrlQuery {
+    const search = window.location.search;
+    const parsedSearch = parse(search.replace("?", ""));
+    return parsedSearch;
+}
     void  router.push({
       pathname: router.pathname,
       query: {
-        ...router.query,
+        ...convertSearchToParsedUrlQuery(),
         ...routerUrlQuery,
       }
     });
-    setDeliveryParamsChanged(false)
-
-  }, [deliveryParamsChanged,router.query]);
+    console.log(-1,router.query)
+  }, [router.query.query,deliveryParamsChanged]);
 
   
   const updateShops = () => {
@@ -57,32 +93,6 @@ const useSearch = () => {
 
   
   
-  useEffect(() => {
-    
-    if (!window.location.search.includes("sort")) {
-      setSort("recommended", router);
-      return;
-    }
 
-    if (
-      Object.keys(Filters).every(
-        (key) => window.location.search.includes(key) === false
-      )
-    )
-    resetFilters();
-
-    
-    if (suggestedCat && !category) {
-      if (suggest) return;
-      setFilter({
-        key: "category",
-        value: suggestedCat,
-      });
-
-      setSuggestedCat("");
-      return;
-    }
-    if (router.query.query) updateShops();
-  }, [router.query]);
 };
 export default useSearch;
