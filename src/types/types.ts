@@ -60,3 +60,4 @@ export type Sort =
   | "date_asc"
   | "date_desc";
 
+export type Categories = "all" | "clothes" | "shoes" 

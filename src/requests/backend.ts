@@ -2,11 +2,7 @@ import axios from "axios";
 import type { ShopRes } from "../types/api/shopsRes";
 import formatApiUrl from "../utils/url/formatApiUrl";
 import formatStoreUrl from "../utils/url/formatStoreUrl";
-type suggestedCatResponse = {
-  suggestedCat: string;
-  suggest: boolean;
-};
-
+type suggestedCatResponse = string
 export type placeAutocomplete = {
   title: string;
   placeId: string;

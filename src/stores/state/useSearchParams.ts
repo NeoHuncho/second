@@ -11,7 +11,6 @@ type StoreType = {
 
 const useSearchParams = create<StoreType>((set) => ({
   searchTerm: "",
-  category: "all",
   dropdownOpen: false,
   hasClickedDeliverySelect: false,
   setSearchTerm: (searchTerm: string) => set({ searchTerm }),

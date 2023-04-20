@@ -7,6 +7,7 @@ import type { SearchResult } from "../../requests/services";
 import { getSearchAutocomplete } from "../../requests/services";
 import useSearchParams from "../../stores/state/useSearchParams";
 import useSuggestedCat from "../../stores/state/useSuggestedCat";
+import useShops from "../../stores/state/useShops";
 
 const useCompletion = () => {
   const router = useRouter();
@@ -17,27 +18,32 @@ const useCompletion = () => {
     "",
     500
   );
-  const { setSuggestedCat, setSuggest } = useSuggestedCat();
+  const { setSuggestedCat } = useSuggestedCat();
   const [completionResults, setCompletionResults] = useState<SearchResult[]>(
     []
   );
+  const {filters}= useShops()
   const [searching, setSearching] = useState<boolean>(false);
 
   const [searchTerm, setSearchTerm] = useState(searchTermStore);
 
+  const getAndSetSuggestedCat = async (term: string) => {
+    const suggestedCat = await getSuggestedCat(term);
+    setSuggestedCat(suggestedCat.data);
+  };
+      
+
   const onSubmit = async (searchTermOverride?: string) => {
     if (!searchTermOverride && !searchTerm) return;
-    const suggestedCat = await getSuggestedCat(
-      searchTermOverride || searchTerm
-    );
+    if(!filters.category || filters.category==='all') await getAndSetSuggestedCat(searchTermOverride || searchTerm);
     setSearchTerm(searchTermOverride || searchTerm);
     setSearchTermStore(searchTermOverride || searchTerm);
     setCompletionResults([]);
-    setSuggestedCat(suggestedCat.data.suggestedCat);
-    setSuggest(suggestedCat.data.suggest);
+    // setSuggest(suggestedCat.data.suggest);
     void router.push({
       pathname: "/search",
-      query: { query: searchTermOverride || searchTerm },
+      query: { query: searchTermOverride || searchTerm, category:filters.category },
+      
     });
   };
 

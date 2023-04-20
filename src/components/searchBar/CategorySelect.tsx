@@ -1,15 +1,17 @@
 import type { MantineSize } from "@mantine/core";
 import { Select } from "@mantine/core";
-import useSearchParams from "../../stores/storage/usePersistentSearchParams";
 import { Categories } from "../../../common/keys/keys";
 import type { Category } from "../../../common/types/types";
+import useShops from "../../stores/state/useShops";
+import { useRouter } from "next/router";
 
 type Props = {
     size: MantineSize;
 }
 
 export default function CategorySelect({ size }: Props) {
-    const { category, setCategory } = useSearchParams();
+    const { filters, setFilter } = useShops();
+    const router = useRouter();
     const data = Object.entries(Categories).map(([key, value]) => ({
         label: value,
         value: key,
@@ -20,8 +22,8 @@ export default function CategorySelect({ size }: Props) {
             size={size}
             radius={"xs"}
             data={data}
-            value={category}
-            onChange={(value) => setCategory(value as Category)}
+            value={filters.category || 'all'}
+            onChange={(value) => setFilter({ key: 'category', value: value as string, router })}
             placeholder="Catégories"
         />
     )

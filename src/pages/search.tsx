@@ -9,7 +9,7 @@ import useShops from "../stores/state/useShops";
 const Search = () => {
   const { validShopsValues: validShops, } = useValidShops()
   useSearch();
-  const { shops } = useShops()
+  const { shops, filters } = useShops()
   return (
     <div className="m-auto flex max-w-screen-2xl flex-col gap-4 sm:gap-2 ">
       <HeaderSearch />

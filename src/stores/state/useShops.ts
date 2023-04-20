@@ -21,9 +21,11 @@ type ShopState = {
   setFilter: ({
     key,
     value,
+    router
   }: {
     key: string;
     value?: string;
+    router: NextRouter;
   }) => void;
   setMultiKeyFilter: ({
     key,
@@ -157,7 +159,7 @@ const useShops = create<ShopState>()((set, get) => ({
     set({ sort: sort });
   },
 
-  setFilter: ({ key, value }) => {
+  setFilter: ({ key, value,router }) => {
     //value is optional. This is for multi key filters where the value is the key. In this cas we just set the value to true
     set((state) => ({
       ...state,
@@ -165,7 +167,14 @@ const useShops = create<ShopState>()((set, get) => ({
         ...state.filters,
         [key]: value || true,
       },
+      
     }));
+    void router.push({
+      pathname: router.pathname,
+      query: {
+        ...router.query,
+        [key]: value || true,
+      }});
   },
   setMultiKeyFilter: ({ key,  router }) => {
        set((state) => ({

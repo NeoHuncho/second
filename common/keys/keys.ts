@@ -30,6 +30,7 @@ export const MultiKeyFilterTypes = {
 };
 
 export const Categories = {
+  all: "Tout",
   clothes: "Vêtements",
   shoes: "Chaussures",
 };

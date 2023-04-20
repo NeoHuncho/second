@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import AppHeader from "../components/AppHeader";
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "@mantine/hooks";
+import { NotificationsProvider } from "@mantine/notifications";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -38,20 +39,23 @@ const MyApp: AppType<{ session: Session | null }> = ({
             fontFamily: "Inter, sans-serif",
           }}
         >
-          <AppShell
-            unstyled={router.pathname === "/"}
-            padding="md"
-            header={
-              router.pathname !== "/" ? (
-                <Header height={65}>
-                  <AppHeader />
-                </Header>
-              ) : undefined
-            }
-          >
-            <Component {...pageProps} />
-            <Analytics />
-          </AppShell>
+          <NotificationsProvider>
+            <AppShell
+              unstyled={router.pathname === "/"}
+              padding="md"
+              header={
+                router.pathname !== "/" ? (
+                  <Header height={65}>
+                    <AppHeader />
+                  </Header>
+                ) : undefined
+              }
+            >
+
+              <Component {...pageProps} />
+              <Analytics />
+            </AppShell>
+          </NotificationsProvider>
         </MantineProvider>
       )}
     </SessionProvider>

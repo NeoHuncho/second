@@ -70,11 +70,7 @@ const usePrice = ({
   useEffect(() => {
     if (firstLoadMin) return setFirstLoadMin(false);
     if (priceMinDebounced) {
-      setFilter({ key: "priceMin", value: priceMinDebounced });
-      void router.push({
-        pathname: router.pathname,
-        query: { ...router.query, priceMin: priceMinDebounced },
-      });
+      setFilter({ key: "priceMin", value: priceMinDebounced, router });
     }
 
   }, [priceMinDebounced]);
@@ -82,11 +78,8 @@ const usePrice = ({
   useEffect(() => {
     if (firstLoadMax) return setFirstLoadMax(false);
     if (priceMaxDebounced) {
-      setFilter({ key: "priceMax", value: priceMaxDebounced });
-      void router.push({
-        pathname: router.pathname,
-        query: { ...router.query, priceMax: priceMaxDebounced },
-      });
+      setFilter({ key: "priceMax", value: priceMaxDebounced, router });
+
     }
   }, [priceMaxDebounced]);
   return { priceMin, priceMax, onChange };

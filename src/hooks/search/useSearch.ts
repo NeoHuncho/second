@@ -1,17 +1,19 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import useShops from "../../stores/state/useShops";
-import type { ShopName } from "../../../common/types/types";
+import type { Category, ShopName } from "../../../common/types/types";
 import { Filters } from "../../../common/keys/keys";
-
+import { showNotification} from '@mantine/notifications';
 import useSuggestedCat from "../../stores/state/useSuggestedCat";
 import useSearchParams from "../../stores/storage/usePersistentSearchParams";
 import type { ParsedUrlQuery} from "querystring";
 import { parse } from "querystring";
 import useValidShops from "./useValidShops";
+import { Categories } from "../../../common/keys/keys";
 
 
 const useSearch = () => {
+
   const router = useRouter();
   const {
     updateListings,
@@ -19,10 +21,10 @@ const useSearch = () => {
     setSort,
     resetFilters,
     setFilter,
-    shops
+    filters
   } = useShops();
-  const { suggestedCat, suggest, setSuggestedCat } = useSuggestedCat();
-  const {category,deliveryMethod,locationRange,addressCoords,deliveryParamsChanged,address}= useSearchParams()
+  const { suggestedCat,  setSuggestedCat } = useSuggestedCat();
+  const {deliveryMethod,locationRange,addressCoords,deliveryParamsChanged,address}= useSearchParams()
   const {validShopKeys: validShops}= useValidShops()
   useEffect(() => {
     if(!deliveryMethod) return;
@@ -31,22 +33,25 @@ const useSearch = () => {
       return;
     }
    
-    if (
-      Object.keys(Filters).every(
-        (key) => window.location.search.includes(key) === false
-      )
-    )
-    resetFilters();
-  
-    if (suggestedCat && !category) {
-      if (suggest) return;
+    // if (
+    //   Object.keys(Filters).every(
+    //     (key) => window.location.search.includes(key) === false
+    //   )
+    // )
+    // resetFilters();
+    if (suggestedCat && Object.keys(Categories).includes(suggestedCat)) {
       setFilter({
         key: "category",
         value: suggestedCat,
+        router,
       });
-
       setSuggestedCat("");
-      return;
+       showNotification({
+        title: `Category ajoutée: ${Categories[suggestedCat as Category]}`,
+        message: `Nous avons ajouté la catégorie ${Categories[suggestedCat as Category]} à votre recherche`,
+        color: "teal", 
+        autoClose:5000
+      });
     }
     
     if (router.query.query) updateShops();
@@ -57,8 +62,6 @@ const useSearch = () => {
   
     const routerUrlQuery:Record<string,string|number>={}
     if(!router.query.query) return;
-    if(category)
-    routerUrlQuery[`category`]=category
       if(deliveryMethod)
     routerUrlQuery[`deliveryMethod`]=deliveryMethod
       if(addressCoords.lat && deliveryMethod!=='delivery')

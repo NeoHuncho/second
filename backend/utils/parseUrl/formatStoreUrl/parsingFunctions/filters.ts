@@ -27,7 +27,7 @@ const multiChoiceFilterParser = ({
 };
 
 const filtersLeboncoin = (filters: Record<QueryUrl, string>) => {
-  console.log(filters);
+
   const { priceMin, priceMax, category,lat,lng, locationRange, deliveryMethod,city } = filters;
   let filtersString = "";
 
