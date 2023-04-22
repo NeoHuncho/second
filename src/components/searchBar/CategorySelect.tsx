@@ -10,7 +10,7 @@ type Props = {
 }
 
 export default function CategorySelect({ size }: Props) {
-    const { filters, setFilter } = useShops();
+    const { filters, setFilter, removeFilter } = useShops();
     const router = useRouter();
     const data = Object.entries(Categories).map(([key, value]) => ({
         label: value,
@@ -22,8 +22,12 @@ export default function CategorySelect({ size }: Props) {
             size={size}
             radius={"xs"}
             data={data}
-            value={filters.category || 'all'}
-            onChange={(value) => setFilter({ key: 'category', value: value as string, router })}
+            value={filters.category}
+            onChange={(value) => {
+                console.log(value)
+                if (!value) return removeFilter({ key: 'category', router })
+                setFilter({ key: 'category', value: value, router })
+            }}
             placeholder="Catégories"
         />
     )

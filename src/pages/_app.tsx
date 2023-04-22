@@ -11,6 +11,7 @@ import AppHeader from "../components/AppHeader";
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "@mantine/hooks";
 import { NotificationsProvider } from "@mantine/notifications";
+import useResetFilters from "../hooks/search/useResetFilters";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -21,6 +22,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   const [theme] = useLocalStorage({
     key: "color-scheme",
   });
+  useResetFilters();
   //fix to fix the issue of the page flashing before the session is loaded
   useEffect(() => {
     setHasLoaded(true);

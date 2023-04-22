@@ -19,9 +19,7 @@ const useSearch = () => {
     updateListings,
     resetShops,
     setSort,
-    resetFilters,
     setFilter,
-    filters
   } = useShops();
   const { suggestedCat,  setSuggestedCat } = useSuggestedCat();
   const {deliveryMethod,locationRange,addressCoords,deliveryParamsChanged,address}= useSearchParams()
@@ -32,14 +30,9 @@ const useSearch = () => {
       setSort("recommended", router);
       return;
     }
-   
-    // if (
-    //   Object.keys(Filters).every(
-    //     (key) => window.location.search.includes(key) === false
-    //   )
-    // )
-    // resetFilters();
+
     if (suggestedCat && Object.keys(Categories).includes(suggestedCat)) {
+      console.log('suggestedCat',suggestedCat)
       setFilter({
         key: "category",
         value: suggestedCat,

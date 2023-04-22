@@ -122,6 +122,7 @@ const sizesLeboncoin: Partial<Record<Filter, string | null>> = {
   sizeChildShoes38: "23",
   sizeChildShoes39: "24",
   sizeChildShoes40: "25",
+
 };
 const sizesVinted: Partial<Record<Filter, string>> = {
   sizeManXS: "206",
@@ -247,4 +248,10 @@ const sizesVinted: Partial<Record<Filter, string>> = {
   sizeChildShoes40: "660",
 };
 
-export { sizesLeboncoin, sizesVinted };
+const clothesTypesLeboncoin={
+  womanClothesTypes:'1',
+  manClothesTypes:'3',
+  childClothesTypes:'4',
+}
+
+export { sizesLeboncoin, sizesVinted, clothesTypesLeboncoin };

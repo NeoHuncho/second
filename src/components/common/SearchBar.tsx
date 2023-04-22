@@ -40,7 +40,7 @@ const SearchBar = ({ size = "md" }: PropTypes) => {
       >
         <div className="w-full sm:grid sm:grid-cols-searchBar flex flex-col gap-2 items-center">
           <div className="flex w-full">
-            {!isMobile && <CategorySelect size={size} />}
+            <CategorySelect size={size} />
             <Popover.Target>
               <TextInput
                 onFocus={focusHandlers.open}
