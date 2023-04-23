@@ -2,7 +2,7 @@ import axios from "axios";
 import type { ShopRes } from "../types/api/shopsRes";
 import formatApiUrl from "../utils/url/formatApiUrl";
 import formatStoreUrl from "../utils/url/formatStoreUrl";
-type suggestedCatResponse = string
+type suggestedCatResponse = string;
 export type placeAutocomplete = {
   title: string;
   placeId: string;
@@ -33,7 +33,7 @@ const getShopListings = async ({
   return await axios.get<ShopRes>(url);
 };
 
-const getPlaceAutocomplete = async (searchTerm: string) => 
+const getPlaceAutocomplete = async (searchTerm: string) =>
   await axios.get<placeAutocompleteResponse>(
     formatApiUrl({
       routeName: "place/getAutocomplete",
@@ -41,7 +41,7 @@ const getPlaceAutocomplete = async (searchTerm: string) =>
     })
   );
 
-const getPlaceLocation = async (placeId: string) => 
+const getPlaceLocation = async (placeId: string) =>
   await axios.get<placeLocation>(
     formatApiUrl({
       routeName: "place/getLocation",

@@ -22,12 +22,11 @@ const getWebsiteScrape = async (websiteUrl: string) => {
     Authorization: "Basic " + Buffer.from(`${API_KEY}:`).toString("base64"),
   };
   const response = await axios.post<ResponseData>(API_URL, data, { headers });
-    const httpResponseBody = Buffer.from(
-      response.data.httpResponseBody,
-      "base64"
-    ).toString();
-    return httpResponseBody;
-  
+  const httpResponseBody = Buffer.from(
+    response.data.httpResponseBody,
+    "base64"
+  ).toString();
+  return httpResponseBody;
 };
 
 export default getWebsiteScrape;

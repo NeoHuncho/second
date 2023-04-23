@@ -1,11 +1,10 @@
 import repairablePhones from "./showcaseItem/repairablePhones";
 
+const ShowcaseCategories = {
+  repairable: {
+    phone: repairablePhones,
+    laptop: repairablePhones,
+  },
+};
 
-const ShowcaseCategories={
-    repairable: {
-        phone: repairablePhones,
-        laptop: repairablePhones
-    }
-}
-
-export default ShowcaseCategories
+export default ShowcaseCategories;

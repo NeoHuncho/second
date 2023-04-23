@@ -15,7 +15,8 @@ const useSearchParams = create<StoreType>((set) => ({
   hasClickedDeliverySelect: false,
   setSearchTerm: (searchTerm: string) => set({ searchTerm }),
   setDropdownOpen: (dropdownOpen) => set({ dropdownOpen }),
-  setHasClickedDeliverySelect: (hasClickedDeliverySelect) => set({ hasClickedDeliverySelect})
+  setHasClickedDeliverySelect: (hasClickedDeliverySelect) =>
+    set({ hasClickedDeliverySelect }),
 }));
 
 export default useSearchParams;

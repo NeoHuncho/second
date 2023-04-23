@@ -23,7 +23,7 @@ export const Filters = {
   ...sizeMan,
   ...sizeWoman,
   ...sizeChild,
-  ...colors
+  ...colors,
 };
 
 export const MultiKeyFilterTypes = {
@@ -38,23 +38,23 @@ export const Categories = {
   shoes: "Chaussures",
 };
 
-export const SizeCategories={
+export const SizeCategories = {
   woman: "Femmes",
   man: "Hommes",
   child: "Enfants",
-}
+};
 
-export const showcaseTabs={
+export const showcaseTabs = {
   phone: "Téléphone",
   laptop: "Ordinateur",
-}
+};
 
-export const showcaseCategories={
+export const showcaseCategories = {
   repairable: "Multimédia réparable",
-}
+};
 
 export const deliveryMethods = {
   delivery: "Livraison 📦",
   location: "Proche de moi 📍",
   both: "Les deux 📦📍",
-}
+};

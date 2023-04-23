@@ -72,9 +72,6 @@ const parseLeboncoin = (responseText: string) => {
       );
     })
     .map((item) => {
-      const attributes = item.attributes.filter((attribute) => {
-        return attribute.key !== "condition" && attribute.key !== "shippable";
-      });
       formatted.push({
         images: {
           urls: item.images.urls,
@@ -96,7 +93,7 @@ const parseLeboncoin = (responseText: string) => {
         shippable:
           item.attributes.find((attribute) => attribute.key === "shippable")
             ?.value === "true",
-        type: 'ShopListing'
+        type: "ShopListing",
       });
     });
   return formatted;

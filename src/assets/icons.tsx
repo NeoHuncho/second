@@ -45,9 +45,8 @@ const icons = {
   Laptop: GiLaptop,
   Screwdriver: BsScrewdriver,
   Close: AiOutlineClose,
-
-
 };
+
 export const Icon: React.FC<IconProps & { name: keyof typeof icons }> = ({
   name,
   color,

@@ -8,53 +8,66 @@ import { useEffect, useState } from "react";
 import useDeliveryParams from "../../stores/storage/usePersistentSearchParams";
 
 type Props = {
-    size: MantineSize;
-}
+  size: MantineSize;
+};
 export default function DeliveryMethodSelect({ size }: Props) {
-    const { setDropdownOpen, setHasClickedDeliverySelect } = useSearchParams();
-    const { deliveryMethod, setDeliveryMethod, address, locationRange } = useDeliveryParams();
-    const { isMobile } = useBreakpoints();
-    const [data, setData] = useState<{ label: string, value: DeliveryMethod }[]>([])
+  const { setDropdownOpen, setHasClickedDeliverySelect } = useSearchParams();
+  const { deliveryMethod, setDeliveryMethod, address, locationRange } =
+    useDeliveryParams();
+  const { isMobile } = useBreakpoints();
+  const [data, setData] = useState<{ label: string; value: DeliveryMethod }[]>(
+    []
+  );
 
-    useEffect(() => {
-        setData(Object.entries(deliveryMethods).map(([key, value]) => ({ label: value, value: key as DeliveryMethod })))
-    }, [])
+  useEffect(() => {
+    setData(
+      Object.entries(deliveryMethods).map(([key, value]) => ({
+        label: value,
+        value: key as DeliveryMethod,
+      }))
+    );
+  }, []);
 
-    useEffect(() => {
-        if (address)
-            setData((data) => data.map((item) => {
-                if (item.value !== 'location') return item;
-                return ({
-                    ...item, label: `${address} (${locationRange}km)📍`
-                })
-            }))
-    }, [address])
+  useEffect(() => {
+    if (address)
+      setData((data) =>
+        data.map((item) => {
+          if (item.value !== "location") return item;
+          return {
+            ...item,
+            label: `${address} (${locationRange}km)📍`,
+          };
+        })
+      );
+  }, [address]);
 
-    useEffect(() => {
-        if (address)
-            setData((data) => data.map((item) => {
-                if (item.value !== 'location') return item;
-                return ({
-                    ...item, label: `${address} (${locationRange}km) 📍`
-                })
-            }))
-    }, [locationRange])
+  useEffect(() => {
+    if (address)
+      setData((data) =>
+        data.map((item) => {
+          if (item.value !== "location") return item;
+          return {
+            ...item,
+            label: `${address} (${locationRange}km) 📍`,
+          };
+        })
+      );
+  }, [locationRange]);
 
-    return (
-        <Select
-            className="ml-2 w-full"
-            size={size}
-            radius={"sm"}
-            data={data}
-            value={deliveryMethod}
-            onChange={(value) => setDeliveryMethod(value as DeliveryMethod)}
-            placeholder="Choisissez une méthode de livraison"
-            onDropdownOpen={() => {
-                setDropdownOpen(true)
-                setHasClickedDeliverySelect(true)
-            }}
-            onDropdownClose={() => setDropdownOpen(false)}
-        />
-    )
-
+  return (
+    <Select
+      className="ml-2 w-full"
+      size={size}
+      radius={"sm"}
+      data={data}
+      value={deliveryMethod}
+      onChange={(value) => setDeliveryMethod(value as DeliveryMethod)}
+      placeholder="Choisissez une méthode de livraison"
+      onDropdownOpen={() => {
+        setDropdownOpen(true);
+        setHasClickedDeliverySelect(true);
+      }}
+      onDropdownClose={() => setDropdownOpen(false)}
+    />
+  );
 }

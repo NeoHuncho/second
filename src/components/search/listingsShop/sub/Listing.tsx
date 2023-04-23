@@ -7,7 +7,10 @@ import NoImage from "./NoImage";
 
 import { useState } from "react";
 import ExpandImage from "../../../image/ExpandImage";
-import { detectRepairable, detectShopListing } from "../../../../types/TypeDetection";
+import {
+  detectRepairable,
+  detectShopListing,
+} from "../../../../types/TypeDetection";
 import RepairScoreIcon from "../../../../assets/repair-score-icon/RepairScoreIcon";
 import { useRouter } from "next/router";
 type Props = {
@@ -16,13 +19,12 @@ type Props = {
   enlargeButton?: boolean;
 };
 
-
 const Listing = ({ listing, isScrolling, enlargeButton }: Props) => {
-  const router = useRouter()
+  const router = useRouter();
   const CARD_SECTION_HEIGHT = 240;
-  const [isZoomed, setIsZoomed] = useState(false)
-  const isShopListing = detectShopListing(listing)
-  const isRepairable = detectRepairable(listing)
+  const [isZoomed, setIsZoomed] = useState(false);
+  const isShopListing = detectShopListing(listing);
+  const isRepairable = detectRepairable(listing);
 
   if (listing.body === "placeholder")
     return (
@@ -47,37 +49,56 @@ const Listing = ({ listing, isScrolling, enlargeButton }: Props) => {
         p="sm"
         radius="md"
         withBorder
-        onClick={() => !isScrolling ? isShopListing ? window.open(listing.url, "_blank") : void router.push(listing.url) : null}
+        onClick={() =>
+          !isScrolling
+            ? isShopListing
+              ? window.open(listing.url, "_blank")
+              : void router.push(listing.url)
+            : null
+        }
       >
-        <Card.Section >
-          {isShopListing ?
+        <Card.Section>
+          {isShopListing ? (
             listing.images?.url_thumb ? (
               <div>
-                {enlargeButton && <ActionIcon onClick={(event) => { event.stopPropagation(); setIsZoomed(true) }} color='gray' variant="filled" className="absolute right-0 top-0 mt-2 mr-2 z-10">
-                  <Icon name="Enlarge" size={14} color='white' />
-                </ActionIcon>}
+                {enlargeButton && (
+                  <ActionIcon
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      setIsZoomed(true);
+                    }}
+                    color="gray"
+                    variant="filled"
+                    className="absolute right-0 top-0 z-10 mt-2 mr-2"
+                  >
+                    <Icon name="Enlarge" size={14} color="white" />
+                  </ActionIcon>
+                )}
 
                 <Image
                   height={CARD_SECTION_HEIGHT}
                   src={listing.images.url_thumb}
                   alt={listing.title}
                 />
-
               </div>
             ) : (
               <NoImage />
-            ) : null}
-          {!isShopListing &&
-            <div className="w-full flex justify-center">
-              <NextImage src={listing.image} alt={listing.title} height={CARD_SECTION_HEIGHT} />
+            )
+          ) : null}
+          {!isShopListing && (
+            <div className="flex w-full justify-center">
+              <NextImage
+                src={listing.image}
+                alt={listing.title}
+                height={CARD_SECTION_HEIGHT}
+              />
             </div>
-          }
-          {isShopListing &&
+          )}
+          {isShopListing && (
             <Title className="absolute right-0 -mt-7 rounded-tl-lg bg-white px-2 text-xl text-black">
               {parsePrice(listing.price)}
             </Title>
-          }
-
+          )}
         </Card.Section>
         <div className="flex  flex-col gap-3 ">
           <Title
@@ -104,17 +125,33 @@ const Listing = ({ listing, isScrolling, enlargeButton }: Props) => {
                 </Text>
               </div>
             ) : null}
-            {isShopListing && <div className="flex items-center gap-1">
-              <Icon name="TruckDelivery" className="mt-0.5" />
-              <Text lineClamp={1} className=" mt-1 text-xs ">
-                {listing.shippable ? "Livraison possible" : "Pas de livraison"}
-              </Text>
-            </div>}
-            {isRepairable && <RepairScoreIcon className="absolute w-20 bottom-1 place-self-center" repairScore={listing.repairScore} />}
+            {isShopListing && (
+              <div className="flex items-center gap-1">
+                <Icon name="TruckDelivery" className="mt-0.5" />
+                <Text lineClamp={1} className=" mt-1 text-xs ">
+                  {listing.shippable
+                    ? "Livraison possible"
+                    : "Pas de livraison"}
+                </Text>
+              </div>
+            )}
+            {isRepairable && (
+              <RepairScoreIcon
+                className="absolute bottom-1 w-20 place-self-center"
+                repairScore={listing.repairScore}
+              />
+            )}
           </div>
         </div>
       </Card>
-      {isShopListing && <ExpandImage alt={listing.title} opened={isZoomed} setOpened={setIsZoomed} src={listing.images.url} />}
+      {isShopListing && (
+        <ExpandImage
+          alt={listing.title}
+          opened={isZoomed}
+          setOpened={setIsZoomed}
+          src={listing.images.url}
+        />
+      )}
     </>
   );
 };

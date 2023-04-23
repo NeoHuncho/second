@@ -6,7 +6,11 @@ import type {
 import { categoriesLeboncoin, categoriesVinted } from "../static/category";
 import { colorsLeboncoin, colorsVinted } from "../static/color";
 import { conditionsLeboncoin, conditionsVinted } from "../static/condition";
-import { clothesTypesLeboncoin, sizesLeboncoin, sizesVinted } from "../static/size";
+import {
+  clothesTypesLeboncoin,
+  sizesLeboncoin,
+  sizesVinted,
+} from "../static/size";
 
 const multiChoiceFilterParser = ({
   filters,
@@ -28,7 +32,19 @@ const multiChoiceFilterParser = ({
 };
 
 const filtersLeboncoin = (filters: Record<QueryUrl, string>) => {
-  const { priceMin, priceMax, category,lat,lng, locationRange, deliveryMethod,city, color, size, condition } = filters;
+  const {
+    priceMin,
+    priceMax,
+    category,
+    lat,
+    lng,
+    locationRange,
+    deliveryMethod,
+    city,
+    color,
+    size,
+    condition,
+  } = filters;
   let filtersString = "";
   if (priceMin && priceMax) filtersString = `&price=${priceMin}-${priceMax}`;
   else if (priceMin) filtersString = `&price=${priceMin}-max`;
@@ -42,7 +58,7 @@ const filtersLeboncoin = (filters: Record<QueryUrl, string>) => {
     filtersString += `&item_condition=${conditions.join("%2C")}`;
   }
 
-  if (category && category!=='all')
+  if (category && category !== "all")
     filtersString += `&category=${categoriesLeboncoin[category as Category]}`;
 
   if (size) {
@@ -52,34 +68,40 @@ const filtersLeboncoin = (filters: Record<QueryUrl, string>) => {
       staticValues: sizesLeboncoin,
     });
 
-    if(category==='shoes')
+    if (category === "shoes")
       filtersString += `&shoe_size=${sizes.join("%2C")}`;
     else {
-      const clothesType=[];
-      if(size.includes('sizeWoman')) clothesType.push(clothesTypesLeboncoin.womanClothesTypes);
-      if(size.includes('sizeMan')) clothesType.push(clothesTypesLeboncoin.manClothesTypes)
-      if(size.includes('sizeChild')) clothesType.push(clothesTypesLeboncoin.childClothesTypes)
-      filtersString += `&clothing_type=${clothesType.join('%2C')}&clothing_st=${sizes.join("%2C")}`
+      const clothesType = [];
+      if (size.includes("sizeWoman"))
+        clothesType.push(clothesTypesLeboncoin.womanClothesTypes);
+      if (size.includes("sizeMan"))
+        clothesType.push(clothesTypesLeboncoin.manClothesTypes);
+      if (size.includes("sizeChild"))
+        clothesType.push(clothesTypesLeboncoin.childClothesTypes);
+      filtersString += `&clothing_type=${clothesType.join(
+        "%2C"
+      )}&clothing_st=${sizes.join("%2C")}`;
     }
   }
-  if(deliveryMethod && deliveryMethod!=='delivery'){
+  if (deliveryMethod && deliveryMethod !== "delivery") {
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    filtersString+=`&locations=${city}__${lat}_${lng}_10000_${parseInt(locationRange)*1000}`
+    filtersString += `&locations=${city}__${lat}_${lng}_10000_${
+      parseInt(locationRange) * 1000
+    }`;
   }
-  if(color){
+  if (color) {
     const colors = multiChoiceFilterParser({
       filters,
-      key:'color',
-      staticValues:colorsLeboncoin
-  })
-  filtersString += `&clothing_color_a=${colors.join("%2C")}`
+      key: "color",
+      staticValues: colorsLeboncoin,
+    });
+    filtersString += `&clothing_color_a=${colors.join("%2C")}`;
   }
-  return filtersString
-
-}
+  return filtersString;
+};
 
 const filtersVinted = (filters: Record<QueryUrl, string>) => {
-  const { priceMin, priceMax, category, condition, size,color } = filters;
+  const { priceMin, priceMax, category, condition, size, color } = filters;
   let filtersString = "";
 
   if (priceMin && priceMax)
@@ -105,15 +127,16 @@ const filtersVinted = (filters: Record<QueryUrl, string>) => {
     });
     filtersString += `&size_id%5B%5D=${sizes.join("&size_id%5B%5D=")}`;
   }
-  if(color){
+  if (color) {
     const colors = multiChoiceFilterParser({
       filters,
-      key:'color',
-      staticValues:colorsVinted
-    })
-    filtersString += `&color_ids%5B%5D=${colors.join("&color_ids%5B%5D=")}`
+      key: "color",
+      staticValues: colorsVinted,
+    });
+    filtersString += `&color_ids%5B%5D=${colors.join("&color_ids%5B%5D=")}`;
   }
-  if (category && category!=='all') filtersString += `&${categoriesVinted[category as Category]}`;
+  if (category && category !== "all")
+    filtersString += `&${categoriesVinted[category as Category]}`;
 
   return filtersString;
 };

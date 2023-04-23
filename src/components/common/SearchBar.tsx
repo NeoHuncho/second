@@ -10,15 +10,12 @@ import LocationOptions from "../searchBar/LocationOptions";
 import DeliveryMethodSelect from "../searchBar/DeliveryMethodSelect";
 import CategorySelect from "../searchBar/CategorySelect";
 
-
 type PropTypes = {
   size?: MantineSize;
-
 };
 
 const SearchBar = ({ size = "md" }: PropTypes) => {
   const { isMobile } = useBreakpoints();
-
 
   const {
     completionResults,
@@ -28,19 +25,25 @@ const SearchBar = ({ size = "md" }: PropTypes) => {
     searchTerm,
     focusHandlers,
     inputInFocus,
-    loading
+    loading,
   } = useCompletion();
 
   return (
-    <div className="w-full flex flex-col items-center px-4 ">
+    <div className="flex w-full flex-col items-center px-4 ">
       <Popover
         width={
-          size === "lg" ? (!isMobile ? "40vw" : "80%") : !isMobile ? "25%" : "60%"
+          size === "lg"
+            ? !isMobile
+              ? "40vw"
+              : "80%"
+            : !isMobile
+            ? "25%"
+            : "60%"
         }
         opened={!!completionResults.length && inputInFocus}
         position="bottom"
       >
-        <div className="w-full sm:grid sm:grid-cols-searchBar flex flex-col gap-4 sm:gap-2 items-center">
+        <div className="flex w-full flex-col items-center gap-4 sm:grid sm:grid-cols-searchBar sm:gap-2">
           <div className="flex w-full">
             {!isMobile && <CategorySelect size={size} />}
             <Popover.Target>
@@ -51,18 +54,20 @@ const SearchBar = ({ size = "md" }: PropTypes) => {
                 size={size}
                 radius="xs"
                 value={searchTerm}
-                style={{ width: isMobile ? '100%' : '-webkit-fill-available' }}
-
+                style={{ width: isMobile ? "100%" : "-webkit-fill-available" }}
                 onKeyDown={getHotkeyHandler([["Enter", () => onSubmit()]])}
-
                 rightSection={
-                  !loading ? <Icon
-                    name="OutlineSearch"
-                    // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                    onClick={() => onSubmit()}
-                    className="mr-3 cursor-pointer"
-                    size={size === "lg" ? 32 : 25}
-                  /> : <Loader size={size === "lg" ? 32 : 25} />
+                  !loading ? (
+                    <Icon
+                      name="OutlineSearch"
+                      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                      onClick={() => onSubmit()}
+                      className="mr-3 cursor-pointer"
+                      size={size === "lg" ? 32 : 25}
+                    />
+                  ) : (
+                    <Loader size={size === "lg" ? 32 : 25} />
+                  )
                 }
                 rightSectionWidth={48}
                 onChange={(e) => {
@@ -83,8 +88,12 @@ const SearchBar = ({ size = "md" }: PropTypes) => {
         <Popover.Dropdown>
           <div className="flex flex-col ">
             {completionResults.map((product, index) => (
-              // eslint-disable-next-line @typescript-eslint/no-misused-promises
-              <SearchItem key={index} text={product.value} onSubmit={onSubmit} />
+              <SearchItem
+                key={index}
+                text={product.value}
+                // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                onSubmit={onSubmit}
+              />
             ))}
           </div>
         </Popover.Dropdown>

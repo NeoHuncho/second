@@ -1,10 +1,10 @@
-import { useState } from "react"
-import type { DeliveryMethod } from "../../../common/types/types" 
+import { useState } from "react";
+import type { DeliveryMethod } from "../../../common/types/types";
 
+const useLocation = () => {
+  const [deliveryMethod, setDeliveryMethod] =
+    useState<DeliveryMethod>("delivery");
 
-const useLocation =()=>{
-    const [deliveryMethod, setDeliveryMethod] = useState<DeliveryMethod>('delivery')
-
-    return {deliveryMethod, setDeliveryMethod}
-}
-export default useLocation
+  return { deliveryMethod, setDeliveryMethod };
+};
+export default useLocation;

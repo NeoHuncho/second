@@ -27,16 +27,16 @@ export interface ShopListing {
   shippable?: boolean;
   condition?: string;
   size?: string;
-  type: 'ShopListing';
+  type: "ShopListing";
 }
 
-export interface LandingListing{
+export interface LandingListing {
   title: string;
   url: string;
   image: StaticImageData;
-  body?:string
+  body?: string;
   repairScore?: number;
-  type: 'Showcase'
+  type: "Showcase";
 }
 
 interface Images {
@@ -60,4 +60,4 @@ export type Sort =
   | "date_asc"
   | "date_desc";
 
-export type Categories = "all" | "clothes" | "shoes" 
+export type Categories = "all" | "clothes" | "shoes";

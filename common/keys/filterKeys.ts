@@ -141,7 +141,7 @@ const sizeChild = {
   sizeChildShoes40: "40",
 };
 
-const colors= {
+const colors = {
   black: "Noir",
   grey: "Gris",
   white: "Blanc",
@@ -170,7 +170,13 @@ const colors= {
   silver: "Argent",
   gold: "Or",
   multicolor: "Multicolore",
+};
 
-}
-
-export { conditionFilters, priceFilters, sizeChild, sizeMan, sizeWoman,colors };
+export {
+  conditionFilters,
+  priceFilters,
+  sizeChild,
+  sizeMan,
+  sizeWoman,
+  colors,
+};

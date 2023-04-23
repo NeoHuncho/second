@@ -72,14 +72,12 @@ const usePrice = ({
     if (priceMinDebounced) {
       setFilter({ key: "priceMin", value: priceMinDebounced, router });
     }
-
   }, [priceMinDebounced]);
 
   useEffect(() => {
     if (firstLoadMax) return setFirstLoadMax(false);
     if (priceMaxDebounced) {
       setFilter({ key: "priceMax", value: priceMaxDebounced, router });
-
     }
   }, [priceMaxDebounced]);
   return { priceMin, priceMax, onChange };

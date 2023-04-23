@@ -53,7 +53,6 @@ const MyApp: AppType<{ session: Session | null }> = ({
                 ) : undefined
               }
             >
-
               <Component {...pageProps} />
               <Analytics />
             </AppShell>

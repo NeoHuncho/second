@@ -22,7 +22,7 @@ const useCompletion = () => {
   const [completionResults, setCompletionResults] = useState<SearchResult[]>(
     []
   );
-  const {filters}= useShops()
+  const { filters } = useShops();
   const [loading, setLoading] = useState<boolean>(false);
 
   const [searchTerm, setSearchTerm] = useState(searchTermStore);
@@ -31,21 +31,20 @@ const useCompletion = () => {
     const suggestedCat = await getSuggestedCat(term);
     setSuggestedCat(suggestedCat.data);
   };
-      
 
   const onSubmit = async (searchTermOverride?: string) => {
-    setLoading(true)
+    setLoading(true);
     if (!searchTermOverride && !searchTerm) return;
     setSearchTerm(searchTermOverride || searchTerm);
-    if(!filters.category || filters.category==='all') await getAndSetSuggestedCat(searchTermOverride || searchTerm);
+    if (!filters.category || filters.category === "all")
+      await getAndSetSuggestedCat(searchTermOverride || searchTerm);
     setSearchTermStore(searchTermOverride || searchTerm);
     setCompletionResults([]);
-    const {query, ...cleanedQuery}= router.query;
-    setLoading(false)
+    const { query, ...cleanedQuery } = router.query;
+    setLoading(false);
     void router.push({
       pathname: "/search",
       query: { query: searchTermOverride || searchTerm, ...cleanedQuery },
-      
     });
   };
 

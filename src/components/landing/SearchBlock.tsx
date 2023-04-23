@@ -6,35 +6,35 @@ import Logo from "../logo/logo";
 import OurRecommendations from "./OurRecommendations";
 import TypingText from "./TypingText";
 
-
-
-
-
 interface Props {
-    scrollIntoView: (alignment?: any) => void
+  scrollIntoView: (alignment?: any) => void;
 }
 const SearchBlock = ({ scrollIntoView }: Props) => {
+  const { isMobile } = useBreakpoints();
 
-    const { isMobile } = useBreakpoints()
-
-    return (
-        <div className="h-screen max-w-screen-md m-auto flex flex-col items-center justify-between">
-            <div className="w-full flex flex-col items-center " style={{ paddingTop: isMobile ? '12vh' : '30vh' }}>
-                <Logo />
-                <Title className="text-lg mx-6 sm:text-2xl font-bold text-center mt-4 mb-4 select-none">
-                    Achetez
-                    <TypingText />
-                    avec des millions de produits d&apos;occasion!
-                </Title>
-                <SearchBar />
-            </div >
-            <OurRecommendations onClick={() => scrollIntoView({
-                alignment: 'start',
-            })} />
-        </div >
-    );
-
-
+  return (
+    <div className="m-auto flex h-screen max-w-screen-md flex-col items-center justify-between">
+      <div
+        className="flex w-full flex-col items-center "
+        style={{ paddingTop: isMobile ? "12vh" : "30vh" }}
+      >
+        <Logo />
+        <Title className="mx-6 mt-4 mb-4 select-none text-center text-lg font-bold sm:text-2xl">
+          Achetez
+          <TypingText />
+          avec des millions de produits d&apos;occasion!
+        </Title>
+        <SearchBar />
+      </div>
+      <OurRecommendations
+        onClick={() =>
+          scrollIntoView({
+            alignment: "start",
+          })
+        }
+      />
+    </div>
+  );
 };
 
 export default SearchBlock;

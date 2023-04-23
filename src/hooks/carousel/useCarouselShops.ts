@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect,  useState } from "react";
+import { useEffect, useState } from "react";
 import defaultListing from "../../static/defaultListing";
 import type { ShopListing } from "../../types/types";
 import useShops from "../../stores/state/useShops";
@@ -8,7 +8,7 @@ import useCarousel from "./useCarousel";
 
 const useCarouselShops = (shop: ShopName) => {
   const router = useRouter();
-  const { slidesPerView } = useCarousel() 
+  const { slidesPerView } = useCarousel();
   const { updateListings } = useShops();
   const { listings, name, hasFetchedAll, status } = useShops(
     (state) => state.shops[shop]

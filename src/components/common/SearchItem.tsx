@@ -16,8 +16,8 @@ const SearchItem = ({ text, onSubmit }: PropTypes) => {
         backgroundColor: !hovered
           ? undefined
           : isLight
-            ? "rgb(241, 245, 249)"
-            : "rgb(51, 109, 238)",
+          ? "rgb(241, 245, 249)"
+          : "rgb(51, 109, 238)",
       }}
       className={`bg-sl bg- flex cursor-pointer flex-col gap-2 rounded-sm  p-1`}
       onClick={() => {

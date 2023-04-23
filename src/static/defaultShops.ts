@@ -9,7 +9,7 @@ const defaultShop = (
   name: ShopName,
   image: StaticImageData,
   color: string,
-  isDeliveryOnly =false
+  isDeliveryOnly = false
 ): Shop => {
   return {
     status: "loading",
@@ -26,5 +26,5 @@ const defaultShop = (
 
 export const defaultShops = {
   Leboncoin: defaultShop("Leboncoin", leboncoinImage, "#FF6F15"),
-  Vinted: defaultShop("Vinted", vintedImage, "#007781",true),
+  Vinted: defaultShop("Vinted", vintedImage, "#007781", true),
 };

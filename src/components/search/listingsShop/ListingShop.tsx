@@ -9,7 +9,7 @@ interface Props {
   shop: Shop;
 }
 export default function ListingShop({ shop }: Props) {
-  const { handleIndexChange, slides, } = useCarouselShops(shop.name);
+  const { handleIndexChange, slides } = useCarouselShops(shop.name);
   const { shops } = useShops();
   if (shop.status === "success")
     return (

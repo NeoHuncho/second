@@ -19,10 +19,10 @@ const Home: NextPage = () => {
         <link rel="manifest" href="/manifest.json" />
       </Head>
       <main
-        className={`flex min-h-screen  flex-col items-center ${theme === "dark" ? "bg-landing-dark" : "bg-landing"
-          } bg-cover bg-fixed bg-center bg-no-repeat pt-5 `}
+        className={`flex min-h-screen  flex-col items-center ${
+          theme === "dark" ? "bg-landing-dark" : "bg-landing"
+        } bg-cover bg-fixed bg-center bg-no-repeat pt-5 `}
       >
-
         <div className="max-w-screen-2xl pb-10">
           <SearchBlock scrollIntoView={scrollIntoView} />
           <ShowcaseBlock targetRef={targetRef} />

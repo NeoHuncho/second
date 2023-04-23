@@ -12,7 +12,7 @@ type Props = {
 };
 
 const LoadingShops = ({ values }: Props) => {
-  const { deliveryMethod } = usePersistentSearchParams()
+  const { deliveryMethod } = usePersistentSearchParams();
   return (
     <div className="flex w-full justify-center">
       <Card className="w-fit" shadow="sm" p="md" radius="md" withBorder>
@@ -25,7 +25,7 @@ const LoadingShops = ({ values }: Props) => {
             >
               <div className="relative h-8 w-20">
                 <Image
-                  className="object-contain select-none"
+                  className="select-none object-contain"
                   alt={value.name}
                   src={value.image}
                   fill
@@ -36,35 +36,35 @@ const LoadingShops = ({ values }: Props) => {
                   className="flex items-center justify-center"
                   {...appearMotion}
                 >
-                  <Text className="text-3xl" weight={600} >
+                  <Text className="text-3xl" weight={600}>
                     📦
                   </Text>
-                </motion.div>) :
-                value.status === "loading" ? (
-                  <Loader />
-                ) : value.status === "success" ? (
-                  <motion.div
-                    className="flex items-center justify-center"
-                    {...appearMotion}
-                  >
-                    <Icon name="FillCheckCircle" color="green" size={35} />
-                  </motion.div>
-                ) : value.status === "no_results" ? (
-                  <motion.div
-                    aria-label="Aucun résultat"
-                    className="flex items-center justify-center"
-                    {...appearMotion}
-                  >
-                    <Icon name="Error" size={35} />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    className="flex items-center justify-center"
-                    {...appearMotion}
-                  >
-                    <Icon name="FillWarning" size={35} />
-                  </motion.div>
-                )}
+                </motion.div>
+              ) : value.status === "loading" ? (
+                <Loader />
+              ) : value.status === "success" ? (
+                <motion.div
+                  className="flex items-center justify-center"
+                  {...appearMotion}
+                >
+                  <Icon name="FillCheckCircle" color="green" size={35} />
+                </motion.div>
+              ) : value.status === "no_results" ? (
+                <motion.div
+                  aria-label="Aucun résultat"
+                  className="flex items-center justify-center"
+                  {...appearMotion}
+                >
+                  <Icon name="Error" size={35} />
+                </motion.div>
+              ) : (
+                <motion.div
+                  className="flex items-center justify-center"
+                  {...appearMotion}
+                >
+                  <Icon name="FillWarning" size={35} />
+                </motion.div>
+              )}
             </div>
           ))}
         </div>

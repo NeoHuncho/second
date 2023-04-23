@@ -44,16 +44,20 @@ const useMultiDropdown = ({
   return { onChange, filters };
 };
 
-const ColorValueAndHex = ({ value, color }: { value: string, color: string }) => {
+const ColorValueAndHex = ({
+  value,
+  color,
+}: {
+  value: string;
+  color: string;
+}) => {
   return (
-    <div className="flex gap-2 items-center">
+    <div className="flex items-center gap-2">
       <ColorSwatch color={color} size={16} />
-      <Text>
-        {value}
-      </Text>
+      <Text>{value}</Text>
     </div>
-  )
-}
+  );
+};
 
 const MultiDropDown = ({
   setFilterText,
@@ -67,12 +71,18 @@ const MultiDropDown = ({
   });
   if (!multiValues) return <></>;
   return (
-    <div className="flex flex-col gap-3 max-h-44 overflow-y-scroll scrollbar-visible  -ml-3 -mr-3 ">
+    <div className="scrollbar-visible -ml-3 -mr-3 flex max-h-44 flex-col  gap-3 overflow-y-scroll ">
       {multiValues.map(([key, value]) => (
         <Checkbox
           checked={filters?.includes(key)}
           onChange={(event) => onChange(key, event.currentTarget.checked)}
-          label={typeKey === 'color' ? <ColorValueAndHex color={colorsHex[key as Color]} value={value} /> : value}
+          label={
+            typeKey === "color" ? (
+              <ColorValueAndHex color={colorsHex[key as Color]} value={value} />
+            ) : (
+              value
+            )
+          }
           key={key}
           className="pr-5"
         />

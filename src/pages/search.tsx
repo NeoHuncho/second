@@ -7,9 +7,9 @@ import useValidShops from "../hooks/search/useValidShops";
 import useShops from "../stores/state/useShops";
 
 const Search = () => {
-  const { validShopsValues: validShops, } = useValidShops()
+  const { validShopsValues: validShops } = useValidShops();
   useSearch();
-  const { shops, filters } = useShops()
+  const { shops, filters } = useShops();
   return (
     <div className="m-auto flex max-w-screen-2xl flex-col gap-4 sm:gap-2 ">
       <div className="mb-3">

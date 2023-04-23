@@ -26,7 +26,7 @@ const UserMenu = () => {
   return (
     <Menu trigger="hover" shadow={"lg"}>
       <Menu.Target>
-        <div className="flex cursor-pointer flex-col items-center select-none">
+        <div className="flex cursor-pointer select-none flex-col items-center">
           {userImage ? (
             <>
               <Image

@@ -8,43 +8,52 @@ import { ActionIcon } from "@mantine/core";
 import { Icon } from "../../assets/icons";
 
 const LocationOptions = () => {
-    const { dropdownOpen, hasClickedDeliverySelect } = useSearchParams();
-    const { deliveryMethod } = useDeliveryParams();
-    const { isLight } = useColorScheme();
-    const [isOpen, setIsOpen] = useState(false);
-    const dropdownRef = useRef<HTMLDivElement>(null)
-    useEffect(() => {
-        setIsOpen(deliveryMethod !== 'delivery' && !dropdownOpen && hasClickedDeliverySelect)
-    }, [deliveryMethod, dropdownOpen])
+  const { dropdownOpen, hasClickedDeliverySelect } = useSearchParams();
+  const { deliveryMethod } = useDeliveryParams();
+  const { isLight } = useColorScheme();
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    setIsOpen(
+      deliveryMethod !== "delivery" && !dropdownOpen && hasClickedDeliverySelect
+    );
+  }, [deliveryMethod, dropdownOpen]);
 
-    useEffect(() => {
-        function handleClickOutside(event: MouseEvent) {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-                setIsOpen(false)
-            }
-        }
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    }
 
-        document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener("mousedown", handleClickOutside);
 
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside)
-        }
-    }, [dropdownRef])
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownRef]);
 
-
-
-    if (!isOpen) return null;
-    return (
-        <div ref={dropdownRef} className="absolute bg-white p-4 rounded-md right-4 sm:right-auto sm:-ml-4 mt-2 z-10" style={!isLight ? { background: '#25262B' } : { background: '#fff' }}>
-            <div className="flex flex-col gap-5 items-center  w-full justify-center">
-                <ActionIcon onClick={() => setIsOpen(false)} className="absolute right-0 top-0">
-                    <Icon name="Close" />
-                </ActionIcon>
-                <AddressDropdown />
-                <AddressRangeSlider />
-            </div>
-        </div>
-
-    )
-}
+  if (!isOpen) return null;
+  return (
+    <div
+      ref={dropdownRef}
+      className="absolute right-4 z-10 mt-2 rounded-md bg-white p-4 sm:right-auto sm:-ml-4"
+      style={!isLight ? { background: "#25262B" } : { background: "#fff" }}
+    >
+      <div className="flex w-full flex-col items-center  justify-center gap-5">
+        <ActionIcon
+          onClick={() => setIsOpen(false)}
+          className="absolute right-0 top-0"
+        >
+          <Icon name="Close" />
+        </ActionIcon>
+        <AddressDropdown />
+        <AddressRangeSlider />
+      </div>
+    </div>
+  );
+};
 export default LocationOptions;

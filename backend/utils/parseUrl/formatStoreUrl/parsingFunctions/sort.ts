@@ -29,4 +29,4 @@ const sortVinted = (sort: string | undefined) => {
   }
 };
 
-export { sortLeboncoin,sortVinted };
+export { sortLeboncoin, sortVinted };
