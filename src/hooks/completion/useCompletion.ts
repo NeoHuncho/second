@@ -23,7 +23,7 @@ const useCompletion = () => {
     []
   );
   const {filters}= useShops()
-  const [searching, setSearching] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const [searchTerm, setSearchTerm] = useState(searchTermStore);
 
@@ -34,12 +34,14 @@ const useCompletion = () => {
       
 
   const onSubmit = async (searchTermOverride?: string) => {
+    setLoading(true)
     if (!searchTermOverride && !searchTerm) return;
-    if(!filters.category || filters.category==='all') await getAndSetSuggestedCat(searchTermOverride || searchTerm);
     setSearchTerm(searchTermOverride || searchTerm);
+    if(!filters.category || filters.category==='all') await getAndSetSuggestedCat(searchTermOverride || searchTerm);
     setSearchTermStore(searchTermOverride || searchTerm);
     setCompletionResults([]);
     const {query, ...cleanedQuery}= router.query;
+    setLoading(false)
     void router.push({
       pathname: "/search",
       query: { query: searchTermOverride || searchTerm, ...cleanedQuery },
@@ -48,9 +50,7 @@ const useCompletion = () => {
   };
 
   const search = async (term: string) => {
-    setSearching(true);
     const results = await getSearchAutocomplete(term);
-    setSearching(false);
     return results.data.suggestions;
   };
 
@@ -67,7 +67,7 @@ const useCompletion = () => {
   const [inputInFocus, focusHandlers] = useDisclosure(false);
   return {
     completionResults,
-    searching,
+    loading,
     setDebouncedSearchTerm,
     onSubmit,
     setSearchTerm,

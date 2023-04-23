@@ -22,7 +22,7 @@ export default function CategorySelect({ size }: Props) {
             size={size}
             radius={"xs"}
             data={data}
-            value={filters.category}
+            value={filters.category ? filters.category : null}
             onChange={(value) => {
                 if (!value) return removeFilter({ key: 'category', router })
                 setFilter({ key: 'category', value: value, router })

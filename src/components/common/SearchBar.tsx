@@ -1,4 +1,5 @@
 import type { MantineSize } from "@mantine/core";
+import { Loader } from "@mantine/core";
 import { Popover, Text, TextInput } from "@mantine/core";
 import { getHotkeyHandler, useMediaQuery } from "@mantine/hooks";
 import { Icon } from "../../assets/icons";
@@ -27,6 +28,7 @@ const SearchBar = ({ size = "md" }: PropTypes) => {
     searchTerm,
     focusHandlers,
     inputInFocus,
+    loading
   } = useCompletion();
 
   return (
@@ -38,9 +40,9 @@ const SearchBar = ({ size = "md" }: PropTypes) => {
         opened={!!completionResults.length && inputInFocus}
         position="bottom"
       >
-        <div className="w-full sm:grid sm:grid-cols-searchBar flex flex-col gap-2 items-center">
+        <div className="w-full sm:grid sm:grid-cols-searchBar flex flex-col gap-4 sm:gap-2 items-center">
           <div className="flex w-full">
-            <CategorySelect size={size} />
+            {!isMobile && <CategorySelect size={size} />}
             <Popover.Target>
               <TextInput
                 onFocus={focusHandlers.open}
@@ -54,13 +56,13 @@ const SearchBar = ({ size = "md" }: PropTypes) => {
                 onKeyDown={getHotkeyHandler([["Enter", () => onSubmit()]])}
 
                 rightSection={
-                  <Icon
+                  !loading ? <Icon
                     name="OutlineSearch"
                     // eslint-disable-next-line @typescript-eslint/no-misused-promises
                     onClick={() => onSubmit()}
                     className="mr-3 cursor-pointer"
                     size={size === "lg" ? 32 : 25}
-                  />
+                  /> : <Loader size={size === "lg" ? 32 : 25} />
                 }
                 rightSectionWidth={48}
                 onChange={(e) => {
@@ -71,7 +73,10 @@ const SearchBar = ({ size = "md" }: PropTypes) => {
             </Popover.Target>
           </div>
           <div>
-            <DeliveryMethodSelect size={size} />
+            <div className="flex">
+              {isMobile && <CategorySelect size={size} />}
+              <DeliveryMethodSelect size={size} />
+            </div>
             <LocationOptions />
           </div>
         </div>

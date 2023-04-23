@@ -43,7 +43,7 @@ export default function DeliveryMethodSelect({ size }: Props) {
     return (
         <Select
             className="ml-2 w-full"
-            size={isMobile ? 'sm' : size}
+            size={size}
             radius={"sm"}
             data={data}
             value={deliveryMethod}

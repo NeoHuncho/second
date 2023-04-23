@@ -35,7 +35,7 @@ const LocationOptions = () => {
 
     if (!isOpen) return null;
     return (
-        <div ref={dropdownRef} className="absolute bg-white p-4 rounded-md ml-auto mr-auto mt-2 z-10" style={!isLight ? { background: '#25262B' } : { background: '#fff' }}>
+        <div ref={dropdownRef} className="absolute bg-white p-4 rounded-md right-4 sm:right-auto sm:-ml-4 mt-2 z-10" style={!isLight ? { background: '#25262B' } : { background: '#fff' }}>
             <div className="flex flex-col gap-5 items-center  w-full justify-center">
                 <ActionIcon onClick={() => setIsOpen(false)} className="absolute right-0 top-0">
                     <Icon name="Close" />

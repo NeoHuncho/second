@@ -12,7 +12,7 @@ const usePersistentSearchParams=()=>{
     const [deliveryMethod,setDeliveryMethod]= useLocalStorage<DeliveryMethod>({key:"deliveryMethod",defaultValue:"delivery"})
     const [address,setAddress]= useLocalStorage({key:"address",defaultValue:""})
     const [addressCoords,setAddressCoords]= useLocalStorage<AddressCoords>({key:"addressCoords",defaultValue:{lat:0,lng:0}})
-    const [deliveryParamsChanged,setDeliveryParamsChanged]= useState(0)
+    const [deliveryParamsChanged,setDeliveryParamsChanged]= useState(0);
     useEffect(()=>{
       setDeliveryParamsChanged(deliveryParamsChanged+1)
     },[locationRange,deliveryMethod,address,addressCoords])

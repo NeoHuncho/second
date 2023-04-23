@@ -45,7 +45,7 @@ const TypingText = () => {
     return (
         <span
             key={currentWord}
-            className="inline-block w-36 mx-1"
+            className="inline-block w-28 sm:w-36 mx-1"
             style={{ color: "#1a7474" }}
         >
             {currentWord}
