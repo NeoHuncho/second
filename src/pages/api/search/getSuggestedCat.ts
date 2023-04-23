@@ -18,7 +18,7 @@ export default async function handler(
     apiKey: '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',
     });
   const openai = new OpenAIApi(configuration);
-  if(env.NODE_ENV !== "production") return response.status(200).json('shoes');
+  if(env.NODE_ENV !== "production") return response.status(200).json('other');
   if(request.query.text){  
     const gptRes = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",

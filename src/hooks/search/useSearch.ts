@@ -65,10 +65,12 @@ const useSearch = () => {
     routerUrlQuery[`locationRange`]=locationRange
     if(address && deliveryMethod!=='delivery' )
     routerUrlQuery[`city`]=address
+     
    function convertSearchToParsedUrlQuery(): ParsedUrlQuery {
     const search = window.location.search;
     const parsedSearch = parse(search.replace("?", ""));
-    return parsedSearch;
+    const {deliveryMethod, lat, lng, locationRange, city,...cleanedSearch} = parsedSearch;
+    return cleanedSearch;
 }
     void  router.push({
       pathname: router.pathname,

@@ -62,7 +62,7 @@ const filtersLeboncoin = (filters: Record<QueryUrl, string>) => {
       filtersString += `&clothing_type=${clothesType.join('%2C')}&clothing_st=${sizes.join("%2C")}`
     }
   }
-  if(deliveryMethod!=='delivery'){
+  if(deliveryMethod && deliveryMethod!=='delivery'){
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     filtersString+=`&locations=${city}__${lat}_${lng}_10000_${parseInt(locationRange)*1000}`
   }

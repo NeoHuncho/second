@@ -24,7 +24,7 @@ const useMultiDropdown = ({
       .map(([key]) => key)
   );
   const onChange = (valueKey: Filter, value: boolean) => {
-     setFilters((prev) => {
+    setFilters((prev) => {
       if (!prev) return [];
       if (value) {
         const newFilters = [...prev, valueKey];
@@ -37,7 +37,7 @@ const useMultiDropdown = ({
       const newFilters = prev.filter((key) => key !== valueKey);
       if (typeKey)
         setFilterText(multiText({ filters: newFilters, key: typeKey }));
-      removeFilter({ key: valueKey, router });
+      removeFilter({ key: valueKey, router, typeKey });
       return newFilters;
     });
   };

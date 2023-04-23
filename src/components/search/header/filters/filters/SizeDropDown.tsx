@@ -56,7 +56,7 @@ const useSizeDropdown = ({
       const newFilters = prev.filter((key) => key !== valueKey);
       if (typeKey)
         setFilterText(multiText({ filters: newFilters, key: typeKey }));
-      removeFilter({ key: valueKey, router });
+      removeFilter({ key: valueKey, router, typeKey });
       return newFilters;
     });
   };
