@@ -1,10 +1,11 @@
-import { Checkbox } from "@mantine/core";
+import { Checkbox, ColorSwatch, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import type { Filter } from "../../../../../../common/types/types";
+import type { Color, Filter } from "../../../../../../common/types/types";
 import useShops from "../../../../../stores/state/useShops";
 import multiText from "../../../../../utils/filterText/multiText";
 import type { DropDownInterface } from "../FiltersListing";
+import colorsHex from "../../../../../static/colorsHex";
 
 const useMultiDropdown = ({
   setFilterText,
@@ -23,13 +24,14 @@ const useMultiDropdown = ({
       .map(([key]) => key)
   );
   const onChange = (valueKey: Filter, value: boolean) => {
-    setFilters((prev) => {
+     setFilters((prev) => {
       if (!prev) return [];
       if (value) {
         const newFilters = [...prev, valueKey];
-        if (typeKey)
+        if (typeKey) {
           setFilterText(multiText({ filters: newFilters, key: typeKey }));
-        setStoreFilters({ key: valueKey, router });
+          setStoreFilters({ key: valueKey, router, typeKey });
+        }
         return newFilters;
       }
       const newFilters = prev.filter((key) => key !== valueKey);
@@ -41,6 +43,17 @@ const useMultiDropdown = ({
   };
   return { onChange, filters };
 };
+
+const ColorValueAndHex = ({ value, color }: { value: string, color: string }) => {
+  return (
+    <div className="flex gap-2 items-center">
+      <ColorSwatch color={color} size={16} />
+      <Text>
+        {value}
+      </Text>
+    </div>
+  )
+}
 
 const MultiDropDown = ({
   setFilterText,
@@ -54,13 +67,14 @@ const MultiDropDown = ({
   });
   if (!multiValues) return <></>;
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 max-h-44 overflow-y-scroll scrollbar-visible  -ml-3 -mr-3 ">
       {multiValues.map(([key, value]) => (
         <Checkbox
           checked={filters?.includes(key)}
           onChange={(event) => onChange(key, event.currentTarget.checked)}
-          label={value}
+          label={typeKey === 'color' ? <ColorValueAndHex color={colorsHex[key as Color]} value={value} /> : value}
           key={key}
+          className="pr-5"
         />
       ))}
     </div>

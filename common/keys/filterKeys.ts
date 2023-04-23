@@ -141,4 +141,36 @@ const sizeChild = {
   sizeChildShoes40: "40",
 };
 
-export { conditionFilters, priceFilters, sizeChild, sizeMan, sizeWoman };
+const colors= {
+  black: "Noir",
+  grey: "Gris",
+  white: "Blanc",
+  creme: "Crème",
+  beige: "Beige",
+  abricot: "Abricot",
+  orange: "Orange",
+  coral: "Corail",
+  red: "Rouge",
+  burgundy: "Bordeaux",
+  pink: "Rose",
+  rose: "Rose",
+  purple: "Violet",
+  lilac: "Lilas",
+  LightBlue: "Bleu clair",
+  blue: "Bleu",
+  navy: "Bleu marine",
+  turquoise: "Turquoise",
+  mint: "Menthe",
+  green: "Vert",
+  darkGreen: "Vert foncé",
+  khaki: "Kaki",
+  brown: "Marron",
+  mustard: "Moutarde",
+  yellow: "Jaune",
+  silver: "Argent",
+  gold: "Or",
+  multicolor: "Multicolore",
+
+}
+
+export { conditionFilters, priceFilters, sizeChild, sizeMan, sizeWoman,colors };

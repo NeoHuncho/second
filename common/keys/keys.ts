@@ -4,6 +4,7 @@ import {
   sizeMan,
   sizeWoman,
   sizeChild,
+  colors,
 } from "./filterKeys";
 
 export const Shops = { Leboncoin: "Leboncoin", Vinted: "Vinted" };
@@ -22,11 +23,13 @@ export const Filters = {
   ...sizeMan,
   ...sizeWoman,
   ...sizeChild,
+  ...colors
 };
 
 export const MultiKeyFilterTypes = {
   condition: "État",
   size: "Taille",
+  color: "Couleur",
 };
 
 export const Categories = {

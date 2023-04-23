@@ -2,6 +2,7 @@ import { Badge, Popover, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { MultiKeyFilterTypes } from "../../../../../common/keys/keys";
+import type { MultiKeyFilterType } from "../../../../../common/types/types";
 import { Filter } from "../../../../../common/types/types";
 import { Icon } from "../../../../assets/icons";
 import type { DropDownInterface } from "./FiltersListing";
@@ -67,7 +68,6 @@ const Filter = ({
             >
               {filterText}
             </Text>
-
             <Icon
               name={"FillCaretUp"}
               color={text === initialText ? undefined : "white"}
@@ -85,7 +85,7 @@ const Filter = ({
         <DropDown
           setFilterText={setFilterText}
           multiValues={multiValues || []}
-          typeKey={typeKey}
+          typeKey={typeKey as MultiKeyFilterType}
         />
       </Popover.Dropdown>
     </Popover>

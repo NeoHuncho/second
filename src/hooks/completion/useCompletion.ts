@@ -39,10 +39,10 @@ const useCompletion = () => {
     setSearchTerm(searchTermOverride || searchTerm);
     setSearchTermStore(searchTermOverride || searchTerm);
     setCompletionResults([]);
-    // setSuggest(suggestedCat.data.suggest);
+    const {query, ...cleanedQuery}= router.query;
     void router.push({
       pathname: "/search",
-      query: { query: searchTermOverride || searchTerm, category:filters.category },
+      query: { query: searchTermOverride || searchTerm, ...cleanedQuery },
       
     });
   };

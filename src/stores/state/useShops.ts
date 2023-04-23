@@ -30,9 +30,11 @@ type ShopState = {
   setMultiKeyFilter: ({
     key,
     router,
+    typeKey
   }: {
     key: string;
     router: NextRouter;
+    typeKey: MultiKeyFilterType;
   }) => void;
   removeFilter: ({ key, router }: { key: Filter; router: NextRouter }) => void;
   resetFilters: () => void;
@@ -176,7 +178,7 @@ const useShops = create<ShopState>()((set, get) => ({
         [key]: value || true,
       }});
   },
-  setMultiKeyFilter: ({ key,  router }) => {
+  setMultiKeyFilter: ({ key,  router,typeKey }) => {
        set((state) => ({
       ...state,
       filters: {
@@ -184,9 +186,6 @@ const useShops = create<ShopState>()((set, get) => ({
         [key]: true,
       },
     }));
-      const typeKey = Object.keys(MultiKeyFilterTypes).find((filter) =>
-        key.includes(filter)
-      ) as MultiKeyFilterType;
       const prevValue = router.query[typeKey] as string | undefined;
       return void router.push({
         pathname: router.pathname,

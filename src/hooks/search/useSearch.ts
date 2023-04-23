@@ -32,7 +32,6 @@ const useSearch = () => {
     }
 
     if (suggestedCat && Object.keys(Categories).includes(suggestedCat)) {
-      console.log('suggestedCat',suggestedCat)
       setFilter({
         key: "category",
         value: suggestedCat,
@@ -44,7 +43,8 @@ const useSearch = () => {
         message: `Nous avons ajouté la catégorie ${Categories[suggestedCat as Category]} à votre recherche`,
         color: "teal", 
         autoClose:5000
-      });
+      })
+      return;
     }
     
     if (router.query.query) updateShops();

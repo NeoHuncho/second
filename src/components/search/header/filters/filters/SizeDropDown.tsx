@@ -47,9 +47,10 @@ const useSizeDropdown = ({
       if (!prev) return [];
       if (value) {
         const newFilters = [...prev, valueKey];
-        if (typeKey)
+        if (typeKey) {
           setFilterText(multiText({ filters: newFilters, key: typeKey }));
-        setStoreFilters({ key: valueKey, router });
+          setStoreFilters({ key: valueKey, router, typeKey });
+        }
         return newFilters;
       }
       const newFilters = prev.filter((key) => key !== valueKey);
@@ -80,7 +81,7 @@ const SizeDropDown = ({
   });
   if (!multiValues) return <></>;
   return (
-    <div className="flex flex-col gap-2 max-h-44 overflow-y-scroll scrollbar-visible  w-36 -ml-3 -mr-3">
+    <div className="flex flex-col gap-2 max-h-44 w-32 overflow-y-scroll scrollbar-visible -ml-3 -mr-3">
       {!categoryClicked &&
         <div className="flex flex-col gap-2">
           {selectedSizes?.length !== 0 &&
@@ -93,7 +94,7 @@ const SizeDropDown = ({
                     onChange={(event) => onChange(tsKey, event.currentTarget.checked)}
                     label={value}
                     key={key}
-                    className="pl-2"
+                    className="pl-2 pr-7"
                   />
                 )
               })}
@@ -104,12 +105,11 @@ const SizeDropDown = ({
               key={category}
               onClick={() => onClickCategory(category as SizeCategory)}
               style={{ cursor: "pointer" }}
-              className=" flex items-center justify-between"
+              className=" flex items-center justify-between justify-between"
 
             >
               <Text
                 key={category}
-
                 className="pl-2"
               >
                 {SizeCategories[category as SizeCategory]}

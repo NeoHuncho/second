@@ -22,7 +22,7 @@ const HeaderSearch = () => {
         <div className="flex">
           <SortListings />
         </div>
-      </div>
+      </div>  
       <FiltersListing />
     </div>
   );

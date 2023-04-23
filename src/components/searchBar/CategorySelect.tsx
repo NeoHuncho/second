@@ -24,7 +24,6 @@ export default function CategorySelect({ size }: Props) {
             data={data}
             value={filters.category}
             onChange={(value) => {
-                console.log(value)
                 if (!value) return removeFilter({ key: 'category', router })
                 setFilter({ key: 'category', value: value, router })
             }}

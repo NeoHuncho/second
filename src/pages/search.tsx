@@ -12,7 +12,9 @@ const Search = () => {
   const { shops, filters } = useShops()
   return (
     <div className="m-auto flex max-w-screen-2xl flex-col gap-4 sm:gap-2 ">
-      <HeaderSearch />
+      <div className="mb-3">
+        <HeaderSearch />
+      </div>
       <LoadingShops values={[...Object.values(shops)]} />
       <div className="flex flex-col gap-6 ">
         {Object.values(validShops).map((shop) => (
