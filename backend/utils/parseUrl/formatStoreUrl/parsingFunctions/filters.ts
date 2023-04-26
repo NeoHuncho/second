@@ -85,9 +85,11 @@ const filtersLeboncoin = (filters: Record<QueryUrl, string>) => {
   }
   if (deliveryMethod && deliveryMethod !== "delivery") {
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    if(deliveryMethod === "both") filtersString += `&shippable=1`;
     filtersString += `&locations=${city}__${lat}_${lng}_10000_${
       parseInt(locationRange) * 1000
     }`;
+
   }
   if (color) {
     const colors = multiChoiceFilterParser({

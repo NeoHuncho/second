@@ -41,11 +41,11 @@ const useCompletion = () => {
     setSearchTermStore(searchTermOverride || searchTerm);
     setCompletionResults([]);
     const { query, ...cleanedQuery } = router.query;
-    setLoading(false);
     void router.push({
       pathname: "/search",
       query: { query: searchTermOverride || searchTerm, ...cleanedQuery },
     });
+    setLoading(false);
   };
 
   const search = async (term: string) => {
