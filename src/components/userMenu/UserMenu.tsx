@@ -2,9 +2,9 @@ import { Menu, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import IconAndLabel from "../header/IconAndLabel";
 import SignInModal from "../logIn/SignInModal";
 import UserDropdown from "./dropdown/UserDropdown";
+import IconAndLabelHorizontal from "../header/sub/IconAndLabelHorizontal";
 
 const UserMenu = () => {
   const [opened, modalControls] = useDisclosure(false);
@@ -14,7 +14,7 @@ const UserMenu = () => {
   if (status !== "authenticated")
     return (
       <>
-        <IconAndLabel
+        <IconAndLabelHorizontal
           iconName="OutlineUser"
           label="connexion"
           onClick={modalControls.open}
@@ -46,7 +46,7 @@ const UserMenu = () => {
               </Text>
             </>
           ) : (
-            <IconAndLabel iconName="OutlineUser" label="profil" />
+            <IconAndLabelHorizontal iconName="OutlineUser" label="profil" />
           )}
         </div>
       </Menu.Target>

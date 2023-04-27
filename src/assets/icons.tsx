@@ -4,7 +4,7 @@ import { TbTruckDelivery } from "react-icons/tb";
 import { GiClothes, GiConverseShoe, GiLaptop } from "react-icons/gi";
 import { FaSignOutAlt } from "react-icons/fa";
 import { BsMoonFill, BsPhoneFill, BsScrewdriver } from "react-icons/bs";
-import { AiOutlineClose } from "react-icons/ai";
+import { FaUser } from "react-icons/fa";
 import useColorScheme from "../hooks/ui/useColorTheme";
 
 import { ImEnlarge } from "react-icons/im";
@@ -22,6 +22,11 @@ export type IconNames = keyof typeof icons;
 const icons = {
   OutlineSearch: AiIcons.AiOutlineSearch,
   OutlineUser: AiIcons.AiOutlineUser,
+  FillUser: FaUser,
+  OutlineHome: AiIcons.AiOutlineHome,
+  FillHome: AiIcons.AiFillHome,
+  OutlineHeart: AiIcons.AiOutlineHeart,
+  FillHeart: AiIcons.AiFillHeart,
   FillCheckCircle: AiIcons.AiFillCheckCircle,
   FillWarning: AiIcons.AiFillWarning,
   Error: VscError,
@@ -44,7 +49,7 @@ const icons = {
   Phone: BsPhoneFill,
   Laptop: GiLaptop,
   Screwdriver: BsScrewdriver,
-  Close: AiOutlineClose,
+  Close: AiIcons.AiOutlineClose,
 };
 
 export const Icon: React.FC<IconProps & { name: keyof typeof icons }> = ({

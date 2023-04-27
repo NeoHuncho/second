@@ -1,15 +1,19 @@
 import { Text } from "@mantine/core";
 import { useState } from "react";
-import type { IconNames } from "../../assets/icons";
-import { Icon } from "../../assets/icons";
+import type { IconNames } from "../../../assets/icons";
+import { Icon } from "../../../assets/icons";
 
-type IconAndLabelProps = {
+type IconAndLabelHorizontalProps = {
   label: string;
   onClick?: () => void;
   iconName: IconNames;
 };
 
-const IconAndLabel = ({ label, onClick, iconName }: IconAndLabelProps) => {
+const IconAndLabelHorizontal = ({
+  label,
+  onClick,
+  iconName,
+}: IconAndLabelHorizontalProps) => {
   const [hovering, setHovering] = useState(false);
 
   return (
@@ -31,4 +35,4 @@ const IconAndLabel = ({ label, onClick, iconName }: IconAndLabelProps) => {
     </div>
   );
 };
-export default IconAndLabel;
+export default IconAndLabelHorizontal;
