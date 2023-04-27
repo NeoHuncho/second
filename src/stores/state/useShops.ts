@@ -13,6 +13,7 @@ import { getShopListings } from "../../requests/backend";
 
 type ShopState = {
   shops: Record<ShopName, Shop>;
+  activeShop: ShopName;
   sort: Sort;
   filters: Partial<Record<Filter, string>>;
   updateListings: (shop: ShopName) => Promise<void>;
@@ -46,11 +47,13 @@ type ShopState = {
     typeKey?: MultiKeyFilterType;
   }) => void;
   resetFilters: () => void;
+  setActiveShop: (shop: ShopName) => void;
   lastListingUpdate: Record<ShopName, number>;
 };
 
 const useShops = create<ShopState>()((set, get) => ({
   shops: defaultShops,
+  activeShop: "Leboncoin",
   sort:
     ((typeof window !== "undefined" &&
       new URLSearchParams(window.location.search).get("sort")) as Sort) ||
@@ -245,6 +248,12 @@ const useShops = create<ShopState>()((set, get) => ({
     set((state) => ({
       ...state,
       filters: {},
+    }));
+  },
+  setActiveShop: (shop) => {
+    set((state) => ({
+      ...state,
+      activeShop: shop,
     }));
   },
 }));
