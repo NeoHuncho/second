@@ -6,7 +6,7 @@ import { FaSignOutAlt } from "react-icons/fa";
 import { BsMoonFill, BsPhoneFill, BsScrewdriver } from "react-icons/bs";
 import { FaUser } from "react-icons/fa";
 import useColorScheme from "../hooks/ui/useColorTheme";
-
+import { RiSearchFill } from "react-icons/ri";
 import { ImEnlarge } from "react-icons/im";
 
 export type IconProps = {
@@ -21,6 +21,7 @@ export type IconType = React.FC<IconProps & { name: keyof typeof icons }>;
 export type IconNames = keyof typeof icons;
 const icons = {
   OutlineSearch: AiIcons.AiOutlineSearch,
+  FillSearch: RiSearchFill,
   OutlineUser: AiIcons.AiOutlineUser,
   FillUser: FaUser,
   OutlineHome: AiIcons.AiOutlineHome,
