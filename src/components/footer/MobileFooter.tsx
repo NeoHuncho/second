@@ -1,12 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import IconAndLabelVertical from "./sub/IconAndLabelVertical";
+import { useRouter } from "next/router";
 
 export default function MobileFooter() {
   const [currentPage, setCurrentPage] = useState("/");
+  const router = useRouter();
   const onClick = (path: string) => {
     console.log(path);
     setCurrentPage(path);
+    if (router.pathname !== path) void router.push(path);
   };
+  useEffect(() => {
+    setCurrentPage(router.pathname);
+  }, [router.pathname]);
 
   return (
     <div className="grid w-full grid-cols-4">
@@ -30,8 +36,8 @@ export default function MobileFooter() {
       />
       <IconAndLabelVertical
         onClick={onClick}
-        icon={`${currentPage === "/user" ? "Fill" : "Outline"}User`}
-        path="/user"
+        icon={`${currentPage === "/account" ? "Fill" : "Outline"}User`}
+        path="/account"
         label="Compte"
       />
     </div>

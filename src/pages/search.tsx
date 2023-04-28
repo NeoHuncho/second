@@ -5,11 +5,15 @@ import HeaderSearch from "../components/search/header/HeaderSearch";
 import useSearch from "../hooks/search/useSearch";
 import useValidShops from "../hooks/search/useValidShops";
 import useShops from "../stores/state/useShops";
+import useSearchParams from "../stores/state/useSearchParams";
 
 const Search = () => {
   const { validShopsValues: validShops } = useValidShops();
+  const { searchTerm } = useSearchParams();
   useSearch();
   const { shops, filters } = useShops();
+  if (!searchTerm)
+    return <div className="text-center">Juste au dessus 👆</div>;
   return (
     <div className="m-auto flex max-w-screen-2xl flex-col gap-4 sm:gap-2 ">
       <div className="mb-3">

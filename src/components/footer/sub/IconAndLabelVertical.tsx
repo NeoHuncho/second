@@ -17,9 +17,9 @@ export default function IconAndLabelVertical({
   return (
     <div
       onClick={() => onClick && path && onClick(path)}
-      className="flex cursor-pointer select-none flex-col items-center"
+      className="flex cursor-pointer select-none flex-col gap-1 items-center"
     >
-      <Icon name={icon} size={30} />
+      <Icon name={icon} size={23} />
       <Text className="text-xs font-semibold">{label}</Text>
     </div>
   );
