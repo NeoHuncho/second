@@ -30,7 +30,7 @@ export default function Showcase({ category }: Props) {
 
       {Object.entries(category).map(([key, value]) => (
         <Tabs.Panel className="mt-2" value={key} key={key}>
-          <SwiperCarousel slides={value} />
+          <SwiperCarousel itemSize='sm' slides={value} />
         </Tabs.Panel>
       ))}
     </Tabs>

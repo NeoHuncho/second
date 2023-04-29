@@ -3,17 +3,13 @@ import { Title } from "@mantine/core";
 import SearchBar from "../common/SearchBar";
 import useBreakpoints from "../../hooks/ui/useBreakpoints";
 import Logo from "../logo/logo";
-import OurRecommendations from "./OurRecommendations";
 import TypingText from "./TypingText";
 
-interface Props {
-  scrollIntoView: (alignment?: any) => void;
-}
-const SearchBlock = ({ scrollIntoView }: Props) => {
+const SearchBlock = () => {
   const { isMobile } = useBreakpoints();
 
   return (
-    <div className="m-auto flex h-screen max-w-screen-md flex-col items-center justify-between">
+    <div className="m-auto  flex max-w-screen-md flex-col items-center justify-between">
       <div
         className="flex w-full flex-col items-center "
         style={{ paddingTop: isMobile ? "12vh" : "30vh" }}
@@ -26,13 +22,6 @@ const SearchBlock = ({ scrollIntoView }: Props) => {
         </Title>
         <SearchBar />
       </div>
-      <OurRecommendations
-        onClick={() =>
-          scrollIntoView({
-            alignment: "start",
-          })
-        }
-      />
     </div>
   );
 };

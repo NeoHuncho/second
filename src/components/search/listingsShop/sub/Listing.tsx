@@ -1,3 +1,4 @@
+import type { MantineNumberSize } from "@mantine/core";
 import { ActionIcon, Card, Image, Text, Title } from "@mantine/core";
 import { Icon } from "../../../../assets/icons";
 import NextImage from "next/image";
@@ -17,11 +18,12 @@ type Props = {
   listing: ShopListing | LandingListing;
   isScrolling: boolean;
   enlargeButton?: boolean;
+  size?: MantineNumberSize;
 };
 
-const Listing = ({ listing, isScrolling, enlargeButton }: Props) => {
+const Listing = ({ listing, isScrolling, enlargeButton, size }: Props) => {
   const router = useRouter();
-  const CARD_SECTION_HEIGHT = 240;
+  const CARD_SECTION_HEIGHT = size === "sm" ? 160 : 240;
   const [isZoomed, setIsZoomed] = useState(false);
   const isShopListing = detectShopListing(listing);
   const isRepairable = detectRepairable(listing);
@@ -104,7 +106,7 @@ const Listing = ({ listing, isScrolling, enlargeButton }: Props) => {
           <Title
             lineClamp={2}
             style={{ minHeight: 32 }}
-            className="mt-3 text-sm"
+            className={`mt-3 ${size === "sm" ? "text-xs" : "text-sm"}`}
           >
             {listing.title}
           </Title>
@@ -137,7 +139,7 @@ const Listing = ({ listing, isScrolling, enlargeButton }: Props) => {
             )}
             {isRepairable && (
               <RepairScoreIcon
-                className="absolute bottom-1 w-20 place-self-center"
+                className="absolute bottom-1 w-2/5 place-self-center"
                 repairScore={listing.repairScore}
               />
             )}

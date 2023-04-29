@@ -44,6 +44,7 @@ const icons = {
   SignOutAlt: FaSignOutAlt,
   FillCaretDown: AiIcons.AiFillCaretDown,
   FillCaretUp: AiIcons.AiFillCaretUp,
+  FillCaretRight: AiIcons.AiFillCaretRight,
   MoonFill: BsMoonFill,
   Shoes: GiConverseShoe,
   Enlarge: ImEnlarge,

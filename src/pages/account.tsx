@@ -1,26 +1,52 @@
-import { Button } from "@mantine/core";
-import DarkModeSwitch from "../components/common/userOptions/DarkModeSwitch";
+import { Button, Switch, Text } from "@mantine/core";
 import { signOut } from "next-auth/react";
 import { Icon } from "../assets/icons";
+import AccountItem from "../components/account/AccountItem";
+import { useDisclosure, useLocalStorage } from "@mantine/hooks";
+import ConfirmModal from "../components/common/ConfirmModal";
 
 export default function Account() {
+  const [signOutOpen, signOutControls] = useDisclosure(false);
   const onSignOut = () => {
     void signOut({ redirect: false });
   };
+
+  const [theme, setTheme] = useLocalStorage({
+    key: "color-scheme",
+    defaultValue: "light",
+  });
+
   return (
     <div className="w-full">
-      <div className="m-auto flex  max-w-xs flex-col gap-3">
-        <DarkModeSwitch />
-        <Button
-          leftIcon={<Icon name="SignOutAlt" />}
-          onClick={onSignOut}
-          variant="light"
-          color="gray"
-          className="mt-5"
-        >
-          Se déconnecter
-        </Button>
+      <Text>Profil</Text>
+      <div className="m-auto mt-5 flex max-w-xs flex-col ">
+        <AccountItem
+          label="Dark Mode"
+          icon="MoonFill"
+          customRightComponent={
+            <Switch
+              onChange={(event) =>
+                setTheme(event.currentTarget.checked ? "dark" : "light")
+              }
+              checked={theme === "dark"}
+              size="xs"
+              className="-mt-0.5"
+            />
+          }
+          divider
+        />
+        <AccountItem
+          label="Se déconnecter"
+          icon="SignOutAlt"
+          onClick={signOutControls.open}
+        />
       </div>
+      <ConfirmModal
+        onClose={signOutControls.close}
+        opened={signOutOpen}
+        onConfirm={onSignOut}
+        text="Es-tu sûr de vouloir te déconnecter ?"
+      />
     </div>
   );
 }

@@ -9,8 +9,7 @@ export default function useCarousel() {
   const [isScrolling, setIsSrolling] = useState(false);
   const [lastTouchDiff, setLastTouchDiff] = useState(0);
   useEffect(() => {
-    if (!breakpoints.xxsBreakpoint) setSlidesPerView(1);
-    else if (!breakpoints.xsBreakpoint) setSlidesPerView(2);
+    if (!breakpoints.xsBreakpoint) setSlidesPerView(2);
     else if (!breakpoints.smBreakpoint) setSlidesPerView(3);
     else if (!breakpoints.mdBreakpoint) setSlidesPerView(4);
     else if (!breakpoints.lgBreakpoint) setSlidesPerView(5);

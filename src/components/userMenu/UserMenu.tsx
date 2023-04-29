@@ -10,6 +10,7 @@ const UserMenu = () => {
   const [opened, modalControls] = useDisclosure(false);
   const { status, data } = useSession();
   const userImage = data?.user?.image;
+  const userName = data?.user?.name;
 
   if (status !== "authenticated")
     return (
@@ -42,7 +43,7 @@ const UserMenu = () => {
                 weight={600}
                 size="xs"
               >
-                {data?.user?.name}
+                {userName}
               </Text>
             </>
           ) : (

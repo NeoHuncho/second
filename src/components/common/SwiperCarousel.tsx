@@ -8,12 +8,18 @@ import SwipperNavButton from "../search/listingsShop/sub/SwipperNavButton";
 import useCarousel from "../../hooks/carousel/useCarousel";
 import type { LandingListing, ShopListing } from "../../types/types";
 import { detectShopListing } from "../../types/TypeDetection";
+import type { MantineNumberSize } from "@mantine/core";
 interface Props {
   slides: ShopListing[] | LandingListing[]; //! add other types of slides
   handleIndexChange?: (index: number) => void;
+  itemSize?: MantineNumberSize;
 }
 
-export default function SwiperCarousel({ slides, handleIndexChange }: Props) {
+export default function SwiperCarousel({
+  slides,
+  handleIndexChange,
+  itemSize,
+}: Props) {
   const { handleTouchEnd, isScrolling, slidesPerView, swiperRef } =
     useCarousel();
   return (
@@ -45,6 +51,7 @@ export default function SwiperCarousel({ slides, handleIndexChange }: Props) {
               listing={listing}
               isScrolling={isScrolling}
               enlargeButton={detectShopListing(listing) ? true : false}
+              size={itemSize}
             />
           </SwiperSlide>
         ))}

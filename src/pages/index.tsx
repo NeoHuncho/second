@@ -3,13 +3,16 @@ import Head from "next/head";
 import { useLocalStorage, useScrollIntoView } from "@mantine/hooks";
 import SearchBlock from "../components/landing/SearchBlock";
 import ShowcaseBlock from "../components/landing/ShowcaseBlock";
+import { useEffect, useState } from "react";
 const Home: NextPage = () => {
+  const [pageHasMounted, setPageHasMounted] = useState(false);
   const [theme] = useLocalStorage({
     key: "color-scheme",
   });
-  const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>({
-    offset: 55,
-  });
+  useEffect(() => {
+    setPageHasMounted(true);
+  }, []);
+
   return (
     <>
       <Head>
@@ -24,8 +27,8 @@ const Home: NextPage = () => {
         } bg-cover bg-fixed bg-center bg-no-repeat pt-5 `}
       >
         <div className="max-w-screen-2xl pb-10">
-          <SearchBlock scrollIntoView={scrollIntoView} />
-          <ShowcaseBlock targetRef={targetRef} />
+          <SearchBlock />
+          {pageHasMounted && <ShowcaseBlock />}
         </div>
       </main>
     </>

@@ -5,14 +5,14 @@ import HeaderSearch from "../components/search/header/HeaderSearch";
 import useSearch from "../hooks/search/useSearch";
 import useValidShops from "../hooks/search/useValidShops";
 import useShops from "../stores/state/useShops";
-import useSearchParams from "../stores/state/useSearchParams";
+import { useRouter } from "next/router";
 
 const Search = () => {
   const { validShopsValues: validShops } = useValidShops();
-  const { searchTerm } = useSearchParams();
+  const router = useRouter();
   useSearch();
   const { shops, filters } = useShops();
-  if (!searchTerm)
+  if (!router.query.query)
     return <div className="text-center">Juste au dessus 👆</div>;
   return (
     <div className="m-auto flex max-w-screen-2xl flex-col gap-4 sm:gap-2 ">
