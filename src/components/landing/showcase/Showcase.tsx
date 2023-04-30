@@ -28,11 +28,17 @@ export default function Showcase({ category }: Props) {
         ))}
       </Tabs.List>
 
-      {Object.entries(category).map(([key, value]) => (
-        <Tabs.Panel className="mt-2" value={key} key={key}>
-          <SwiperCarousel itemSize='sm' slides={value} />
-        </Tabs.Panel>
-      ))}
+      {Object.entries(category).map(([key, value]) => {
+        return (
+          <Tabs.Panel className="mt-2" value={key} key={key}>
+            <SwiperCarousel
+              landscapeImage={key === "laptop"}
+              itemSize="sm"
+              slides={value}
+            />
+          </Tabs.Panel>
+        );
+      })}
     </Tabs>
   );
 }

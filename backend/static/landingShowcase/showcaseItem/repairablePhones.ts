@@ -6,6 +6,10 @@ import fairphone4 from "../../../assets/products/phones/fairphone_4.png";
 import redmiNote11 from "../../../assets/products/phones/redmi_note11.png";
 import vivoV52 from "../../../assets/products/phones/vivo_y52.png";
 import motorolaE13 from "../../../assets/products/phones/motorola_e13.png";
+import iphone13 from "../../../assets/products/phones/apple_iphone13.png";
+import oppoA74 from "../../../assets/products/phones/oppo_a74.png";
+import sonyXperia10 from "../../../assets/products/phones/sony_xperia10.png";
+import redmiNote10 from "../../../assets/products/phones/redmi_note10.png";
 
 const repairablePhones: LandingListing[] = [
   {
@@ -52,10 +56,17 @@ const repairablePhones: LandingListing[] = [
     type: "Showcase",
   },
   {
-    title: "APPLE iPhone 14",
-    repairScore: 6.9,
-    image: iphone14img,
-    url: "/search?query=iphone+14",
+    title: "REDMI NOTE 10",
+    repairScore: 7.3,
+    image: redmiNote10,
+    url: "/search?query=redmi+note+10",
+    type: "Showcase",
+  },
+  {
+    title: "OPPO A74",
+    repairScore: 7,
+    image: oppoA74,
+    url: "/search?query=oppo+a74",
     type: "Showcase",
   },
   {
@@ -66,10 +77,17 @@ const repairablePhones: LandingListing[] = [
     type: "Showcase",
   },
   {
-    title: "APPLE iPhone 14",
-    repairScore: 6.9,
-    image: iphone14img,
-    url: "/search?query=iphone+14",
+    title: "APPLE iPhone 13",
+    repairScore: 6.4,
+    image: iphone13,
+    url: "/search?query=iphone+13",
+    type: "Showcase",
+  },
+  {
+    title: "SONY Xperia 10",
+    repairScore: 6,
+    image: sonyXperia10,
+    url: "/search?query=sony+xperia+10",
     type: "Showcase",
   },
 ];

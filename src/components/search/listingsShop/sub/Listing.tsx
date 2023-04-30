@@ -19,9 +19,16 @@ type Props = {
   isScrolling: boolean;
   enlargeButton?: boolean;
   size?: MantineNumberSize;
+  landscapeImage?: boolean;
 };
 
-const Listing = ({ listing, isScrolling, enlargeButton, size }: Props) => {
+const Listing = ({
+  listing,
+  isScrolling,
+  enlargeButton,
+  size,
+  landscapeImage,
+}: Props) => {
   const router = useRouter();
   const CARD_SECTION_HEIGHT = size === "sm" ? 160 : 240;
   const [isZoomed, setIsZoomed] = useState(false);
@@ -88,11 +95,14 @@ const Listing = ({ listing, isScrolling, enlargeButton, size }: Props) => {
             )
           ) : null}
           {!isShopListing && (
-            <div className="flex w-full justify-center">
+            <div className="flex  justify-center ">
               <NextImage
                 src={listing.image}
                 alt={listing.title}
                 height={CARD_SECTION_HEIGHT}
+                className={`object-contain py-2 ${
+                  landscapeImage ? "px-10" : ""
+                }`}
               />
             </div>
           )}

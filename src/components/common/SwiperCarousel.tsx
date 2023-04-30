@@ -13,12 +13,14 @@ interface Props {
   slides: ShopListing[] | LandingListing[]; //! add other types of slides
   handleIndexChange?: (index: number) => void;
   itemSize?: MantineNumberSize;
+  landscapeImage?: boolean;
 }
 
 export default function SwiperCarousel({
   slides,
   handleIndexChange,
   itemSize,
+  landscapeImage,
 }: Props) {
   const { handleTouchEnd, isScrolling, slidesPerView, swiperRef } =
     useCarousel();
@@ -52,6 +54,7 @@ export default function SwiperCarousel({
               isScrolling={isScrolling}
               enlargeButton={detectShopListing(listing) ? true : false}
               size={itemSize}
+              landscapeImage={landscapeImage}
             />
           </SwiperSlide>
         ))}
