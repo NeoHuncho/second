@@ -1,23 +1,24 @@
 import type { MantineSize } from "@mantine/core";
+import { Popover } from "@mantine/core";
+import { Button } from "@mantine/core";
 import { Select } from "@mantine/core";
-import useSearchParams from "../../stores/state/useSearchParams";
 import type { DeliveryMethod } from "../../../common/types/types";
 import { deliveryMethods } from "../../../common/keys/keys";
-import useBreakpoints from "../../hooks/ui/useBreakpoints";
 import { useEffect, useState } from "react";
 import useDeliveryParams from "../../stores/storage/usePersistentSearchParams";
+import LocationOptions from "./LocationOptions";
 
 type Props = {
   size: MantineSize;
 };
 export default function DeliveryMethodSelect({ size }: Props) {
-  const { setDropdownOpen, setHasClickedDeliverySelect } = useSearchParams();
   const { deliveryMethod, setDeliveryMethod, address, locationRange } =
     useDeliveryParams();
-  const { isMobile } = useBreakpoints();
   const [data, setData] = useState<{ label: string; value: DeliveryMethod }[]>(
     []
   );
+  const [openedOptions, setOpenedOptions] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
     setData(
@@ -55,19 +56,43 @@ export default function DeliveryMethodSelect({ size }: Props) {
   }, [locationRange]);
 
   return (
-    <Select
-      className="ml-2 w-full"
-      size={size}
-      radius={"sm"}
-      data={data}
-      value={deliveryMethod}
-      onChange={(value) => setDeliveryMethod(value as DeliveryMethod)}
-      placeholder="Choisissez une méthode de livraison"
-      onDropdownOpen={() => {
-        setDropdownOpen(true);
-        setHasClickedDeliverySelect(true);
-      }}
-      onDropdownClose={() => setDropdownOpen(false)}
-    />
+    <div className="flex flex-col items-center gap-1">
+      <Select
+        className="ml-2 w-full"
+        size={size}
+        radius={"sm"}
+        data={data}
+        value={deliveryMethod}
+        onChange={(value) => setDeliveryMethod(value as DeliveryMethod)}
+        placeholder="Choisissez une méthode de livraison"
+        onDropdownOpen={() => setDropdownOpen(true)}
+        onDropdownClose={() => setDropdownOpen(false)}
+      />
+      {deliveryMethod !== "delivery" && (
+        <Popover
+          opened={openedOptions || (!address && !dropdownOpen)}
+          onChange={setOpenedOptions}
+        >
+          <Popover.Target>
+            {address ? (
+              <Button
+                onClick={() => setOpenedOptions((o) => !o)}
+                className="-mb-10"
+                variant="subtle"
+                size="sm"
+                color="gray"
+              >
+                Changer l&apos;address
+              </Button>
+            ) : (
+              <div />
+            )}
+          </Popover.Target>
+          <Popover.Dropdown>
+            <LocationOptions setOpened={setOpenedOptions} address={address} />
+          </Popover.Dropdown>
+        </Popover>
+      )}
+    </div>
   );
 }

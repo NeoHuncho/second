@@ -3,7 +3,12 @@ import { VscError } from "react-icons/vsc";
 import { TbTruckDelivery } from "react-icons/tb";
 import { GiClothes, GiConverseShoe, GiLaptop } from "react-icons/gi";
 import { FaSignOutAlt } from "react-icons/fa";
-import { BsMoonFill, BsPhoneFill, BsScrewdriver } from "react-icons/bs";
+import {
+  BsMoonFill,
+  BsPhoneFill,
+  BsScrewdriver,
+  BsPencilFill,
+} from "react-icons/bs";
 import { FaUser } from "react-icons/fa";
 import useColorScheme from "../hooks/ui/useColorTheme";
 import { RiSearchFill } from "react-icons/ri";
@@ -52,6 +57,7 @@ const icons = {
   Laptop: GiLaptop,
   Screwdriver: BsScrewdriver,
   Close: AiIcons.AiOutlineClose,
+  FillPencil: BsPencilFill,
 };
 
 export const Icon: React.FC<IconProps & { name: keyof typeof icons }> = ({

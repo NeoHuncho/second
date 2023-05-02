@@ -1,55 +1,27 @@
-import useSearchParams from "../../stores/state/useSearchParams";
 import AddressDropdown from "./AddressDropdown";
 import useColorScheme from "../../hooks/ui/useColorTheme";
-import { useEffect, useRef, useState } from "react";
-import useDeliveryParams from "../../stores/storage/usePersistentSearchParams";
 import AddressRangeSlider from "./AddressRangeSlider";
 import { ActionIcon } from "@mantine/core";
 import { Icon } from "../../assets/icons";
 
-const LocationOptions = () => {
-  const { dropdownOpen, hasClickedDeliverySelect } = useSearchParams();
-  const { deliveryMethod } = useDeliveryParams();
+type Props = {
+  setOpened: (opened: boolean) => void;
+  address: string;
+};
+
+const LocationOptions = ({ setOpened, address }: Props) => {
   const { isLight } = useColorScheme();
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    setIsOpen(
-      deliveryMethod !== "delivery" && !dropdownOpen && hasClickedDeliverySelect
-    );
-  }, [deliveryMethod, dropdownOpen]);
-
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [dropdownRef]);
-
-  if (!isOpen) return null;
   return (
-    <div
-      ref={dropdownRef}
-      className="absolute right-4 z-10 mt-2 rounded-md bg-white p-4 sm:right-auto sm:-ml-4"
-      style={!isLight ? { background: "#25262B" } : { background: "#fff" }}
-    >
+    <div>
       <div className="flex w-full flex-col items-center  justify-center gap-5">
-        <ActionIcon
-          onClick={() => setIsOpen(false)}
-          className="absolute right-0 top-0"
-        >
-          <Icon name="Close" />
-        </ActionIcon>
+        {address && (
+          <ActionIcon
+            onClick={() => setOpened(false)}
+            className="absolute right-0 top-0"
+          >
+            <Icon name="Close" />
+          </ActionIcon>
+        )}
         <AddressDropdown />
         <AddressRangeSlider />
       </div>

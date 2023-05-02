@@ -6,7 +6,6 @@ import { Icon } from "../../assets/icons";
 import useCompletion from "../../hooks/completion/useCompletion";
 import useBreakpoints from "../../hooks/ui/useBreakpoints";
 import SearchItem from "./SearchItem";
-import LocationOptions from "../searchBar/LocationOptions";
 import DeliveryMethodSelect from "../searchBar/DeliveryMethodSelect";
 import CategorySelect from "../searchBar/CategorySelect";
 
@@ -82,7 +81,6 @@ const SearchBar = ({ size = "md" }: PropTypes) => {
               {isMobile && <CategorySelect size={size} />}
               <DeliveryMethodSelect size={size} />
             </div>
-            <LocationOptions />
           </div>
         </div>
         <Popover.Dropdown>
