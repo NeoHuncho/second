@@ -1,6 +1,7 @@
 import { useLocalStorage } from "@mantine/hooks";
 import type { DeliveryMethod } from "../../../common/types/types";
 import { useEffect, useState } from "react";
+import useSearchParams from "../state/useSearchParams";
 
 type AddressCoords = {
   lat: number;
@@ -8,6 +9,7 @@ type AddressCoords = {
 };
 
 const usePersistentSearchParams = () => {
+  const { setDeliveryParamChanged } = useSearchParams();
   const [locationRange, setLocationRange] = useLocalStorage({
     key: "locationRange",
     defaultValue: 0,
@@ -24,9 +26,9 @@ const usePersistentSearchParams = () => {
     key: "addressCoords",
     defaultValue: { lat: 0, lng: 0 },
   });
-  const [deliveryParamsChanged, setDeliveryParamsChanged] = useState(0);
+
   useEffect(() => {
-    setDeliveryParamsChanged(deliveryParamsChanged + 1);
+    setDeliveryParamChanged(true);
   }, [locationRange, deliveryMethod, address, addressCoords]);
 
   return {
@@ -38,8 +40,6 @@ const usePersistentSearchParams = () => {
     setAddress,
     addressCoords,
     setAddressCoords,
-    deliveryParamsChanged,
-    setDeliveryParamsChanged,
   };
 };
 export default usePersistentSearchParams;

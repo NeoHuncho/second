@@ -5,7 +5,7 @@ const useValidShops = () => {
   const { deliveryMethod } = usePersistentSearchParams();
   const { shops } = useShops();
   const validShops = Object.entries(shops).filter(([key, values]) => {
-    if (deliveryMethod !== "delivery" && values.isDeliveryOnly) return false;
+    if (deliveryMethod === "location" && values.isDeliveryOnly) return false;
     return true;
   });
 

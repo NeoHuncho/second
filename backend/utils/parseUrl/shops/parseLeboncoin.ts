@@ -42,7 +42,7 @@ interface Attribute {
   values: string[];
   value_label: string;
 }
-const parseLeboncoin = (responseText: string) => {
+const parseLeboncoin = (responseText: string, deliveryMethod: string) => {
   const $ = load(responseText);
   const data = $("script")
     .filter((i, el) => {
@@ -62,7 +62,11 @@ const parseLeboncoin = (responseText: string) => {
           (attribute.value === "sold" || attribute.value === "pending")
         )
           hasFilteredAttributes = true;
-        if (attribute.key === "shippable" && attribute.value !== "true")
+        if (
+          attribute.key === "shippable" &&
+          attribute.value !== "true" &&
+          deliveryMethod === "delivery"
+        )
           hasFilteredAttributes = true;
       });
       return (

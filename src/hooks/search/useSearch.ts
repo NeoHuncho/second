@@ -1,35 +1,74 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import useShops from "../../stores/state/useShops";
-import type { Category, ShopName } from "../../../common/types/types";
-import { Filters } from "../../../common/keys/keys";
-import { showNotification } from "@mantine/notifications";
 import useSuggestedCat from "../../stores/state/useSuggestedCat";
-import useSearchParams from "../../stores/storage/usePersistentSearchParams";
+import usePersistentSearchParams from "../../stores/storage/usePersistentSearchParams";
+import useSearchParams from "../../stores/state/useSearchParams";
+import useValidShops from "./useValidShops";
+
 import type { ParsedUrlQuery } from "querystring";
 import { parse } from "querystring";
-import useValidShops from "./useValidShops";
-import { Categories } from "../../../common/keys/keys";
+
+import { Filters, Categories } from "../../../common/keys/keys";
+import type { Category, ShopName } from "../../../common/types/types";
+
+import { showNotification } from "@mantine/notifications";
 
 const useSearch = () => {
   const router = useRouter();
+  const { deliveryMethod, locationRange, addressCoords, address } =
+    usePersistentSearchParams();
+
   const { updateListings, resetShops, setSort, setFilter } = useShops();
+
   const { suggestedCat, setSuggestedCat } = useSuggestedCat();
-  const {
-    deliveryMethod,
-    locationRange,
-    addressCoords,
-    deliveryParamsChanged,
-    address,
-  } = useSearchParams();
+
+  const { deliveryParamChanged, setDeliveryParamChanged } = useSearchParams();
+
   const { validShopKeys: validShops } = useValidShops();
+
+  const convertSearchToParsedUrlQuery = (): ParsedUrlQuery => {
+    const search = window.location.search;
+    const parsedSearch = parse(search.replace("?", ""));
+    const { deliveryMethod, lat, lng, locationRange, city, ...cleanedSearch } =
+      parsedSearch;
+    return cleanedSearch;
+  };
+
+  const processNewDeliveryParams = () => {
+    if (!router.query.query) return;
+    const routerUrlQuery: Record<string, string | number> = {};
+    if (deliveryMethod) routerUrlQuery[`deliveryMethod`] = deliveryMethod;
+    if (addressCoords.lat && deliveryMethod !== "delivery")
+      routerUrlQuery[`lat`] = addressCoords.lat;
+    if (addressCoords.lng && deliveryMethod !== "delivery")
+      routerUrlQuery[`lng`] = addressCoords.lng;
+    if (locationRange && deliveryMethod !== "delivery")
+      routerUrlQuery[`locationRange`] = locationRange;
+    if (address && deliveryMethod !== "delivery")
+      routerUrlQuery[`city`] = address;
+    void router.push({
+      pathname: router.pathname,
+      query: {
+        ...convertSearchToParsedUrlQuery(),
+        ...routerUrlQuery,
+      },
+    });
+  };
+
+  const updateShops = () => {
+    resetShops();
+    validShops.forEach((shop) => {
+      void updateListings(shop as ShopName);
+    });
+  };
+
   useEffect(() => {
     if (!deliveryMethod) return;
     if (!window.location.search.includes("sort")) {
       setSort("recommended", router);
       return;
     }
-
     if (suggestedCat && Object.keys(Categories).includes(suggestedCat)) {
       setFilter({
         key: "category",
@@ -47,51 +86,16 @@ const useSearch = () => {
       });
       return;
     }
-
-    if (router.query.query) updateShops();
+    if (router.query.query) {
+      updateShops();
+    }
   }, [router.query]);
 
   useEffect(() => {
-    const routerUrlQuery: Record<string, string | number> = {};
-    if (!router.query.query) return;
-    if (deliveryMethod) routerUrlQuery[`deliveryMethod`] = deliveryMethod;
-    if (addressCoords.lat && deliveryMethod !== "delivery")
-      routerUrlQuery[`lat`] = addressCoords.lat;
-    if (addressCoords.lng && deliveryMethod !== "delivery")
-      routerUrlQuery[`lng`] = addressCoords.lng;
-    if (locationRange && deliveryMethod !== "delivery")
-      routerUrlQuery[`locationRange`] = locationRange;
-    if (address && deliveryMethod !== "delivery")
-      routerUrlQuery[`city`] = address;
-
-    function convertSearchToParsedUrlQuery(): ParsedUrlQuery {
-      const search = window.location.search;
-      const parsedSearch = parse(search.replace("?", ""));
-      const {
-        deliveryMethod,
-        lat,
-        lng,
-        locationRange,
-        city,
-        ...cleanedSearch
-      } = parsedSearch;
-      return cleanedSearch;
-    }
-    void router.push({
-      pathname: router.pathname,
-      query: {
-        ...convertSearchToParsedUrlQuery(),
-        ...routerUrlQuery,
-      },
-    });
-  }, [router.query.query, deliveryParamsChanged]);
-
-  const updateShops = () => {
-    resetShops();
-
-    validShops.forEach((shop) => {
-      void updateListings(shop as ShopName);
-    });
-  };
+    if (!deliveryParamChanged) return;
+    processNewDeliveryParams();
+    setDeliveryParamChanged(false);
+  }, [deliveryParamChanged]);
 };
+
 export default useSearch;

@@ -31,7 +31,7 @@ const LoadingShops = ({ values }: Props) => {
                   fill
                 />
               </div>
-              {value.isDeliveryOnly && deliveryMethod !== "delivery" ? (
+              {value.isDeliveryOnly && deliveryMethod === "location" ? (
                 <motion.div
                   className="flex items-center justify-center"
                   {...appearMotion}

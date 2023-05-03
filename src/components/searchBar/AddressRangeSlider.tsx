@@ -10,7 +10,7 @@ export default function AddressRangeSlider() {
     { value: 60, label: "30 km" },
     { value: 75, label: "50 km" },
     { value: 90, label: "100 km" },
-    { value: 105, label: "200 km" },
+    { value: 100, label: "200 km" },
   ];
   const { locationRange, setLocationRange } = useDeliveryParams();
   const [actualRangeValue, setActualRangeValue] = useState(
