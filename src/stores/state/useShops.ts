@@ -1,4 +1,4 @@
-import type { Shop, Sort } from "../../types/types";
+import type { Shop, ShopListing, Sort } from "../../types/types";
 import { create } from "zustand";
 import { defaultShops } from "../../static/defaultShops";
 import type { NextRouter } from "next/router";
@@ -16,6 +16,8 @@ type ShopState = {
   activeShop: ShopName;
   sort: Sort;
   filters: Partial<Record<Filter, string>>;
+  slides: ShopListing[];
+  setSlides: (slides: ShopListing[]) => void;
   updateListings: (shop: ShopName) => Promise<void>;
   resetShops: () => void;
   setSort: (sort: Sort, router: NextRouter) => void;
@@ -66,6 +68,13 @@ const useShops = create<ShopState>()((set, get) => ({
     (acc, shop) => ({ ...acc, [shop]: 0 }),
     {}
   ) as Record<ShopName, number>,
+  slides: [],
+  setSlides: (slides: ShopListing[]) => {
+    set((state) => ({
+      ...state,
+      slides,
+    }));
+  },
   updateListings: async (shop: ShopName) => {
     const { listings, page, name } = get().shops[shop];
     const currentDate = Date.now();

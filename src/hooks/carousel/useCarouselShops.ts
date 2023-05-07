@@ -13,7 +13,7 @@ const useCarouselShops = (shop: ShopName) => {
   const { listings, name, hasFetchedAll, status } = useShops(
     (state) => state.shops[shop]
   );
-  const [slides, setSlides] = useState([] as ShopListing[]);
+  const { slides, setSlides } = useShops();
 
   const [loadingNewSlides, setLoadingNewSlides] = useState(false);
 
@@ -36,6 +36,7 @@ const useCarouselShops = (shop: ShopName) => {
       return setSlides([...listings, ...placeHolderSlides]);
     }
     setSlides([]);
+
     return setSlides([...listings.slice(0, 15)]);
   }, [listings]);
 
