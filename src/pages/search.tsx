@@ -15,7 +15,7 @@ const Search = () => {
         <HeaderSearch />
       </div>
       <ShopTabs shops={[...Object.values(shops)]} />
-      <div className="flex flex-col gap-6 ">
+      <div className="flex flex-col ">
         <ListingShop key={shops[activeShop].name} shop={shops[activeShop]} />
       </div>
     </div>

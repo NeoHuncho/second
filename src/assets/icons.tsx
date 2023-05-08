@@ -8,11 +8,14 @@ import {
   BsPhoneFill,
   BsScrewdriver,
   BsPencilFill,
+  BsGridFill,
 } from "react-icons/bs";
 import { FaUser } from "react-icons/fa";
 import useColorScheme from "../hooks/ui/useColorTheme";
 import { RiSearchFill } from "react-icons/ri";
 import { ImEnlarge } from "react-icons/im";
+// BiCarousel
+import { BiCarousel } from "react-icons/bi";
 
 export type IconProps = {
   size?: number;
@@ -58,6 +61,8 @@ const icons = {
   Screwdriver: BsScrewdriver,
   Close: AiIcons.AiOutlineClose,
   FillPencil: BsPencilFill,
+  Grid: BsGridFill,
+  Carousel: BiCarousel,
 };
 
 export const Icon: React.FC<IconProps & { name: keyof typeof icons }> = ({

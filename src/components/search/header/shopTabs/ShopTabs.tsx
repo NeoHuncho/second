@@ -10,10 +10,11 @@ import useColorScheme from "../../../../hooks/ui/useColorTheme";
 import useShops from "../../../../stores/state/useShops";
 import { motion } from "framer-motion";
 import useValidShops from "../../../../hooks/search/useValidShops";
-import { Loader, Text } from "@mantine/core";
+import { Loader, Switch, Text } from "@mantine/core";
 import { appearMotion } from "../../../../animate/Animate";
 import { Icon } from "../../../../assets/icons";
 import type { ShopName } from "../../../../../common/types/types";
+import { useLocalStorage } from "@mantine/hooks";
 
 // Install Swiper modules
 
@@ -70,6 +71,10 @@ const ShopTabs: React.FC<ShopTabsProps> = ({ shops }) => {
   const { isDark } = useColorScheme();
   const { activeShop, setActiveShop } = useShops();
   const { validShopKeys: validShops } = useValidShops();
+  const [displayType, setDisplayType] = useLocalStorage<"grid" | "carousel">({
+    key: "displayType",
+    defaultValue: "grid",
+  });
 
   return (
     <div className="relative  w-full">
@@ -128,6 +133,20 @@ const ShopTabs: React.FC<ShopTabsProps> = ({ shops }) => {
           }`}
         />
       </Swiper>
+      <div className="mt-1.5 flex w-full justify-end">
+        <div className="flex flex-col items-center ">
+          <Switch
+            size="md"
+            offLabel={<Icon name="Grid" size={15} />}
+            onLabel={<Icon name="Carousel" size={15} />}
+            color={isDark ? "gray" : "dark"}
+            checked={displayType === "carousel"}
+            onChange={(e) =>
+              setDisplayType(e.currentTarget.checked ? "carousel" : "grid")
+            }
+          />
+        </div>
+      </div>
     </div>
   );
 };
