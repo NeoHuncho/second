@@ -13,6 +13,7 @@ import useValidShops from "../../../../hooks/search/useValidShops";
 import { Loader, Text } from "@mantine/core";
 import { appearMotion } from "../../../../animate/Animate";
 import { Icon } from "../../../../assets/icons";
+import type { ShopName } from "../../../../../common/types/types";
 
 // Install Swiper modules
 
@@ -21,8 +22,6 @@ type ShopTabsProps = {
 };
 
 const ShopStatus = ({ shop }: { shop: Shop }) => {
-  // {shops[shop.name].loadingNextPage &&
-  //   !shops[shop.name].hasFetchedAll && <Loader color={shop.color} />}
   const { validShopKeys: validShops } = useValidShops();
   if (!validShops.includes(shop.name))
     return (
@@ -85,7 +84,7 @@ const ShopTabs: React.FC<ShopTabsProps> = ({ shops }) => {
         {shops.map((shop, index) => (
           <SwiperSlide
             key={index}
-            className="!flex  !h-10 !w-28 !flex-col !justify-end"
+            className="!flex  !h-10 !w-36 !flex-col !justify-end"
           >
             {validShops.includes(shop.name) ? (
               <div className="flex h-full w-full items-center gap-2">
@@ -96,6 +95,7 @@ const ShopTabs: React.FC<ShopTabsProps> = ({ shops }) => {
                   style={{
                     opacity: activeShop === shop.name ? 1 : 0.8,
                   }}
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
                   onClick={() => setActiveShop(shop.name)}
                 />
                 <ShopStatus shop={shop} />
