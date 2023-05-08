@@ -7,10 +7,8 @@ import { useRouter } from "next/router";
 import ShopTabs from "../components/search/header/shopTabs/ShopTabs";
 
 const Search = () => {
-  const { validShopsValues: validShops } = useValidShops();
-  const router = useRouter();
   useSearch();
-  const { shops, filters, activeShop } = useShops();
+  const { shops, activeShop } = useShops();
   return (
     <div className="m-auto flex max-w-screen-2xl flex-col gap-4 sm:gap-2 ">
       <div className="mb-3">
