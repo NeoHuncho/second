@@ -4,7 +4,7 @@ import type { placeAutocomplete } from "../../requests/backend";
 import { getPlaceLocation } from "../../requests/backend";
 import { getPlaceAutocomplete } from "../../requests/backend";
 import { useDebouncedState } from "@mantine/hooks";
-import useDeliveryParams from "../../stores/storage/usePersistentSearchParams";
+import useDeliveryParams from "../../stores/useLocalStorage";
 import { Icon } from "../../assets/icons";
 
 const AddressDropdown = () => {

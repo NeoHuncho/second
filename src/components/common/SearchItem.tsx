@@ -1,6 +1,6 @@
 import { Text } from "@mantine/core";
 import { useState } from "react";
-import useColorScheme from "../../hooks/ui/useColorTheme";
+import useColorTheme from "../../hooks/ui/useColorTheme";
 
 type PropTypes = {
   text: string;
@@ -8,7 +8,7 @@ type PropTypes = {
 };
 const SearchItem = ({ text, onSubmit }: PropTypes) => {
   const [hovered, setHovered] = useState(false);
-  const { isLight } = useColorScheme();
+  const { isLight } = useColorTheme();
   return (
     <div
       style={{

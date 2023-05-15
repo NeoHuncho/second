@@ -9,12 +9,12 @@ import { AppShell, Footer, Header, MantineProvider } from "@mantine/core";
 import { useRouter } from "next/router";
 import AppHeader from "../components/header/AppHeader";
 import { useEffect, useState } from "react";
-import { useLocalStorage } from "@mantine/hooks";
 import { NotificationsProvider } from "@mantine/notifications";
 import useResetFilters from "../hooks/search/useResetFilters";
 import useBreakpoints from "../hooks/ui/useBreakpoints";
 import MobileFooter from "../components/footer/MobileFooter";
 import MobileSearchHeader from "../components/header/MobileSearchHeader";
+import useLocalStorage from "../stores/useLocalStorage";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -23,9 +23,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   const router = useRouter();
   const [hasLoaded, setHasLoaded] = useState(false);
   const { isMobile } = useBreakpoints();
-  const [theme] = useLocalStorage({
-    key: "color-scheme",
-  });
+  const { theme } = useLocalStorage();
   const isSearchPage = router.pathname === "/search";
   const isIndexPage = router.pathname === "/";
 

@@ -5,10 +5,11 @@ import type { ShopListing } from "../../types/types";
 import useShops from "../../stores/state/useShops";
 import type { ShopName } from "../../../common/types/types";
 import useCarousel from "./useCarousel";
+import useListingsInView from "../search/useListingsInView";
 
 const useCarouselShops = (shop: ShopName) => {
   const router = useRouter();
-  const { slidesPerView } = useCarousel();
+  const listingsInView = useListingsInView();
   const { updateListings } = useShops();
   const { listings, name, hasFetchedAll, status } = useShops(
     (state) => state.shops[shop]
@@ -27,7 +28,7 @@ const useCarouselShops = (shop: ShopName) => {
       ]);
     }
     if (!listings.length) return setSlides([]);
-    const missingSlides = slidesPerView - listings.length;
+    const missingSlides = listingsInView - listings.length;
     if (missingSlides > 0) {
       const placeHolderSlides = [];
       for (let i = 0; i < missingSlides; i++) {

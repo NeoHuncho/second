@@ -5,7 +5,7 @@ import { Select } from "@mantine/core";
 import type { DeliveryMethod } from "../../../common/types/types";
 import { deliveryMethods } from "../../../common/keys/keys";
 import { useEffect, useState } from "react";
-import useDeliveryParams from "../../stores/storage/usePersistentSearchParams";
+import useDeliveryParams from "../../stores/useLocalStorage";
 import LocationOptions from "./LocationOptions";
 
 type Props = {

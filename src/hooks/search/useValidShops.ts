@@ -1,8 +1,8 @@
 import useShops from "../../stores/state/useShops";
-import usePersistentSearchParams from "../../stores/storage/usePersistentSearchParams";
+import useLocalStorage from "../../stores/useLocalStorage";
 
 const useValidShops = () => {
-  const { deliveryMethod } = usePersistentSearchParams();
+  const { deliveryMethod } = useLocalStorage();
   const { shops } = useShops();
   const validShops = Object.entries(shops).filter(([key, values]) => {
     if (deliveryMethod === "location" && values.isDeliveryOnly) return false;

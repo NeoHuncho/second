@@ -11,7 +11,7 @@ import {
   BsGridFill,
 } from "react-icons/bs";
 import { FaUser } from "react-icons/fa";
-import useColorScheme from "../hooks/ui/useColorTheme";
+import useColorTheme from "../hooks/ui/useColorTheme";
 import { RiSearchFill } from "react-icons/ri";
 import { ImEnlarge } from "react-icons/im";
 // BiCarousel
@@ -71,7 +71,7 @@ export const Icon: React.FC<IconProps & { name: keyof typeof icons }> = ({
   className,
   ...props
 }) => {
-  const { isLight } = useColorScheme();
+  const { isLight } = useColorTheme();
   const IconComponent = icons[name];
   return (
     <IconComponent

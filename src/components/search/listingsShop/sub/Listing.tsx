@@ -1,4 +1,5 @@
 import type { MantineNumberSize } from "@mantine/core";
+import { Loader } from "@mantine/core";
 import { ActionIcon, Card, Image, Text, Title } from "@mantine/core";
 import { Icon } from "../../../../assets/icons";
 import NextImage from "next/image";
@@ -20,6 +21,7 @@ type Props = {
   enlargeButton?: boolean;
   size?: MantineNumberSize;
   landscapeImage?: boolean;
+  loadImage?: boolean;
 };
 
 const Listing = ({
@@ -28,6 +30,7 @@ const Listing = ({
   enlargeButton,
   size,
   landscapeImage,
+  loadImage = true,
 }: Props) => {
   const router = useRouter();
   const CARD_SECTION_HEIGHT = size === "sm" ? 160 : 240;
@@ -83,12 +86,20 @@ const Listing = ({
                     <Icon name="Enlarge" size={14} color="white" />
                   </ActionIcon>
                 )}
-
-                <Image
-                  height={CARD_SECTION_HEIGHT}
-                  src={listing.images.url_thumb}
-                  alt={listing.title}
-                />
+                {loadImage ? (
+                  <Image
+                    height={CARD_SECTION_HEIGHT}
+                    src={listing.images.url_thumb}
+                    alt={listing.title}
+                  />
+                ) : (
+                  <div
+                    className="flex w-full items-center justify-center"
+                    style={{ height: CARD_SECTION_HEIGHT }}
+                  >
+                    <Loader />
+                  </div>
+                )}
               </div>
             ) : (
               <NoImage />

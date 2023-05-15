@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import useShops from "../../stores/state/useShops";
 import useSuggestedCat from "../../stores/state/useSuggestedCat";
-import usePersistentSearchParams from "../../stores/storage/usePersistentSearchParams";
+import useLocalStorage from "../../stores/useLocalStorage";
 import useSearchParams from "../../stores/state/useSearchParams";
 import useValidShops from "./useValidShops";
 
@@ -17,7 +17,7 @@ import { showNotification } from "@mantine/notifications";
 const useSearch = () => {
   const router = useRouter();
   const { deliveryMethod, locationRange, addressCoords, address } =
-    usePersistentSearchParams();
+    useLocalStorage();
 
   const { updateListings, resetShops, setSort, setFilter } = useShops();
 

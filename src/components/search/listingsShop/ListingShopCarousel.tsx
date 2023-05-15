@@ -8,7 +8,7 @@ import SwiperCarousel from "../../common/SwiperCarousel";
 interface Props {
   shop: Shop;
 }
-export default function ListingShop({ shop }: Props) {
+export default function ListingShopCarousel({ shop }: Props) {
   const { handleIndexChange, slides } = useCarouselShops(shop.name);
   const { shops } = useShops();
   if (shop.status === "success")

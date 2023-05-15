@@ -1,17 +1,16 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import { useLocalStorage, useScrollIntoView } from "@mantine/hooks";
 import SearchBlock from "../components/landing/SearchBlock";
 import ShowcaseBlock from "../components/landing/ShowcaseBlock";
 import { useEffect, useState } from "react";
+import useLocalStorage from "../stores/useLocalStorage";
 const Home: NextPage = () => {
   const [pageHasMounted, setPageHasMounted] = useState(false);
-  const [theme] = useLocalStorage({
-    key: "color-scheme",
-  });
+
   useEffect(() => {
     setPageHasMounted(true);
   }, []);
+  const { theme } = useLocalStorage();
 
   return (
     <>

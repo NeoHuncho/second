@@ -9,6 +9,7 @@ import useCarousel from "../../hooks/carousel/useCarousel";
 import type { LandingListing, ShopListing } from "../../types/types";
 import { detectShopListing } from "../../types/TypeDetection";
 import type { MantineNumberSize } from "@mantine/core";
+import useListingsInView from "../../hooks/search/useListingsInView";
 interface Props {
   slides: ShopListing[] | LandingListing[]; //! add other types of slides
   handleIndexChange?: (index: number) => void;
@@ -22,9 +23,8 @@ export default function SwiperCarousel({
   itemSize,
   landscapeImage,
 }: Props) {
-  const { handleTouchEnd, isScrolling, slidesPerView, swiperRef } =
-    useCarousel();
-
+  const { handleTouchEnd, isScrolling, swiperRef } = useCarousel();
+  const listingsInView = useListingsInView();
   return (
     <div className="flex w-full flex-wrap">
       <Swiper
@@ -40,7 +40,7 @@ export default function SwiperCarousel({
         }}
         freeMode
         spaceBetween={10}
-        slidesPerView={slidesPerView}
+        slidesPerView={listingsInView}
         watchSlidesProgress
         onSwiper={(swiper) => {
           swiperRef.current = swiper;

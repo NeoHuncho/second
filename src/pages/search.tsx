@@ -1,14 +1,17 @@
-import ListingShop from "../components/search/listingsShop/ListingShop";
+import ListingShopCarousel from "../components/search/listingsShop/ListingShopCarousel";
 import HeaderSearch from "../components/search/header/HeaderSearch";
 import useSearch from "../hooks/search/useSearch";
 import useValidShops from "../hooks/search/useValidShops";
 import useShops from "../stores/state/useShops";
 import { useRouter } from "next/router";
 import ShopTabs from "../components/search/header/shopTabs/ShopTabs";
+import useLocalStorage from "../stores/useLocalStorage";
+import ListingShopGrid from "../components/search/listingsShop/ListingShopGrid";
 
 const Search = () => {
   useSearch();
   const { shops, activeShop } = useShops();
+  const { viewListingType } = useLocalStorage();
   return (
     <div className="m-auto flex max-w-screen-2xl flex-col gap-4 sm:gap-2 ">
       <div className="mb-3">
@@ -16,7 +19,14 @@ const Search = () => {
       </div>
       <ShopTabs shops={[...Object.values(shops)]} />
       <div className="flex flex-col ">
-        <ListingShop key={shops[activeShop].name} shop={shops[activeShop]} />
+        {viewListingType === "grid" ? (
+          <ListingShopGrid shop={shops[activeShop]} />
+        ) : (
+          <ListingShopCarousel
+            key={shops[activeShop].name}
+            shop={shops[activeShop]}
+          />
+        )}
       </div>
     </div>
   );

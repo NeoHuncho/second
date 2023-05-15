@@ -1,5 +1,4 @@
 import AddressDropdown from "./AddressDropdown";
-import useColorScheme from "../../hooks/ui/useColorTheme";
 import AddressRangeSlider from "./AddressRangeSlider";
 import { ActionIcon } from "@mantine/core";
 import { Icon } from "../../assets/icons";
@@ -10,7 +9,6 @@ type Props = {
 };
 
 const LocationOptions = ({ setOpened, address }: Props) => {
-  const { isLight } = useColorScheme();
   return (
     <div>
       <div className="flex w-full flex-col items-center  justify-center gap-5">

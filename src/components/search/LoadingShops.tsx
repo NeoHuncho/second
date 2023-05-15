@@ -5,14 +5,14 @@ import { appearMotion } from "../../animate/Animate";
 import { Icon } from "../../assets/icons";
 
 import type { Shop } from "../../types/types";
-import usePersistentSearchParams from "../../stores/storage/usePersistentSearchParams";
+import useLocalStorage from "../../stores/useLocalStorage";
 
 type Props = {
   values: Shop[];
 };
 
 const LoadingShops = ({ values }: Props) => {
-  const { deliveryMethod } = usePersistentSearchParams();
+  const { deliveryMethod } = useLocalStorage();
   return (
     <div className="flex w-full justify-center">
       <Card className="w-fit" shadow="sm" p="md" radius="md" withBorder>

@@ -1,15 +1,12 @@
-import { useLocalStorage } from "@mantine/hooks";
+import useLocalStorage from "../../stores/useLocalStorage";
 
-const useColorScheme = () => {
-  const [colorTheme, setColorTheme] = useLocalStorage({
-    key: "color-scheme",
-    defaultValue: "light",
-  });
+const useColorTheme = () => {
+  const { theme } = useLocalStorage();
 
-  const isDark = colorTheme === "dark";
-  const isLight = colorTheme === "light";
+  const isDark = theme === "dark";
+  const isLight = theme === "light";
 
-  return { colorTheme, setColorTheme, isDark, isLight };
+  return { isDark, isLight };
 };
 
-export default useColorScheme;
+export default useColorTheme;

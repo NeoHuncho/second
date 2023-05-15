@@ -6,7 +6,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import Image from "next/image";
 import type { Shop } from "../../../../types/types";
-import useColorScheme from "../../../../hooks/ui/useColorTheme";
+import useColorTheme from "../../../../hooks/ui/useColorTheme";
 import useShops from "../../../../stores/state/useShops";
 import { motion } from "framer-motion";
 import useValidShops from "../../../../hooks/search/useValidShops";
@@ -14,7 +14,7 @@ import { Loader, Switch, Text } from "@mantine/core";
 import { appearMotion } from "../../../../animate/Animate";
 import { Icon } from "../../../../assets/icons";
 import type { ShopName } from "../../../../../common/types/types";
-import { useLocalStorage } from "@mantine/hooks";
+import useLocalStorage from "../../../../stores/useLocalStorage";
 
 // Install Swiper modules
 
@@ -68,14 +68,10 @@ const ShopStatus = ({ shop }: { shop: Shop }) => {
 };
 
 const ShopTabs: React.FC<ShopTabsProps> = ({ shops }) => {
-  const { isDark } = useColorScheme();
+  const { isDark } = useColorTheme();
   const { activeShop, setActiveShop } = useShops();
   const { validShopKeys: validShops } = useValidShops();
-  const [displayType, setDisplayType] = useLocalStorage<"grid" | "carousel">({
-    key: "displayType",
-    defaultValue: "grid",
-  });
-
+  const { viewListingType, setViewListingType } = useLocalStorage();
   return (
     <div className="relative  w-full">
       <Swiper
@@ -140,9 +136,9 @@ const ShopTabs: React.FC<ShopTabsProps> = ({ shops }) => {
             offLabel={<Icon name="Grid" size={15} />}
             onLabel={<Icon name="Carousel" size={15} />}
             color={isDark ? "gray" : "dark"}
-            checked={displayType === "carousel"}
+            checked={viewListingType === "carousel"}
             onChange={(e) =>
-              setDisplayType(e.currentTarget.checked ? "carousel" : "grid")
+              setViewListingType(e.currentTarget.checked ? "carousel" : "grid")
             }
           />
         </div>

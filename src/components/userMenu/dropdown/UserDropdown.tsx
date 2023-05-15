@@ -1,15 +1,12 @@
 import { Switch, Text } from "@mantine/core";
 import { signOut } from "next-auth/react";
 import { Icon } from "../../../assets/icons";
-import { useLocalStorage } from "@mantine/hooks";
+import useLocalStorage from "../../../stores/useLocalStorage";
 const UserDropdown = () => {
   const onSignOut = () => {
     void signOut({ redirect: false });
   };
-  const [theme, setTheme] = useLocalStorage({
-    key: "color-scheme",
-    defaultValue: "light",
-  });
+  const { theme, setTheme } = useLocalStorage();
   return (
     <div className="flex w-max flex-col  gap-3 px-3 py-1">
       <div className="flex cursor-pointer items-center justify-between gap-4 ">

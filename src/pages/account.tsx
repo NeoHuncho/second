@@ -2,8 +2,9 @@ import { Button, Switch, Text } from "@mantine/core";
 import { signOut } from "next-auth/react";
 import { Icon } from "../assets/icons";
 import AccountItem from "../components/account/AccountItem";
-import { useDisclosure, useLocalStorage } from "@mantine/hooks";
+import { useDisclosure } from "@mantine/hooks";
 import ConfirmModal from "../components/common/ConfirmModal";
+import useLocalStorage from "../stores/useLocalStorage";
 
 export default function Account() {
   const [signOutOpen, signOutControls] = useDisclosure(false);
@@ -11,10 +12,7 @@ export default function Account() {
     void signOut({ redirect: false });
   };
 
-  const [theme, setTheme] = useLocalStorage({
-    key: "color-scheme",
-    defaultValue: "light",
-  });
+  const { theme, setTheme } = useLocalStorage();
 
   return (
     <div className="w-full">
