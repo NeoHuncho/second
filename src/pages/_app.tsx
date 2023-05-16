@@ -15,6 +15,7 @@ import useBreakpoints from "../hooks/ui/useBreakpoints";
 import MobileFooter from "../components/footer/MobileFooter";
 import MobileSearchHeader from "../components/header/MobileSearchHeader";
 import useLocalStorage from "../stores/useLocalStorage";
+import useIsComponentVisible from "../stores/state/useIsComponentVisible";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -24,6 +25,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   const [hasLoaded, setHasLoaded] = useState(false);
   const { isMobile } = useBreakpoints();
   const { theme } = useLocalStorage();
+  const { isShopTabsVisible } = useIsComponentVisible();
   const isSearchPage = router.pathname === "/search";
   const isIndexPage = router.pathname === "/";
 

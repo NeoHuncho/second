@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -15,11 +15,33 @@ import { appearMotion } from "../../../../animate/Animate";
 import { Icon } from "../../../../assets/icons";
 import type { ShopName } from "../../../../../common/types/types";
 import useLocalStorage from "../../../../stores/useLocalStorage";
+import useIsComponentVisible from "../../../../stores/state/useIsComponentVisible";
+import { useInView } from "react-intersection-observer";
 
 // Install Swiper modules
 
 type ShopTabsProps = {
   shops: Shop[];
+  noSwitch?: boolean;
+  noObserver?: boolean;
+};
+
+const useIsVisible = (noObserver: boolean) => {
+  const { ref, inView, entry } = useInView({
+    threshold: 1,
+    rootMargin: "0px 0px 0px 0px",
+  });
+  const { setIsShopTabsVisible } = useIsComponentVisible();
+  useEffect(() => {
+    if (noObserver) return;
+    if (inView) {
+      setIsShopTabsVisible(true);
+    } else {
+      setIsShopTabsVisible(false);
+    }
+  }, [inView]);
+
+  return ref;
 };
 
 const ShopStatus = ({ shop }: { shop: Shop }) => {
@@ -67,13 +89,19 @@ const ShopStatus = ({ shop }: { shop: Shop }) => {
   );
 };
 
-const ShopTabs: React.FC<ShopTabsProps> = ({ shops }) => {
+const ShopTabs: React.FC<ShopTabsProps> = ({
+  shops,
+  noSwitch = false,
+  noObserver = false,
+}) => {
   const { isDark } = useColorTheme();
   const { activeShop, setActiveShop } = useShops();
   const { validShopKeys: validShops } = useValidShops();
   const { viewListingType, setViewListingType } = useLocalStorage();
+  const ref = useIsVisible(noObserver);
+
   return (
-    <div className="relative  w-full">
+    <div className={`relative w-full `} ref={!noObserver ? ref : undefined}>
       <Swiper
         spaceBetween={10}
         slidesPerView={"auto"}
@@ -129,20 +157,24 @@ const ShopTabs: React.FC<ShopTabsProps> = ({ shops }) => {
           }`}
         />
       </Swiper>
-      <div className="mt-1.5 flex w-full justify-end">
-        <div className="flex flex-col items-center ">
-          <Switch
-            size="md"
-            offLabel={<Icon name="Grid" size={15} />}
-            onLabel={<Icon name="Carousel" size={15} />}
-            color={isDark ? "gray" : "dark"}
-            checked={viewListingType === "carousel"}
-            onChange={(e) =>
-              setViewListingType(e.currentTarget.checked ? "carousel" : "grid")
-            }
-          />
+      {!noSwitch && (
+        <div className="mt-1.5 flex w-full justify-end">
+          <div className="flex flex-col items-center ">
+            <Switch
+              size="md"
+              offLabel={<Icon name="Grid" size={15} />}
+              onLabel={<Icon name="Carousel" size={15} />}
+              color={isDark ? "gray" : "dark"}
+              checked={viewListingType === "carousel"}
+              onChange={(e) =>
+                setViewListingType(
+                  e.currentTarget.checked ? "carousel" : "grid"
+                )
+              }
+            />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

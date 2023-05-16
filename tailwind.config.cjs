@@ -7,7 +7,7 @@ module.exports = {
         secondary: "#2a9494",
         lightGrey: "#DEE2E6",
         darkGrey: "#383A40",
-        
+        darkBackground: "#1A1C1E",
       },
       backgroundImage: {
         landing: "url('~/src/assets/images/background-landing-min.jpg')",
