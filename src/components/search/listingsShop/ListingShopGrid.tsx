@@ -2,33 +2,28 @@ import React, { useRef, useEffect, useState } from "react";
 import type { Shop } from "../../../types/types";
 import Listing from "./sub/Listing";
 import useListingsInView from "../../../hooks/search/useListingsInView";
-
+import { useInView } from "react-intersection-observer";
+import useShops from "../../../stores/state/useShops";
+import type { ShopName } from "../../../../common/types/types";
+import { Loader } from "@mantine/core";
 interface Props {
   shop: Shop;
 }
 
-const useLastingListing = () => {
-  const lastListingRef = useRef<HTMLDivElement>(null);
-  const [reachedEnd, setReachedEnd] = useState(false);
+const useLastListing = (shop: Shop) => {
+  const { updateListings } = useShops();
+  const { ref, inView, entry } = useInView({
+    threshold: 1,
+    rootMargin: "0px 0px 0px 0px",
+  });
+  const [reachedEnd, setReachedEnd] = useState(inView);
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry && entry.isIntersecting) {
-          setReachedEnd(true);
-        }
-      },
-      {
-        rootMargin: "-200px",
-      }
-    );
-    if (lastListingRef.current) {
-      observer.observe(lastListingRef.current);
-    }
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
-  return { lastListingRef, reachedEnd };
+    if (reachedEnd) return setReachedEnd(false);
+    if (!inView || shop.loadingNextPage) return;
+    void updateListings(shop.name);
+    setReachedEnd(true);
+  }, [inView]);
+  return { lastListingRef: ref };
 };
 
 const useListingsDisplayed = (shop: Shop) => {
@@ -75,8 +70,19 @@ const useListingsDisplayed = (shop: Shop) => {
 
 export default function ListingShopGrid({ shop }: Props) {
   const listingsInView = useListingsInView();
-  const { lastListingRef, reachedEnd } = useLastingListing();
+  const { lastListingRef } = useLastListing(shop);
   const listingsDisplayed = useListingsDisplayed(shop);
+  const [shopChanged, setShopChanged] = useState(false);
+
+  useEffect(() => {
+    setShopChanged(true);
+  }, [shop.name]);
+
+  useEffect(() => {
+    if (!shopChanged) return;
+    setShopChanged(false);
+  }, [shopChanged]);
+  if (shopChanged) return <Loader />;
   return (
     <div
       className={`grid w-full gap-3`}
@@ -85,16 +91,18 @@ export default function ListingShopGrid({ shop }: Props) {
       }}
     >
       {shop.listings.map((listing, index) => (
-        <div className="col-span-1 " id={index.toString()} key={listing.id}>
+        <div
+          ref={index === shop.listings.length - 9 ? lastListingRef : undefined}
+          className="col-span-1 "
+          id={index.toString()}
+          key={listing.id}
+        >
           <Listing
             listing={listing}
             isScrolling={false}
             loadImage={listingsDisplayed.has(index)}
             enlargeButton
           />
-          {reachedEnd && index === shop.listings.length - 1 && (
-            <div ref={lastListingRef} />
-          )}
         </div>
       ))}
     </div>
