@@ -97,6 +97,13 @@ const useShops = create<ShopState>()((set, get) => ({
         ...state.lastListingUpdate,
         [shop]: currentDate,
       },
+      shops: {
+        ...state.shops,
+        [shop]: {
+          ...state.shops[shop],
+          status: "loading",
+        },
+      },
     }));
 
     const response = await getShopListings({ name, page: page + 1 }).catch(
