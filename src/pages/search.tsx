@@ -1,9 +1,7 @@
 import ListingShopCarousel from "../components/search/listingsShop/ListingShopCarousel";
 import HeaderSearch from "../components/search/header/HeaderSearch";
 import useSearch from "../hooks/search/useSearch";
-import useValidShops from "../hooks/search/useValidShops";
 import useShops from "../stores/state/useShops";
-import { useRouter } from "next/router";
 import ShopTabs from "../components/search/header/shopTabs/ShopTabs";
 import useLocalStorage from "../stores/useLocalStorage";
 import ListingShopGrid from "../components/search/listingsShop/ListingShopGrid";

@@ -1,9 +1,24 @@
+import useColorTheme from "../../hooks/ui/useColorTheme";
+import useIsComponentVisible from "../../stores/state/useIsComponentVisible";
+import useShops from "../../stores/state/useShops";
 import SearchBar from "../common/SearchBar";
+import ShopTabs from "../search/header/shopTabs/ShopTabs";
 
 export default function MobileSearchHeader() {
+  const { isShopTabsVisible } = useIsComponentVisible();
+  const { shops } = useShops();
+  const { isDark } = useColorTheme();
   return (
     <div className="mt-2">
       <SearchBar size="sm" />
+
+      <div
+        className={`transition-opacity ${
+          !isShopTabsVisible ? "opacity-100" : "opacity-0"
+        } ${isDark ? "bg-darkBackground" : "bg-white"} px-3`}
+      >
+        <ShopTabs shops={[...Object.values(shops)]} noSwitch noObserver />
+      </div>
     </div>
   );
 }

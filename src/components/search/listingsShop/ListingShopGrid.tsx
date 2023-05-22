@@ -32,17 +32,24 @@ export default function ListingShopGrid({ shop }: Props) {
   const itemsPerPage = 20;
   const [hasMore, setHasMore] = useState(true);
   const [records, setRecords] = useState(itemsPerPage);
+
   useEffect(() => {
     setRecords(itemsPerPage);
     setHasMore(true);
-  }, [shop]);
+    window.scrollTo(0, 0);
+  }, [shop.name]);
 
-  const loadMore = () => {
+  const loadMore = async () => {
     if (shop.status === "loading") return;
     if (shop.hasFetchedAll) return setHasMore(false);
     if (records === shop.listings.length) {
-      console.log("fetching next page");
-      void updateListings(shop.name);
+      await updateListings(shop.name);
+      setTimeout(() => {
+        if (shop.hasFetchedAll) return setHasMore(false);
+        if (records + itemsPerPage > shop.listings.length)
+          setRecords(shop.listings.length);
+        else setRecords(records + itemsPerPage);
+      }, 1);
     } else {
       setTimeout(() => {
         if (records + itemsPerPage > shop.listings.length)
@@ -54,8 +61,9 @@ export default function ListingShopGrid({ shop }: Props) {
 
   return (
     <InfiniteScroll
+      key={shop.name}
       pageStart={0}
-      loadMore={loadMore}
+      loadMore={() => void loadMore()}
       hasMore={hasMore}
       loader={<Loader color={shop.color} />}
       threshold={450}
