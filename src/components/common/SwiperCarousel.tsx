@@ -25,6 +25,7 @@ export default function SwiperCarousel({
 }: Props) {
   const { handleTouchEnd, isScrolling, swiperRef } = useCarousel();
   const listingsInView = useListingsInView();
+  if (!listingsInView) return <></>;
   return (
     <div className="flex w-full flex-wrap">
       <Swiper

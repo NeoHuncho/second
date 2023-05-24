@@ -22,8 +22,8 @@ import { useInView } from "react-intersection-observer";
 
 type ShopTabsProps = {
   shops: Shop[];
-  noSwitch?: boolean;
   noObserver?: boolean;
+  className?: string;
 };
 
 const useIsVisible = (noObserver: boolean) => {
@@ -91,17 +91,19 @@ const ShopStatus = ({ shop }: { shop: Shop }) => {
 
 const ShopTabs: React.FC<ShopTabsProps> = ({
   shops,
-  noSwitch = false,
   noObserver = false,
+  className = "",
 }) => {
   const { isDark } = useColorTheme();
   const { activeShop, setActiveShop } = useShops();
   const { validShopKeys: validShops } = useValidShops();
-  const { viewListingType, setViewListingType } = useLocalStorage();
   const ref = useIsVisible(noObserver);
 
   return (
-    <div className={`relative w-full `} ref={!noObserver ? ref : undefined}>
+    <div
+      className={`relative w-full ${className}`}
+      ref={!noObserver ? ref : undefined}
+    >
       <Swiper
         spaceBetween={10}
         slidesPerView={"auto"}
@@ -116,16 +118,20 @@ const ShopTabs: React.FC<ShopTabsProps> = ({
             className="!flex  !h-10 !w-36 !flex-col !justify-end"
           >
             {validShops.includes(shop.name) ? (
-              <div className="flex h-full w-full items-center gap-2">
+              <div
+                onClick={() => setActiveShop(shop.name)}
+                className="flex h-full w-full cursor-pointer items-center justify-between gap-2"
+              >
                 <Image
                   src={shop.image}
-                  className={`h-auto w-4/6 cursor-pointer rounded-sm object-contain pl-2 transition duration-300 ease-out hover:!opacity-100`}
+                  className={
+                    "h-auto w-4/6  rounded-sm object-contain pl-2 transition duration-300 ease-out hover:!opacity-100"
+                  }
                   alt={`Store Logo ${index}`}
                   style={{
                     opacity: activeShop === shop.name ? 1 : 0.8,
                   }}
                   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-                  onClick={() => setActiveShop(shop.name)}
                 />
                 <ShopStatus shop={shop} />
                 <div
@@ -157,24 +163,6 @@ const ShopTabs: React.FC<ShopTabsProps> = ({
           }`}
         />
       </Swiper>
-      {!noSwitch && (
-        <div className="mt-1.5 flex w-full justify-end">
-          <div className="flex flex-col items-center ">
-            <Switch
-              size="md"
-              offLabel={<Icon name="Grid" size={15} />}
-              onLabel={<Icon name="Carousel" size={15} />}
-              color={isDark ? "gray" : "dark"}
-              checked={viewListingType === "carousel"}
-              onChange={(e) =>
-                setViewListingType(
-                  e.currentTarget.checked ? "carousel" : "grid"
-                )
-              }
-            />
-          </div>
-        </div>
-      )}
     </div>
   );
 };

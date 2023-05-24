@@ -30,13 +30,6 @@ const useLocalStorage = () => {
     defaultValue: { lat: 0, lng: 0 },
   });
 
-  const [viewListingType, setViewListingType] = localStorageHook<
-    "grid" | "carousel"
-  >({
-    key: "viewListingType",
-    defaultValue: "grid",
-  });
-
   useEffect(() => {
     setDeliveryParamChanged(true);
   }, [locationRange, deliveryMethod, address, addressCoords]);
@@ -50,8 +43,6 @@ const useLocalStorage = () => {
     setAddress,
     addressCoords,
     setAddressCoords,
-    viewListingType,
-    setViewListingType,
     theme,
     setTheme,
   };

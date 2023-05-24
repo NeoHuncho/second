@@ -17,6 +17,7 @@ import { ImEnlarge } from "react-icons/im";
 // BiCarousel
 import { BiCarousel } from "react-icons/bi";
 
+import { HiAdjustments } from "react-icons/hi";
 export type IconProps = {
   size?: number;
   className?: string;
@@ -63,6 +64,7 @@ const icons = {
   FillPencil: BsPencilFill,
   Grid: BsGridFill,
   Carousel: BiCarousel,
+  Adjustments: HiAdjustments,
 };
 
 export const Icon: React.FC<IconProps & { name: keyof typeof icons }> = ({

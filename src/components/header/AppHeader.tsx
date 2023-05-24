@@ -33,7 +33,7 @@ const AppHeader = () => {
             !isShopTabsVisible ? "opacity-100" : "opacity-0"
           } ${isDark ? "bg-darkBackground" : "bg-white"} px-3`}
         >
-          <ShopTabs shops={[...Object.values(shops)]} noSwitch noObserver />
+          <ShopTabs shops={[...Object.values(shops)]} noObserver />
         </div>
       )}
     </div>

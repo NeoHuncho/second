@@ -11,7 +11,7 @@ interface Props {
   shop: Shop;
 }
 
-export default function ListingShopGrid({ shop }: Props) {
+export default function ListingsShop({ shop }: Props) {
   const { updateListings } = useShops();
   const listingsInView = useListingsInView();
   const showItems = (listings: ShopListing[]) => {
@@ -58,7 +58,7 @@ export default function ListingShopGrid({ shop }: Props) {
       }, 1);
     }
   };
-
+  if (!listingsInView) return <></>;
   return (
     <InfiniteScroll
       key={shop.name}

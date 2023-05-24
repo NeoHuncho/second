@@ -1,4 +1,5 @@
 import type { MantineSize } from "@mantine/core";
+import { ActionIcon } from "@mantine/core";
 import { Popover } from "@mantine/core";
 import { Button } from "@mantine/core";
 import { Select } from "@mantine/core";
@@ -7,6 +8,7 @@ import { deliveryMethods } from "../../../common/keys/keys";
 import { useEffect, useState } from "react";
 import useDeliveryParams from "../../stores/useLocalStorage";
 import LocationOptions from "./LocationOptions";
+import { Icon } from "../../assets/icons";
 
 type Props = {
   size: MantineSize;
@@ -56,7 +58,7 @@ export default function DeliveryMethodSelect({ size }: Props) {
   }, [locationRange]);
 
   return (
-    <div className="flex flex-col items-center gap-1">
+    <div className="flex  items-center gap-1">
       <Select
         className="ml-2 w-full"
         size={size}
@@ -75,15 +77,12 @@ export default function DeliveryMethodSelect({ size }: Props) {
         >
           <Popover.Target>
             {address ? (
-              <Button
+              <ActionIcon
+                variant="filled"
                 onClick={() => setOpenedOptions((o) => !o)}
-                className="-mb-10"
-                variant="subtle"
-                size="sm"
-                color="gray"
               >
-                Changer l&apos;address
-              </Button>
+                <Icon color="white" size={20} name="Adjustments" />
+              </ActionIcon>
             ) : (
               <div />
             )}
