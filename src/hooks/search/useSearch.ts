@@ -23,8 +23,6 @@ const useSearch = () => {
 
   const { suggestedCat, setSuggestedCat } = useSuggestedCat();
 
-  const { deliveryParamChanged, setDeliveryParamChanged } = useSearchParams();
-
   const { validShopKeys: validShops } = useValidShops();
 
   const convertSearchToParsedUrlQuery = (): ParsedUrlQuery => {
@@ -92,10 +90,8 @@ const useSearch = () => {
   }, [router.query]);
 
   useEffect(() => {
-    if (!deliveryParamChanged) return;
     processNewDeliveryParams();
-    setDeliveryParamChanged(false);
-  }, [deliveryParamChanged]);
+  }, [deliveryMethod, locationRange, address]);
 };
 
 export default useSearch;

@@ -12,10 +12,10 @@ import samsungGalaxyBook2 from "../../../assets/products/laptops/samsung_galaxyB
 
 const repairableLaptops: LandingListing[] = [
   {
-    title: "Framework Laptop",
+    title: "Framework",
     repairScore: 9.7,
     image: framework,
-    url: "/search?query=framework+laptop",
+    url: "/search?query=pc+framework",
     type: "Showcase",
   },
   {

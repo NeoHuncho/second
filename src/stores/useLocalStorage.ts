@@ -9,7 +9,6 @@ type AddressCoords = {
 };
 
 const useLocalStorage = () => {
-  const { setDeliveryParamChanged } = useSearchParams();
   const [theme, setTheme] = localStorageHook({
     key: "color-scheme",
   });
@@ -29,10 +28,6 @@ const useLocalStorage = () => {
     key: "addressCoords",
     defaultValue: { lat: 0, lng: 0 },
   });
-
-  useEffect(() => {
-    setDeliveryParamChanged(true);
-  }, [locationRange, deliveryMethod, address, addressCoords]);
 
   return {
     locationRange,

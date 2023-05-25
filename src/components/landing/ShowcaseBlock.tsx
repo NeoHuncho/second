@@ -2,6 +2,7 @@ import { Divider, Title } from "@mantine/core";
 import ShowcaseCategories from "../../../backend/static/landingShowcase/Showcasecategories";
 import { showcaseCategories } from "../../../common/keys/keys";
 import Showcase from "./showcase/Showcase";
+import SectionTitle from "./showcase/SectionTitle";
 
 export default function ShowcaseBlock() {
   return (
@@ -13,8 +14,8 @@ export default function ShowcaseBlock() {
         <Divider className="mt-1 mb-10" />
       </div>
       <div className="mb-10 flex flex-col gap-24">
-        <div className="flex flex-col gap-2">
-          <Title order={5}>{`${showcaseCategories.repairable} 🪛`}</Title>
+        <div className="flex flex-col  gap-2">
+          <SectionTitle text={`${showcaseCategories.repairable} 🪛`} />
           <Showcase category={ShowcaseCategories.repairable} />
         </div>
       </div>
