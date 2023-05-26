@@ -32,32 +32,29 @@ export default function ListingsShop({ shop }: Props) {
   const itemsPerPage = 20;
   const [hasMore, setHasMore] = useState(true);
   const [records, setRecords] = useState(itemsPerPage);
-
   useEffect(() => {
-    setRecords(itemsPerPage);
+    setRecords(
+      shop.listings.length < itemsPerPage ? shop.listings.length : itemsPerPage
+    );
     setHasMore(true);
     window.scrollTo(0, 0);
   }, [shop.name]);
 
-  const loadMore = async () => {
+  const loadMore = () => {
     if (shop.status === "loading") return;
     if (shop.hasFetchedAll) return setHasMore(false);
     if (records === shop.listings.length) {
-      await updateListings(shop.name);
-      setTimeout(() => {
-        if (shop.hasFetchedAll) return setHasMore(false);
-        if (records + itemsPerPage > shop.listings.length)
-          setRecords(shop.listings.length);
-        else setRecords(records + itemsPerPage);
-      }, 1);
+      return void updateListings(shop.name);
     } else {
       setTimeout(() => {
-        if (records + itemsPerPage > shop.listings.length)
+        if (records + itemsPerPage > shop.listings.length) {
           return setRecords(shop.listings.length);
+        }
         setRecords(records + itemsPerPage);
       }, 1);
     }
   };
+
   if (!listingsInView) return <></>;
   return (
     <InfiniteScroll
