@@ -7,12 +7,14 @@ import useShops from "../../../stores/state/useShops";
 import type { ShopName } from "../../../../common/types/types";
 import { Loader } from "@mantine/core";
 import InfiniteScroll from "react-infinite-scroller";
+import useSearchParams from "../../../stores/state/useSearchParams";
 interface Props {
   shop: Shop;
 }
 
 export default function ListingsShop({ shop }: Props) {
   const { updateListings } = useShops();
+  const { searchTerm } = useSearchParams();
   const listingsInView = useListingsInView();
   const showItems = (listings: ShopListing[]) => {
     if (!listings || !listings.length) return null;
@@ -56,6 +58,7 @@ export default function ListingsShop({ shop }: Props) {
   };
 
   if (!listingsInView) return <></>;
+  if (!searchTerm) return <></>;
   return (
     <InfiniteScroll
       key={shop.name}

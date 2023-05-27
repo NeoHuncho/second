@@ -57,6 +57,7 @@ const ShopStatus = ({ shop }: { shop: Shop }) => {
         </Text>
       </motion.div>
     );
+  if (shop.status === "waiting") return <></>;
   if (
     (shop.loadingNextPage && !shop.hasFetchedAll) ||
     shop.status === "loading"
@@ -117,7 +118,7 @@ const ShopTabs: React.FC<ShopTabsProps> = ({
             key={index}
             className="!flex  !h-10 !w-36 !flex-col !justify-end"
           >
-            {validShops.includes(shop.name) ? (
+            {validShops.includes(shop.name) && shop.status !== "waiting" ? (
               <div
                 onClick={() => setActiveShop(shop.name)}
                 className="flex h-full w-full cursor-pointer items-center justify-between gap-2"

@@ -52,7 +52,12 @@ interface Attribute {
   values: string[];
 }
 
-export type LoadingStatus = "success" | "error" | "loading" | "no_results";
+export type LoadingStatus =
+  | "success"
+  | "error"
+  | "loading"
+  | "no_results"
+  | "waiting";
 export type Sort =
   | "recommended"
   | "price_asc"
