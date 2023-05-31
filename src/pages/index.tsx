@@ -7,9 +7,6 @@ import useLocalStorage from "../stores/useLocalStorage";
 const Home: NextPage = () => {
   const [pageHasMounted, setPageHasMounted] = useState(false);
 
-  useEffect(() => {
-    setPageHasMounted(true);
-  }, []);
   const { theme } = useLocalStorage();
 
   return (
@@ -27,7 +24,7 @@ const Home: NextPage = () => {
       >
         <div className="max-w-screen-2xl pb-10">
           <SearchBlock />
-          {pageHasMounted && <ShowcaseBlock />}
+          <ShowcaseBlock />
         </div>
       </main>
     </>

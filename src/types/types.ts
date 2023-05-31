@@ -46,6 +46,7 @@ export interface ListingChildren {
   image: StaticImageData;
   repairScore?: number;
   type: "Showcase";
+  price?: number;
 }
 
 interface Images {

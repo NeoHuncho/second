@@ -10,6 +10,7 @@ import type { LandingListing, ShopListing } from "../../types/types";
 import { detectShopListing } from "../../types/TypeDetection";
 import type { MantineNumberSize } from "@mantine/core";
 import useListingsInView from "../../hooks/search/useListingsInView";
+import { useEffect, useState } from "react";
 interface Props {
   slides: ShopListing[] | LandingListing[]; //! add other types of slides
   handleIndexChange?: (index: number) => void;
@@ -25,7 +26,13 @@ export default function SwiperCarousel({
 }: Props) {
   const { handleTouchEnd, isScrolling, swiperRef } = useCarousel();
   const listingsInView = useListingsInView();
-  if (!listingsInView) return <></>;
+  const [hasMounted, setHasMounted] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      setHasMounted(true);
+    }, 50);
+  }, []);
+  if (!hasMounted || !listingsInView) return <></>;
   return (
     <div className="flex w-full flex-wrap">
       <Swiper

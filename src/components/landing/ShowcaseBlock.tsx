@@ -5,6 +5,7 @@ import Showcase from "./showcase/Showcase";
 import SectionTitle from "./showcase/SectionTitle";
 
 export default function ShowcaseBlock() {
+  
   return (
     <div className=" mt-20 max-w-screen-2xl px-3" style={{ width: "99vw" }}>
       <div className="mb-5">

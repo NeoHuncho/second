@@ -17,6 +17,8 @@ import {
 import RepairScoreIcon from "../../../../assets/repair-score-icon/RepairScoreIcon";
 import { useRouter } from "next/router";
 import { useDisclosure } from "@mantine/hooks";
+import useSearchParams from "../../../../stores/state/useSearchParams";
+
 type Props = {
   listing: ShopListing | LandingListing;
   isScrolling: boolean;
@@ -42,6 +44,7 @@ const Listing = ({
   const isShopListing = detectShopListing(listing);
   const isShowcase = detectShowcase(listing);
   const [showModal, modalHandlers] = useDisclosure(false);
+  const { setSearchTerm } = useSearchParams();
 
   if (listing.body === "placeholder")
     return (
@@ -57,6 +60,19 @@ const Listing = ({
         </div>
       </Card>
     );
+  const onClick = () => {
+    if (isScrolling) {
+      return null;
+    }
+    if (isShopListing) {
+      return window.open(listing.url, "_blank");
+    }
+    if (listing.children) {
+      return modalHandlers.open();
+    }
+    setSearchTerm(listing.title);
+    return void  router.push(listing.url);
+  };
 
   return (
     <div className={rootClassName}>
@@ -66,15 +82,7 @@ const Listing = ({
         p="sm"
         radius="md"
         withBorder
-        onClick={() =>
-          !isScrolling
-            ? isShopListing
-              ? window.open(listing.url, "_blank")
-              : listing.children
-              ? modalHandlers.open()
-              : void router.push(listing.url)
-            : null
-        }
+        onClick={onClick}
       >
         <Card.Section>
           {isShopListing ? (
@@ -182,15 +190,26 @@ const Listing = ({
           src={listing.images.url}
         />
       )}
-      <Modal opened={showModal} size="lg" onClose={modalHandlers.close}>
+      <Modal
+        opened={showModal}
+        size={
+          isShowcase && listing.children?.length
+            ? listing.children?.length <= 2
+              ? "md"
+              : "lg"
+            : "lg"
+        }
+        onClose={modalHandlers.close}
+      >
         <div className="flex flex-wrap justify-around gap-3">
           {isShowcase &&
             listing.children?.map((child) => (
               <Listing
                 rootClassName={"w-40"}
-                isScrolling
+                isScrolling={false}
                 key={child.url}
                 listing={child}
+                size="sm"
               />
             ))}
         </div>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 const useChangingWord = () => {
   const words = ["économique", "écologique", "solidaire"];
-  const [typingText, setTypingText] = useState("Économique");
+  const [typingText, setTypingText] = useState("économique");
   const [wordIndex, setWordIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [delay, setDelay] = useState<number>(100);
