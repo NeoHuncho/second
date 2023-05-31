@@ -1,4 +1,5 @@
 import type { MantineNumberSize } from "@mantine/core";
+import { Modal } from "@mantine/core";
 import { Loader } from "@mantine/core";
 import { ActionIcon, Card, Image, Text, Title } from "@mantine/core";
 import { Icon } from "../../../../assets/icons";
@@ -10,11 +11,12 @@ import NoImage from "./NoImage";
 import { useState } from "react";
 import ExpandImage from "../../../image/ExpandImage";
 import {
-  detectRepairable,
+  detectShowcase,
   detectShopListing,
 } from "../../../../types/TypeDetection";
 import RepairScoreIcon from "../../../../assets/repair-score-icon/RepairScoreIcon";
 import { useRouter } from "next/router";
+import { useDisclosure } from "@mantine/hooks";
 type Props = {
   listing: ShopListing | LandingListing;
   isScrolling: boolean;
@@ -22,6 +24,7 @@ type Props = {
   size?: MantineNumberSize;
   landscapeImage?: boolean;
   loadImage?: boolean;
+  rootClassName?: string;
 };
 
 const Listing = ({
@@ -31,17 +34,19 @@ const Listing = ({
   size,
   landscapeImage,
   loadImage = true,
+  rootClassName = "",
 }: Props) => {
   const router = useRouter();
   const CARD_SECTION_HEIGHT = size === "sm" ? 160 : 240;
   const [isZoomed, setIsZoomed] = useState(false);
   const isShopListing = detectShopListing(listing);
-  const isRepairable = detectRepairable(listing);
+  const isShowcase = detectShowcase(listing);
+  const [showModal, modalHandlers] = useDisclosure(false);
 
   if (listing.body === "placeholder")
     return (
       <Card
-        className="h-full w-full "
+        className={`h-full w-full`}
         shadow="sm"
         p="sm"
         withBorder
@@ -54,9 +59,9 @@ const Listing = ({
     );
 
   return (
-    <>
+    <div className={rootClassName}>
       <Card
-        className="h-full cursor-pointer"
+        className={`h-full  cursor-pointer`}
         shadow="sm"
         p="sm"
         radius="md"
@@ -65,6 +70,8 @@ const Listing = ({
           !isScrolling
             ? isShopListing
               ? window.open(listing.url, "_blank")
+              : listing.children
+              ? modalHandlers.open()
               : void router.push(listing.url)
             : null
         }
@@ -158,7 +165,7 @@ const Listing = ({
                 </Text>
               </div>
             )}
-            {isRepairable && (
+            {isShowcase && (
               <RepairScoreIcon
                 className="absolute bottom-1 w-2/5 place-self-center"
                 repairScore={listing.repairScore}
@@ -175,7 +182,20 @@ const Listing = ({
           src={listing.images.url}
         />
       )}
-    </>
+      <Modal opened={showModal} size="lg" onClose={modalHandlers.close}>
+        <div className="flex flex-wrap justify-around gap-3">
+          {isShowcase &&
+            listing.children?.map((child) => (
+              <Listing
+                rootClassName={"w-40"}
+                isScrolling
+                key={child.url}
+                listing={child}
+              />
+            ))}
+        </div>
+      </Modal>
+    </div>
   );
 };
 export default Listing;

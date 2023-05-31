@@ -1,8 +1,13 @@
-import type { LandingListing } from "../../../../src/types/types";
+import type {
+  LandingListing,
+  ListingChildren,
+} from "../../../../src/types/types";
 import iphone14img from "../../../assets/products/phones/apple_iphone14.png";
 import samsungA52 from "../../../assets/products/phones/samsung_a52.png";
 import crosscallCore from "../../../assets/products/phones/crosscall_core.png";
+import fairphone3 from "../../../assets/products/phones/fairphone_3.jpeg";
 import fairphone4 from "../../../assets/products/phones/fairphone_4.png";
+
 import redmiNote11 from "../../../assets/products/phones/redmi_note11.png";
 import vivoV52 from "../../../assets/products/phones/vivo_y52.png";
 import motorolaE13 from "../../../assets/products/phones/motorola_e13.png";
@@ -13,11 +18,27 @@ import redmiNote10 from "../../../assets/products/phones/redmi_note10.png";
 
 const repairablePhones: LandingListing[] = [
   {
-    title: "Fairphone 4",
+    title: "Fairphone",
     repairScore: 9.2,
     image: fairphone4,
     url: "/search?query=fairphone+4",
     type: "Showcase",
+    children: [
+      {
+        title: "Fairphone 4",
+        repairScore: 9.2,
+        image: fairphone4,
+        url: "/search?query=fairphone+4",
+        type: "Showcase",
+      },
+      {
+        title: "Fairphone 3+",
+        repairScore: 8.7,
+        image: fairphone3,
+        url: "/search?query=fairphone+3",
+        type: "Showcase",
+      },
+    ],
   },
   {
     title: "CROSSCALL Core M5/Z5/X5",
@@ -91,4 +112,5 @@ const repairablePhones: LandingListing[] = [
     type: "Showcase",
   },
 ];
+
 export default repairablePhones;

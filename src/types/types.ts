@@ -37,6 +37,15 @@ export interface LandingListing {
   body?: string;
   repairScore?: number;
   type: "Showcase";
+  children?: ListingChildren[];
+}
+
+export interface ListingChildren {
+  title: string;
+  url: string;
+  image: StaticImageData;
+  repairScore?: number;
+  type: "Showcase";
 }
 
 interface Images {

@@ -32,7 +32,7 @@ export default async function handler(
   const formattedStoreUrl = formatQueriesToStoreUrl(
     request.query as Partial<{ [key: string]: string }>
   );
-  console.log(1, formattedStoreUrl);
+
   let res = "";
   if (env.NODE_ENV === "production")
     res = await getWebsiteScrape(formattedStoreUrl);
@@ -41,7 +41,10 @@ export default async function handler(
   const formatListings = (shopName: ShopName) => {
     switch (shopName) {
       case "Leboncoin":
-        return parseLeboncoin(res, request.query.deliveryMethod as string);
+        return [
+          ...parseLeboncoin(res, request.query.deliveryMethod as string),
+          ...parseLeboncoin(res, request.query.deliveryMethod as string),
+        ];
       //vinted has additional parameter for sorting because the sorting does not work on the website
       case "Vinted":
         return parseVinted(res, request.query.sort as string | undefined);

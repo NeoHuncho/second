@@ -11,7 +11,7 @@ interface Props {
 
 export default function Showcase({ category }: Props) {
   return (
-    <Tabs defaultValue={Object.keys(category)[0]}>
+    <Tabs color="secondary" defaultValue={Object.keys(category)[0]}>
       <Tabs.List>
         {Object.keys(category).map((key) => (
           <Tabs.Tab
