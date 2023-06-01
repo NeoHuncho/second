@@ -30,7 +30,7 @@ const repairablePhones: LandingListing[] = [
         image: fairphone4,
         url: "/search?query=fairphone+4",
         type: "Showcase",
-        price: 2,
+        priceRange: 2,
       },
       {
         title: "Fairphone 3+",
@@ -38,7 +38,7 @@ const repairablePhones: LandingListing[] = [
         image: fairphone3,
         url: "/search?query=fairphone+3",
         type: "Showcase",
-        price: 1,
+        priceRange: 1,
       },
     ],
   },

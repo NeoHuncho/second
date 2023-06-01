@@ -1,4 +1,4 @@
-import type { LandingListing, ShopListing } from "./types";
+import type { LandingListing, ShopListing, ListingChildren } from "./types";
 
 export const detectShopListing = (
   listing: ShopListing | LandingListing
@@ -9,4 +9,10 @@ export const detectShowcase = (
   listing: ShopListing | LandingListing
 ): listing is LandingListing => {
   return (listing as LandingListing).repairScore !== undefined;
+};
+
+export const detectChildShowcase = (
+  listing: ShopListing | LandingListing | ListingChildren
+): listing is ListingChildren => {
+  return (listing as ListingChildren).priceRange !== undefined;
 };

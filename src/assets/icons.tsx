@@ -65,6 +65,8 @@ const icons = {
   Grid: BsGridFill,
   Carousel: BiCarousel,
   Adjustments: HiAdjustments,
+  FillDollar: AiIcons.AiFillDollarCircle,
+  OutlineDollar: AiIcons.AiOutlineDollarCircle,
 };
 
 export const Icon: React.FC<IconProps & { name: keyof typeof icons }> = ({
