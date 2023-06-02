@@ -12,8 +12,8 @@ import A23 from "../../../assets/products/phones/a23.webp";
 import vivoY52 from "../../../assets/products/phones/vivo_y52.webp";
 import vivoV21 from "../../../assets/products/phones/vivo_v21.webp";
 import vivoX90 from "../../../assets/products/phones/vivo_x90Pro.webp";
-import S22 from "../../../assets/products/phones/samsung_s22.webp";
-import S23 from "../../../assets/products/phones/samsung_s23.webp";
+import S22 from "../../../assets/products/phones/samsung_s22+.webp";
+import S23 from "../../../assets/products/phones/samsung_s23+.webp";
 
 import fairphone3 from "../../../assets/products/phones/fairphone_3.jpeg";
 import fairphone4 from "../../../assets/products/phones/fairphone_4.png";
