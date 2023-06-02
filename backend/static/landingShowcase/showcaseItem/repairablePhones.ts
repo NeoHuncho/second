@@ -1,7 +1,4 @@
-import type {
-  LandingListing,
-  ListingChildren,
-} from "../../../../src/types/types";
+import type { LandingListing } from "../../../../src/types/types";
 import iphone14img from "../../../assets/products/phones/apple_iphone14.png";
 import coreZ5 from "../../../assets/products/phones/CORE-Z5.webp";
 import coreX5 from "../../../assets/products/phones/CORE-X5.webp";
@@ -12,11 +9,15 @@ import A54 from "../../../assets/products/phones/a54.webp";
 import A53 from "../../../assets/products/phones/a53.webp";
 import A34 from "../../../assets/products/phones/a34.webp";
 import A23 from "../../../assets/products/phones/a23.webp";
+import vivoY52 from "../../../assets/products/phones/vivo_y52.webp";
+import vivoV21 from "../../../assets/products/phones/vivo_v21.webp";
+import vivoX90 from "../../../assets/products/phones/vivo_x90Pro.webp";
+import S22 from "../../../assets/products/phones/samsung_s22.webp";
+import S23 from "../../../assets/products/phones/samsung_s23.webp";
 
 import fairphone3 from "../../../assets/products/phones/fairphone_3.jpeg";
 import fairphone4 from "../../../assets/products/phones/fairphone_4.png";
 import redmiNote11 from "../../../assets/products/phones/redmi_note11.png";
-import vivoV52 from "../../../assets/products/phones/vivo_y52.png";
 import motorolaE13 from "../../../assets/products/phones/motorola_e13.png";
 import iphone13 from "../../../assets/products/phones/apple_iphone13.png";
 import oppoA74 from "../../../assets/products/phones/oppo_a74.png";
@@ -139,13 +140,63 @@ const repairablePhones: LandingListing[] = [
       },
     ],
   },
-
   {
-    title: "VIVO V21/Y52/X80",
-    repairScore: 8,
-    image: vivoV52,
+    title: "VIVO V/Y/X",
+    repairScore: 8.3,
+    image: vivoY52,
     url: "/search?query=vivo+y52",
     type: "Showcase",
+    children: [
+      {
+        title: "VIVO X90 PRO",
+        repairScore: 8.3,
+        image: vivoX90,
+        url: "/search?query=vivo+x90",
+        type: "Showcase",
+        priceRange: 3,
+      },
+      {
+        title: "VIVO V21",
+        repairScore: 8,
+        image: vivoV21,
+        url: "/search?query=vivo+v21",
+        type: "Showcase",
+        priceRange: 2,
+      },
+      {
+        title: "VIVO Y52",
+        repairScore: 7.9,
+        image: vivoY52,
+        url: "/search?query=vivo+y52",
+        type: "Showcase",
+        priceRange: 1,
+      },
+    ],
+  },
+  {
+    title: "Samsung Galaxy S",
+    repairScore: 8.2,
+    image: S23,
+    url: "/search?query=galaxy+s22",
+    type: "Showcase",
+    children: [
+      {
+        title: "Samsung Galaxy S23",
+        repairScore: 8.2,
+        image: S23,
+        url: "/search?query=galaxy+s23",
+        type: "Showcase",
+        priceRange: 3,
+      },
+      {
+        title: "Samsung Galaxy S22",
+        repairScore: 8.2,
+        image: S22,
+        url: "/search?query=galaxy+s22",
+        type: "Showcase",
+        priceRange: 2,
+      },
+    ],
   },
   {
     title: "MOTOROLA E13",
