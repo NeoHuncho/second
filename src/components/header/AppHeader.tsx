@@ -30,7 +30,7 @@ const AppHeader = () => {
       {router.pathname === "/search" && !isMobile && (
         <div
           className={`transition-opacity ${
-            !isShopTabsVisible ? "opacity-100" : "opacity-0"
+            !isShopTabsVisible ? "opacity-100" : "pointer-events-none opacity-0"
           } ${isDark ? "bg-darkBackground" : "bg-white"} px-3`}
         >
           <ShopTabs shops={[...Object.values(shops)]} noObserver />

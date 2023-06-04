@@ -12,17 +12,19 @@ export default function MobileSearchHeader() {
     <div className="mt-2">
       <SearchBar size="sm" />
 
-      <div
-        className={`transition-opacity ${
-          !isShopTabsVisible ? "opacity-100" : "opacity-0"
-        } ${isDark ? "bg-darkBackground" : "bg-white"} px-3`}
-      >
-        <ShopTabs
-          className="pt-2"
-          shops={[...Object.values(shops)]}
-          noObserver
-        />
-      </div>
+      {!isShopTabsVisible && (
+        <div
+          className={`transition-opacity ${
+            isDark ? "bg-darkBackground" : "bg-white"
+          } px-3`}
+        >
+          <ShopTabs
+            className="pt-2"
+            shops={[...Object.values(shops)]}
+            noObserver
+          />
+        </div>
+      )}
     </div>
   );
 }

@@ -14,7 +14,6 @@ interface Props {
 
 export default function ListingsShop({ shop }: Props) {
   const { updateListings } = useShops();
-  const { searchTerm } = useSearchParams();
   const listingsInView = useListingsInView();
   const showItems = (listings: ShopListing[]) => {
     if (!listings || !listings.length) return null;
@@ -58,14 +57,13 @@ export default function ListingsShop({ shop }: Props) {
   };
 
   if (!listingsInView) return <></>;
-  if (!searchTerm) return <></>;
   return (
     <InfiniteScroll
       key={shop.name}
       pageStart={0}
       loadMore={() => void loadMore()}
       hasMore={hasMore}
-      loader={<Loader color={shop.color} />}
+      loader={shop.listings.length ? <Loader color={shop.color} /> : undefined}
       threshold={450}
     >
       <div

@@ -13,13 +13,17 @@ const Search = () => {
 
   return (
     <div className="m-auto flex max-w-screen-2xl flex-col gap-4 sm:gap-2 ">
-      <div className="mb-3">
-        <HeaderSearch />
-      </div>
-      <ShopTabs shops={[...Object.values(shops)]} />
-      <div className="flex flex-col">
-        <ListingsShop shop={shops[activeShop]} />
-      </div>
+      {window.location.search && (
+        <div>
+          <div className="mb-3">
+            <HeaderSearch />
+          </div>
+          <ShopTabs shops={[...Object.values(shops)]} />
+          <div className="flex flex-col">
+            <ListingsShop shop={shops[activeShop]} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
