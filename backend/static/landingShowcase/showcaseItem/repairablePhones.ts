@@ -16,8 +16,8 @@ import S23 from "../../../assets/products/phones/samsung_s23+.webp";
 
 import fairphone3 from "../../../assets/products/phones/fairphone_3.jpeg";
 import fairphone4 from "../../../assets/products/phones/fairphone_4.png";
-import redmiNote12Pro from "../../../assets/products/phones/redmi__note12Pro.webp";
-import redmiNote12 from "../../../assets/products/phones/redmi__note12.webp";
+import redmiNote12Pro from "../../../assets/products/phones/redmi_note12Pro.webp";
+import redmiNote12 from "../../../assets/products/phones/redmi_note12.webp";
 import redmiNote11 from "../../../assets/products/phones/redmi_note11.png";
 import redmiNote10 from "../../../assets/products/phones/redmi_note10.png";
 import motorolaE13 from "../../../assets/products/phones/motorola_e13.png";
