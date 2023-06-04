@@ -1,5 +1,4 @@
 import type { LandingListing } from "../../../../src/types/types";
-import iphone14img from "../../../assets/products/phones/apple_iphone14.png";
 import coreZ5 from "../../../assets/products/phones/CORE-Z5.webp";
 import coreX5 from "../../../assets/products/phones/CORE-X5.webp";
 import coreM5 from "../../../assets/products/phones/CORE-M5.webp";
@@ -17,12 +16,19 @@ import S23 from "../../../assets/products/phones/samsung_s23+.webp";
 
 import fairphone3 from "../../../assets/products/phones/fairphone_3.jpeg";
 import fairphone4 from "../../../assets/products/phones/fairphone_4.png";
+import redmiNote12Pro from "../../../assets/products/phones/redmi_note12Pro.webp";
+import redmiNote12 from "../../../assets/products/phones/redmi_note12.webp";
 import redmiNote11 from "../../../assets/products/phones/redmi_note11.png";
+import redmiNote10 from "../../../assets/products/phones/redmi_note10.png";
 import motorolaE13 from "../../../assets/products/phones/motorola_e13.png";
-import iphone13 from "../../../assets/products/phones/apple_iphone13.png";
+import iphone13 from "../../../assets/products/phones/iphone13.webp";
+import iphone13Pro from "../../../assets/products/phones/iphone13Pro.webp";
+import iphone13ProMax from "../../../assets/products/phones/iphone13ProMax.webp";
+import iphone14 from "../../../assets/products/phones/iphone14.webp";
+import iphone14Pro from "../../../assets/products/phones/iphone14Pro.webp";
+import iphone14ProMax from "../../../assets/products/phones/iphone14ProMax.webp";
 import oppoA74 from "../../../assets/products/phones/oppo_a74.png";
 import sonyXperia10 from "../../../assets/products/phones/sony_xperia10.png";
-import redmiNote10 from "../../../assets/products/phones/redmi_note10.png";
 
 const repairablePhones: LandingListing[] = [
   {
@@ -206,18 +212,45 @@ const repairablePhones: LandingListing[] = [
     type: "Showcase",
   },
   {
-    title: "REDMI NOTE 11",
+    title: "REDMI NOTE",
     repairScore: 7.8,
-    image: redmiNote11,
+    image: redmiNote12Pro,
     url: "/search?query=redmi+note+11",
     type: "Showcase",
-  },
-  {
-    title: "REDMI NOTE 10",
-    repairScore: 7.3,
-    image: redmiNote10,
-    url: "/search?query=redmi+note+10",
-    type: "Showcase",
+    children: [
+      {
+        title: "REDMI NOTE 12 Pro",
+        repairScore: 7.6,
+        image: redmiNote12Pro,
+        url: "/search?query=redmi+note+12+pro",
+        type: "Showcase",
+        priceRange: 2,
+      },
+      {
+        title: "REDMI NOTE 12",
+        repairScore: 7.5,
+        image: redmiNote12,
+        url: "/search?query=redmi+note+12",
+        type: "Showcase",
+        priceRange: 1,
+      },
+      {
+        title: "REDMI NOTE 11",
+        repairScore: 7.2,
+        image: redmiNote11,
+        url: "/search?query=redmi+note+11",
+        type: "Showcase",
+        priceRange: 1,
+      },
+      {
+        title: "REDMI NOTE 10",
+        repairScore: 7.3,
+        image: redmiNote10,
+        url: "/search?query=redmi+note+10",
+        type: "Showcase",
+        priceRange: 1,
+      },
+    ],
   },
   {
     title: "OPPO A74",
@@ -227,18 +260,61 @@ const repairablePhones: LandingListing[] = [
     type: "Showcase",
   },
   {
-    title: "APPLE iPhone 14",
-    repairScore: 6.9,
-    image: iphone14img,
+    title: "APPLE iPhone 13/14",
+    repairScore: 7,
+    image: iphone14Pro,
     url: "/search?query=iphone+14",
     type: "Showcase",
-  },
-  {
-    title: "APPLE iPhone 13",
-    repairScore: 6.4,
-    image: iphone13,
-    url: "/search?query=iphone+13",
-    type: "Showcase",
+    children: [
+      {
+        title: "iPhone 14 pro max",
+        repairScore: 7.0,
+        image: iphone14ProMax,
+        url: "/search?query=iphone+14+pro+max",
+        type: "Showcase",
+        priceRange: 3,
+      },
+      {
+        title: "iPhone 14 pro",
+        repairScore: 7,
+        image: iphone14Pro,
+        url: "/search?query=iphone+14+pro",
+        type: "Showcase",
+        priceRange: 3,
+      },
+      {
+        title: "iPhone 14",
+        repairScore: 6.9,
+        image: iphone14,
+        url: "/search?query=iphone+14",
+        type: "Showcase",
+        priceRange: 3,
+      },
+      {
+        title: "iPhone 13 pro max",
+        repairScore: 6.8,
+        image: iphone13ProMax,
+        url: "/search?query=iphone+13+pro+max",
+        type: "Showcase",
+        priceRange: 3,
+      },
+      {
+        title: "iPhone 13 pro",
+        repairScore: 6.8,
+        image: iphone13Pro,
+        url: "/search?query=iphone+13+pro",
+        type: "Showcase",
+        priceRange: 3,
+      },
+      {
+        title: "iPhone 13",
+        repairScore: 6.4,
+        image: iphone13,
+        url: "/search?query=iphone+13",
+        type: "Showcase",
+        priceRange: 2,
+      },
+    ],
   },
   {
     title: "SONY Xperia 10",

@@ -31,7 +31,6 @@ type Props = {
   enlargeButton?: boolean;
   size?: MantineNumberSize;
   landscapeImage?: boolean;
-  loadImage?: boolean;
   rootClassName?: string;
 };
 
@@ -41,7 +40,6 @@ const Listing = ({
   enlargeButton,
   size,
   landscapeImage,
-  loadImage = true,
   rootClassName = "",
 }: Props) => {
   const router = useRouter();
@@ -87,7 +85,6 @@ const Listing = ({
     setSearchTerm(listing.title);
     void router.push(listing.url);
   };
-
   return (
     <div className={rootClassName}>
       <Card
@@ -99,7 +96,7 @@ const Listing = ({
         onClick={onClick}
       >
         <Card.Section>
-          {isShopListing && listing.images?.url_thumb ? (
+          {isShopListing ? (
             <div>
               {enlargeButton && (
                 <ActionIcon
@@ -114,19 +111,14 @@ const Listing = ({
                   <Icon name="Enlarge" size={14} color="white" />
                 </ActionIcon>
               )}
-              {loadImage ? (
+              {listing.images.url_thumb ? (
                 <Image
                   height={CARD_SECTION_HEIGHT}
                   src={listing.images.url_thumb}
                   alt={listing.title}
                 />
               ) : (
-                <div
-                  className="flex w-full items-center justify-center"
-                  style={{ height: CARD_SECTION_HEIGHT }}
-                >
-                  <Loader />
-                </div>
+                <NoImage />
               )}
               <Title className="absolute right-0 -mt-7 rounded-tl-lg bg-white px-2 text-xl text-black">
                 {parsePrice(listing.price)}
