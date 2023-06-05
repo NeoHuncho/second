@@ -5,12 +5,40 @@ import useListingsInView from "../../../hooks/search/useListingsInView";
 import { useInView } from "react-intersection-observer";
 import useShops from "../../../stores/state/useShops";
 import type { ShopName } from "../../../../common/types/types";
-import { Loader } from "@mantine/core";
+import { Loader, RingProgress, Text } from "@mantine/core";
 import InfiniteScroll from "react-infinite-scroller";
 import useSearchParams from "../../../stores/state/useSearchParams";
 interface Props {
   shop: Shop;
 }
+
+const RingLoader = ({ color }: { color: string }) => {
+  const [ringValue, setRingValue] = useState(1);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (ringValue >= 99) {
+        clearInterval(intervalId);
+      } else {
+        setRingValue(ringValue + 1);
+      }
+    }, 60);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [ringValue]);
+
+  return (
+    <div className="mt-10 flex w-full items-center justify-center">
+      <RingProgress
+        size={45}
+        thickness={5}
+        sections={[{ value: ringValue, color: color }]}
+      />
+    </div>
+  );
+};
 
 export default function ListingsShop({ shop }: Props) {
   const { updateListings } = useShops();
@@ -42,6 +70,7 @@ export default function ListingsShop({ shop }: Props) {
   }, [shop.name]);
 
   const loadMore = () => {
+    console.log("loading more");
     if (shop.status === "loading") return;
     if (shop.hasFetchedAll) return setHasMore(false);
     if (records === shop.listings.length) {
@@ -57,13 +86,16 @@ export default function ListingsShop({ shop }: Props) {
   };
 
   if (!listingsInView) return <></>;
+  if (!shop.listings.length) return <RingLoader color={shop.color} />;
   return (
     <InfiniteScroll
       key={shop.name}
       pageStart={0}
       loadMore={() => void loadMore()}
       hasMore={hasMore}
-      loader={shop.listings.length ? <Loader color={shop.color} /> : undefined}
+      loader={
+        records > itemsPerPage ? <Loader color={shop.color} /> : undefined
+      }
       threshold={450}
     >
       <div

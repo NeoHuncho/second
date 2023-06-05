@@ -19,7 +19,7 @@ const Search = () => {
             <HeaderSearch />
           </div>
           <ShopTabs shops={[...Object.values(shops)]} />
-          <div className="flex flex-col">
+          <div className="flex flex-col mt-5">
             <ListingsShop shop={shops[activeShop]} />
           </div>
         </div>
