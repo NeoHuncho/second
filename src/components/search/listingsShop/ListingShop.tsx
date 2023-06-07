@@ -49,6 +49,13 @@ const RingLoader = ({ color }: { color: string }) => {
   );
 };
 
+const NextPageLoader = ({ color }: { color: string }) => {
+  return (
+    <div className="my-5 flex w-full items-center justify-center">
+      <Loader color={color} />
+    </div>
+  );
+};
 export default function ListingsShop({ shop }: Props) {
   const { updateListings } = useShops();
   const listingsInView = useListingsInView();
@@ -77,9 +84,7 @@ export default function ListingsShop({ shop }: Props) {
     setHasMore(true);
     window.scrollTo(0, 0);
   }, [shop.name]);
-
   const loadMore = () => {
-    console.log("loading more");
     if (shop.status === "loading") return;
     if (shop.hasFetchedAll) return setHasMore(false);
     if (records === shop.listings.length) {
@@ -118,7 +123,7 @@ export default function ListingsShop({ shop }: Props) {
       loadMore={() => void loadMore()}
       hasMore={hasMore}
       loader={
-        records > itemsPerPage ? <Loader color={shop.color} /> : undefined
+        shop.loadingNextPage ? <NextPageLoader color={shop.color} /> : undefined
       }
       threshold={450}
     >

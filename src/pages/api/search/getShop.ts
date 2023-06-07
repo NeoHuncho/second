@@ -37,7 +37,7 @@ export default async function handler(
   if (env.NODE_ENV === "production")
     res = await getWebsiteScrape(formattedStoreUrl);
   else {
-    // await new Promise((resolve) => setTimeout(resolve, 5009));
+    await new Promise((resolve) => setTimeout(resolve, 5009));
     res = await getStaticListings(request.query.shop as ShopName);
   }
 

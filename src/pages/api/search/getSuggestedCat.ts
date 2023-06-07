@@ -21,7 +21,6 @@ export default async function handler(
     try {
       const gptRes = await getCatSuggestionWithTimeout(request.query.text);
       const category = gptRes.data.choices[0]?.message?.content;
-      console.log(category);
       if (!category) return response.status(200).json(null);
       return response
         .status(200)
