@@ -22,7 +22,7 @@ const RingLoader = ({ color }: { color: string }) => {
       } else {
         setRingValue(ringValue + 1);
       }
-    }, 60);
+    }, 45);
 
     return () => {
       clearInterval(intervalId);
@@ -30,12 +30,21 @@ const RingLoader = ({ color }: { color: string }) => {
   }, [ringValue]);
 
   return (
-    <div className="mt-10 flex w-full items-center justify-center">
+    <div className="mt-10 flex w-full flex-col items-center justify-center gap-2">
       <RingProgress
         size={45}
         thickness={5}
         sections={[{ value: ringValue, color: color }]}
       />
+      {ringValue < 99 && <Text>Ça arrive...🌱</Text>}
+      {ringValue >= 99 && (
+        <div className="flex flex-col items-center justify-center gap-2">
+          <Text className="font-bold">Cela prend plus de temps que prévu</Text>
+          <Text italic>
+            Veuillez patienter, nous relançons la recherche...🛠
+          </Text>
+        </div>
+      )}
     </div>
   );
 };
@@ -86,6 +95,21 @@ export default function ListingsShop({ shop }: Props) {
   };
 
   if (!listingsInView) return <></>;
+  if (shop.status === "error")
+    return (
+      <div className="mt-10 flex flex-col items-center justify-center gap-2">
+        <Text className="font-bold">Une erreur est survenue</Text>
+        <Text italic>Veuillez réessayer votre recherche 🔎</Text>
+      </div>
+    );
+  if (shop.status === "no_results")
+    return (
+      <div className="mt-10 flex flex-col items-center justify-center gap-2">
+        <Text className="font-bold">Aucun résultat trouvé</Text>
+        <Text italic>Veuillez essayer une autre recherche 🔎</Text>
+      </div>
+    );
+
   if (!shop.listings.length) return <RingLoader color={shop.color} />;
   return (
     <InfiniteScroll
