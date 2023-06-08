@@ -4,19 +4,22 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useDisclosure } from "@mantine/hooks";
 import SignInModal from "../logIn/SignInModal";
+import useShops from "../../stores/state/useShops";
 
 export default function MobileFooter() {
   const [currentPage, setCurrentPage] = useState("/");
   const [openedSignIn, modalSignInControls] = useDisclosure(false);
   const router = useRouter();
   const { status, data } = useSession();
-
+  const { lastSearched } = useShops();
   const userImage = data?.user?.image;
   const userName = data?.user?.name;
 
   const onClick = (path: string) => {
     setCurrentPage(path);
-    if (router.pathname !== path) void router.push(path);
+    if (router.pathname !== path) { 
+      void router.push(path);
+    }
   };
 
   useEffect(() => {
@@ -34,7 +37,7 @@ export default function MobileFooter() {
       <IconAndLabelVertical
         onClick={onClick}
         icon={`${currentPage === "/search" ? "Fill" : "Outline"}Search`}
-        path="/search"
+        path={!lastSearched ? "/search" : lastSearched}
         label="Recherche"
       />
       <IconAndLabelVertical

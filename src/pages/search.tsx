@@ -7,12 +7,11 @@ import ListingsShop from "../components/search/listingsShop/ListingShop";
 
 const Search = () => {
   useSearch();
-  const { shops, activeShop } = useShops();
-  
+  const { shops, activeShop, lastSearched } = useShops();
+
   // TODO this is not needed but when removed the page loops the shop loading
   useLocalStorage();
-
-  return (
+  return lastSearched ? (
     <div className="m-auto flex max-w-screen-2xl flex-col gap-4 sm:gap-2 ">
       <div>
         <div className="mb-3">
@@ -24,7 +23,7 @@ const Search = () => {
         </div>
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default Search;

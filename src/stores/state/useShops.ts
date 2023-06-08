@@ -21,6 +21,8 @@ type ShopState = {
   updateListings: (shop: ShopName) => Promise<void>;
   resetShops: () => void;
   setSort: (sort: Sort, router: NextRouter) => void;
+  lastSearched: string;
+  setLastSearched: (lastSearched: string) => void;
   setFilter: ({
     key,
     value,
@@ -73,6 +75,13 @@ const useShops = create<ShopState>()((set, get) => ({
     set((state) => ({
       ...state,
       slides,
+    }));
+  },
+  lastSearched: "",
+  setLastSearched: (lastSearched: string) => {
+    set((state) => ({
+      ...state,
+      lastSearched,
     }));
   },
   updateListings: async (shop: ShopName) => {

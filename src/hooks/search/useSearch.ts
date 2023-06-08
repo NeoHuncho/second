@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useShops from "../../stores/state/useShops";
 import useSuggestedCat from "../../stores/state/useSuggestedCat";
 import useLocalStorage from "../../stores/useLocalStorage";
@@ -19,11 +19,19 @@ const useSearch = () => {
   const { deliveryMethod, locationRange, addressCoords, address } =
     useLocalStorage();
 
-  const { updateListings, resetShops, setSort, setFilter } = useShops();
+  const {
+    updateListings,
+    resetShops,
+    setSort,
+    setFilter,
+    shops,
+    setLastSearched,
+  } = useShops();
 
   const { suggestedCat, setSuggestedCat } = useSuggestedCat();
 
   const { validShopKeys: validShops } = useValidShops();
+  const [alreadyHasListings, setAlreadyHasListings] = useState(true);
 
   const convertSearchToParsedUrlQuery = (): ParsedUrlQuery => {
     const search = window.location.search;
@@ -56,12 +64,20 @@ const useSearch = () => {
 
   const updateShops = () => {
     resetShops();
+    setLastSearched(router.asPath);
     validShops.forEach((shop) => {
       void updateListings(shop as ShopName);
     });
   };
 
   useEffect(() => {
+    if (alreadyHasListings) {
+      setTimeout(() => {
+        setAlreadyHasListings(false);
+      }, 1000);
+      return;
+    }
+    console.log(alreadyHasListings);
     if (!deliveryMethod) return;
     if (!window.location.search.includes("sort")) {
       setSort("recommended", router);
@@ -88,6 +104,13 @@ const useSearch = () => {
       updateShops();
     }
   }, [router.query]);
+
+  useEffect(() => {
+    if (Object.values(shops).every((shop) => shop.listings.length === 0)) {
+      console.log("already has listings");
+      setAlreadyHasListings(false);
+    }
+  }, []);
 
   useEffect(() => {
     processNewDeliveryParams();
