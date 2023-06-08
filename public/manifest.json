@@ -1,5 +1,7 @@
 {
   "name": "Secondd",
+  "orientation": "any",
+  "description": "Secondd is a simple, easy to use, and free to use second hand marketplace aggregator.",
   "short_name": "Secondd",
   "icons": [
     {
