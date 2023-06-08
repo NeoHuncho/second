@@ -77,7 +77,7 @@ const useSearch = () => {
       }, 1000);
       return;
     }
-    console.log(alreadyHasListings);
+  
     if (!deliveryMethod) return;
     if (!window.location.search.includes("sort")) {
       setSort("recommended", router);
@@ -107,7 +107,6 @@ const useSearch = () => {
 
   useEffect(() => {
     if (Object.values(shops).every((shop) => shop.listings.length === 0)) {
-      console.log("already has listings");
       setAlreadyHasListings(false);
     }
   }, []);
