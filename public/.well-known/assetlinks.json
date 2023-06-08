@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "net.secondd.www.twa",
+      "sha256_cert_fingerprints": [
+        "C4:D1:9E:22:94:63:BA:CC:3D:E6:F5:A8:6F:26:DF:D1:CC:8B:D1:06:03:42:01:E4:CA:43:FB:EF:4C:1A:17:6E"
+      ]
+    }
+  }
+]
