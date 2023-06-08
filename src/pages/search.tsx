@@ -8,22 +8,21 @@ import ListingsShop from "../components/search/listingsShop/ListingShop";
 const Search = () => {
   useSearch();
   const { shops, activeShop } = useShops();
+  
   // TODO this is not needed but when removed the page loops the shop loading
   useLocalStorage();
 
   return (
     <div className="m-auto flex max-w-screen-2xl flex-col gap-4 sm:gap-2 ">
-      {window.location.search && (
-        <div>
-          <div className="mb-3">
-            <HeaderSearch />
-          </div>
-          <ShopTabs shops={[...Object.values(shops)]} />
-          <div className="flex flex-col mt-5">
-            <ListingsShop shop={shops[activeShop]} />
-          </div>
+      <div>
+        <div className="mb-3">
+          <HeaderSearch />
         </div>
-      )}
+        <ShopTabs shops={[...Object.values(shops)]} />
+        <div className="mt-5 flex flex-col">
+          <ListingsShop shop={shops[activeShop]} />
+        </div>
+      </div>
     </div>
   );
 };

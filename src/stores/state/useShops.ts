@@ -135,6 +135,7 @@ const useShops = create<ShopState>()((set, get) => ({
       }
     );
     if (!response) return;
+    console.log(response.data.url);
     if (currentDate < get().lastListingUpdate[shop]) return;
     set((state) => ({
       ...state,
