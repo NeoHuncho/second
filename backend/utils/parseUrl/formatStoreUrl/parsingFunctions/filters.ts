@@ -49,13 +49,14 @@ const filtersLeboncoin = (filters: Record<QueryUrl, string>) => {
   if (priceMin && priceMax) filtersString = `&price=${priceMin}-${priceMax}`;
   else if (priceMin) filtersString = `&price=${priceMin}-max`;
   else if (priceMax) filtersString = `&price=min-${priceMax}`;
-  if (condition) {
+  if (condition && category !== "all") {
     const conditions = multiChoiceFilterParser({
       filters,
       key: "condition",
       staticValues: conditionsLeboncoin,
     });
-    filtersString += `&item_condition=${conditions.join("%2C")}`;
+    if (category === "shoes" || category === "clothes")
+      filtersString += `&clothing_condition_a=${conditions.join("%2C")}`;
   }
 
   if (category && category !== "all")
@@ -85,11 +86,10 @@ const filtersLeboncoin = (filters: Record<QueryUrl, string>) => {
   }
   if (deliveryMethod && deliveryMethod !== "delivery") {
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    if(deliveryMethod === "both") filtersString += `&shippable=1`;
+    if (deliveryMethod === "both") filtersString += `&shippable=1`;
     filtersString += `&locations=${city}__${lat}_${lng}_10000_${
       parseInt(locationRange) * 1000
     }`;
-
   }
   if (color) {
     const colors = multiChoiceFilterParser({
@@ -127,7 +127,7 @@ const filtersVinted = (filters: Record<QueryUrl, string>) => {
       key: "size",
       staticValues: sizesVinted,
     });
-    filtersString += `&size_id%5B%5D=${sizes.join("&size_id%5B%5D=")}`;
+    filtersString += `&size_ids%5B%5D=${sizes.join("&size_id%5B%5D=")}`;
   }
   if (color) {
     const colors = multiChoiceFilterParser({
