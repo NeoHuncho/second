@@ -6,12 +6,11 @@ const HeaderSearch = () => {
   return (
     <div className="flex flex-col gap-3 sm:gap-2">
       <div className="flex w-full justify-between">
-        <SearchTerm />
+        <FiltersListing />
         <div className="flex">
           <SortListings />
         </div>
       </div>
-      <FiltersListing />
     </div>
   );
 };

@@ -13,20 +13,16 @@ import { Filters, Categories } from "../../../common/keys/keys";
 import type { Category, ShopName } from "../../../common/types/types";
 
 import { showNotification } from "@mantine/notifications";
+import useShopFilters from "../../stores/state/useShopFilters";
 
 const useSearch = () => {
   const router = useRouter();
   const { deliveryMethod, locationRange, addressCoords, address } =
     useLocalStorage();
 
-  const {
-    updateListings,
-    resetShops,
-    setSort,
-    setFilter,
-    shops,
-    setLastSearched,
-  } = useShops();
+  const { updateListings, resetShops, setSort, shops, setLastSearched } =
+    useShops();
+  const { setFilter } = useShopFilters();
 
   const { suggestedCat, setSuggestedCat } = useSuggestedCat();
 
@@ -77,7 +73,7 @@ const useSearch = () => {
       }, 1000);
       return;
     }
-  
+
     if (!deliveryMethod) return;
     if (!window.location.search.includes("sort")) {
       setSort("recommended", router);

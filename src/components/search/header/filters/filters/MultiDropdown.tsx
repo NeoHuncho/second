@@ -2,7 +2,7 @@ import { Checkbox, ColorSwatch, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import type { Color, Filter } from "../../../../../../common/types/types";
-import useShops from "../../../../../stores/state/useShops";
+import useShopFilters from "../../../../../stores/state/useShopFilters";
 import multiText from "../../../../../utils/filterText/multiText";
 import type { DropDownInterface } from "../FiltersListing";
 import colorsHex from "../../../../../static/colorsHex";
@@ -17,7 +17,7 @@ const useMultiDropdown = ({
     filters: storeFilters,
     setMultiKeyFilter: setStoreFilters,
     removeFilter,
-  } = useShops();
+  } = useShopFilters();
   const [filters, setFilters] = useState(
     multiValues
       ?.filter(([key]) => Object.keys(storeFilters).includes(key))

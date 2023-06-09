@@ -2,7 +2,7 @@ import type { MantineSize } from "@mantine/core";
 import { Select } from "@mantine/core";
 import { Categories } from "../../../common/keys/keys";
 import type { Category } from "../../../common/types/types";
-import useShops from "../../stores/state/useShops";
+import useShopsFilters from "../../stores/state/useShopFilters";
 import { useRouter } from "next/router";
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
 };
 
 export default function CategorySelect({ size }: Props) {
-  const { filters, setFilter, removeFilter } = useShops();
+  const { filters, setFilter, removeFilter } = useShopsFilters();
   const router = useRouter();
   const data = Object.entries(Categories).map(([key, value]) => ({
     label: value,

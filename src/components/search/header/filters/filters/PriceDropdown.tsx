@@ -2,7 +2,7 @@ import type { DropDownInterface } from "../FiltersListing";
 import { TextInput } from "@mantine/core";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import useShops from "../../../../../stores/state/useShops";
+import useShopFilters from "../../../../../stores/state/useShopFilters";
 import { useDebouncedState } from "@mantine/hooks";
 import priceText from "../../../../../utils/filterText/priceText";
 import { Filters } from "../../../../../../common/keys/keys";
@@ -39,7 +39,7 @@ const usePrice = ({
   setFilterText: (text: string) => void;
 }) => {
   const router = useRouter();
-  const { filters, setFilter, removeFilter } = useShops();
+  const { filters, setFilter, removeFilter } = useShopFilters();
   const [firstLoadMin, setFirstLoadMin] = useState(true);
   const [firstLoadMax, setFirstLoadMax] = useState(true);
   const [priceMinDebounced, setPriceMinDebounced] = useDebouncedState(

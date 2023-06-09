@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import useShops from "../../stores/state/useShops";
+import useShopsFilters from "../../stores/state/useShopFilters";
 
 const useResetFilters = () => {
   const router = useRouter();
-  const { resetFilters } = useShops();
+  const { resetFilters } = useShopsFilters();
   useEffect(() => {
     if (router.pathname === "/") resetFilters();
   }, [router.pathname]);
