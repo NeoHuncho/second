@@ -11,7 +11,7 @@ type FiltersStore = {
   }: {
     key: string;
     value?: string;
-    router: NextRouter;
+    router?: NextRouter;
   }) => void;
   setMultiKeyFilter: ({
     key,
@@ -19,7 +19,7 @@ type FiltersStore = {
     typeKey,
   }: {
     key: string;
-    router: NextRouter;
+    router?: NextRouter;
     typeKey: MultiKeyFilterType;
   }) => void;
   removeFilter: ({
@@ -46,13 +46,14 @@ const useShopFilters = create<FiltersStore>((set) => ({
         [key]: value || true,
       },
     }));
-    void router.push({
-      pathname: router.pathname,
-      query: {
-        ...router.query,
-        [key]: value || true,
-      },
-    });
+    router &&
+      void router.push({
+        pathname: router.pathname,
+        query: {
+          ...router.query,
+          [key]: value || true,
+        },
+      });
   },
   setMultiKeyFilter: ({ key, router, typeKey }) => {
     set((state) => ({
@@ -62,6 +63,7 @@ const useShopFilters = create<FiltersStore>((set) => ({
         [key]: true,
       },
     }));
+    if (!router) return;
     const prevValue = router.query[typeKey] as string | undefined;
     return void router.push({
       pathname: router.pathname,

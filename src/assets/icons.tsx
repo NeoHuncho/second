@@ -67,6 +67,8 @@ const icons = {
   Adjustments: HiAdjustments,
   FillDollar: AiIcons.AiFillDollarCircle,
   OutlineDollar: AiIcons.AiOutlineDollarCircle,
+  OutlineEuro: AiIcons.AiOutlineEuroCircle,
+  OutlineList: AiIcons.AiOutlineUnorderedList,
 };
 
 export const Icon: React.FC<IconProps & { name: keyof typeof icons }> = ({

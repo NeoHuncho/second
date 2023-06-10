@@ -8,14 +8,16 @@ import useBreakpoints from "../../hooks/ui/useBreakpoints";
 import SearchItem from "./SearchItem";
 import DeliveryMethodSelect from "../searchBar/DeliveryMethodSelect";
 import CategorySelect from "../searchBar/CategorySelect";
-
+import useShopFilters from "../../stores/state/useShopFilters";
+import { useRouter } from "next/router";
 type PropTypes = {
   size?: MantineSize;
 };
 
 const SearchBar = ({ size = "md" }: PropTypes) => {
+  const router = useRouter();
   const { isMobile } = useBreakpoints();
-
+  const { filters, setFilter, removeFilter } = useShopFilters();
   const {
     completionResults,
     setDebouncedSearchTerm,
@@ -26,6 +28,11 @@ const SearchBar = ({ size = "md" }: PropTypes) => {
     inputInFocus,
     loading,
   } = useCompletion();
+
+  const onChangeCategory = (value: string | null) => {
+    if (!value) return removeFilter({ key: "category", router });
+    setFilter({ key: "category", value: value, router });
+  };
 
   return (
     <div className="flex w-full flex-col items-center px-4 ">
@@ -44,7 +51,9 @@ const SearchBar = ({ size = "md" }: PropTypes) => {
       >
         <div className="flex w-full flex-col items-center gap-4 sm:grid sm:grid-cols-searchBar sm:gap-2">
           <div className="flex w-full">
-            {!isMobile && <CategorySelect size={size} />}
+            {!isMobile && (
+              <CategorySelect onChange={onChangeCategory} size={size} />
+            )}
             <Popover.Target>
               <TextInput
                 onFocus={focusHandlers.open}
@@ -78,7 +87,9 @@ const SearchBar = ({ size = "md" }: PropTypes) => {
           </div>
           <div>
             <div className="flex">
-              {isMobile && <CategorySelect size={size} />}
+              {isMobile && (
+                <CategorySelect onChange={onChangeCategory} size={size} />
+              )}
               <DeliveryMethodSelect size={size} />
             </div>
           </div>

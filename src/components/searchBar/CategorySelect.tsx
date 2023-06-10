@@ -1,33 +1,37 @@
 import type { MantineSize } from "@mantine/core";
 import { Select } from "@mantine/core";
 import { Categories } from "../../../common/keys/keys";
-import type { Category } from "../../../common/types/types";
 import useShopsFilters from "../../stores/state/useShopFilters";
-import { useRouter } from "next/router";
 
 type Props = {
   size: MantineSize;
+  onChange: (value: string | null) => void;
+  radius?: "xs" | "sm" | "md" | "lg";
+  className?: string;
 };
 
-export default function CategorySelect({ size }: Props) {
-  const { filters, setFilter, removeFilter } = useShopsFilters();
-  const router = useRouter();
+export default function CategorySelect({
+  size,
+  onChange,
+  radius = "xs",
+  className,
+}: Props) {
+  const { filters } = useShopsFilters();
+
   const data = Object.entries(Categories).map(([key, value]) => ({
     label: value,
     value: key,
   }));
   return (
     <Select
+      className={className ?? ""}
       clearable
       size={size}
-      radius={"xs"}
+      radius={radius}
       data={data}
       value={filters.category ? filters.category : null}
-      onChange={(value) => {
-        if (!value) return removeFilter({ key: "category", router });
-        setFilter({ key: "category", value: value, router });
-      }}
-      placeholder="Catégories"
+      onChange={onChange}
+      placeholder="Catégorie"
     />
   );
 }
