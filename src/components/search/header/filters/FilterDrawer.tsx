@@ -32,7 +32,6 @@ export default function FilterDrawer({ close }: { close: () => void }) {
       value: key,
       label: Filters[key as keyof typeof Filters],
     }));
-  console.log(filters);
 
   function onPriceChange({
     num,

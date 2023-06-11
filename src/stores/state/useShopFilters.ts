@@ -1,11 +1,12 @@
 import type { NextRouter } from "next/router";
 import type { Filter, MultiKeyFilterType } from "../../../common/types/types";
 import { create } from "zustand";
-import { MultiKeyFilterTypes } from "../../../common/keys/keys";
+import { Filters, MultiKeyFilterTypes } from "../../../common/keys/keys";
+import type { ParsedUrlQuery } from "querystring";
 
 type FiltersStore = {
   filters: Partial<Record<Filter, string | boolean>>;
-
+  hasChanged: boolean;
   setFilter: ({
     key,
     value,
@@ -33,15 +34,18 @@ type FiltersStore = {
   }) => void;
   resetFilters: () => void;
   confirmFilters: ({ router }: { router: NextRouter }) => void;
+  setFiltersFromQuery: ({ query }: { query: string }) => void;
 };
 
 const useShopFilters = create<FiltersStore>((set, get) => ({
   filters: {},
+  hasChanged: false,
 
   setFilter: ({ key, value, router }) => {
     //value is optional. This is for multi key filters where the value is the key. In this cas we just set the value to true
     set((state) => ({
       ...state,
+      hasChanged: true,
       filters: {
         ...state.filters,
         [key]: value || true,
@@ -74,6 +78,7 @@ const useShopFilters = create<FiltersStore>((set, get) => ({
 
     set((state) => ({
       ...state,
+      hasChanged: true,
       filters: newFilters,
     }));
   },
@@ -84,6 +89,7 @@ const useShopFilters = create<FiltersStore>((set, get) => ({
       return {
         ...state,
         filters,
+        hasChanged: true,
       };
     });
     if (!router) return;
@@ -97,9 +103,15 @@ const useShopFilters = create<FiltersStore>((set, get) => ({
     set((state) => ({
       ...state,
       filters: {},
+      hasChanged: true,
     }));
   },
   confirmFilters: ({ router }) => {
+    if (!get().hasChanged) return;
+    set((state) => ({
+      ...state,
+      hasChanged: false,
+    }));
     const query: Partial<Record<Filter | MultiKeyFilterType, string>> = {};
     const typeKeysFilters = Object.keys(get().filters).filter(
       (key) =>
@@ -110,14 +122,12 @@ const useShopFilters = create<FiltersStore>((set, get) => ({
     const nonTypeKeysFilters = Object.keys(get().filters).filter(
       (key) => !typeKeysFilters.includes(key as Filter)
     ) as Filter[];
-    console.log(typeKeysFilters, nonTypeKeysFilters);
     if (nonTypeKeysFilters.length) {
       nonTypeKeysFilters.forEach((key) => {
         query[key] = get().filters[key] as string;
       });
     }
     if (typeKeysFilters.length) {
-      //we need to group the type keys together
       const groupedTypeKeys = typeKeysFilters.reduce((acc, key) => {
         const typeKey = Object.keys(MultiKeyFilterTypes).find((typeKey) =>
           key.includes(typeKey)
@@ -133,6 +143,9 @@ const useShopFilters = create<FiltersStore>((set, get) => ({
         query[key as MultiKeyFilterType] = groupedTypeKeys[key];
       });
     }
+
+    if (router.query === query) return;
+    if (!Object.keys(query).length) return;
     void router.push({
       pathname: router.pathname,
       query: {
@@ -140,7 +153,38 @@ const useShopFilters = create<FiltersStore>((set, get) => ({
         ...query,
       },
     });
-    //add to end of url using router
+  },
+  setFiltersFromQuery: ({ query }) => {
+    const filters = query
+      .substring(1)
+      .split("&")
+      .reduce((acc, filter) => {
+        const [key, value] = filter.split("=");
+        if (!key || !value) return acc;
+        acc[key] = value;
+        return acc;
+      }, {} as Record<string, string>);
+
+    const parsedUrls = {} as Partial<Record<Filter, string | boolean>>;
+    Object.keys(filters)
+      .filter((key) => Object.keys(MultiKeyFilterTypes).includes(key))
+      .forEach((key) => {
+        const value = filters[key];
+        if (!value) return;
+        const keys = value.split("%2B") as Filter[];
+        for (const key of keys) {
+          parsedUrls[key] = true;
+        }
+      });
+    Object.keys(filters)
+      .filter((key) => Object.keys(Filters).includes(key))
+      .map((key) => {
+        parsedUrls[key as Filter] = filters[key];
+      });
+    set((state) => ({
+      ...state,
+      filters: parsedUrls,
+    }));
   },
 }));
 

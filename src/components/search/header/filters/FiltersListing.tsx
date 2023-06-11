@@ -8,6 +8,7 @@ import { Icon } from "../../../../assets/icons";
 import FilterDrawer from "./FilterDrawer";
 import useShopFilters from "../../../../stores/state/useShopFilters";
 import { useRouter } from "next/router";
+import useColorTheme from "../../../../hooks/ui/useColorTheme";
 
 export interface DropDownInterface {
   setFilterText: (text: string) => void;
@@ -17,12 +18,14 @@ export interface DropDownInterface {
 
 const FiltersListing = () => {
   const router = useRouter();
-  const { confirmFilters } = useShopFilters();
+  const { isLight } = useColorTheme();
+  const { confirmFilters, filters } = useShopFilters();
   const [opened, { open, close }] = useDisclosure(false);
   const onClose = () => {
     confirmFilters({ router });
     close();
   };
+  const filtersLength = Object.keys(filters).length;
   return (
     <>
       <Drawer
@@ -45,10 +48,16 @@ const FiltersListing = () => {
         onClick={open}
         className="sm:h-12"
         color="secondary"
-        variant="outline"
-        leftIcon={<Icon name="Adjustments" color="#2a9494" size={20} />}
+        variant={filtersLength > 0 ? "filled" : "outline"}
+        leftIcon={
+          <Icon
+            name="Adjustments"
+            size={20}
+            color={filtersLength > 0 ? "white" : isLight ? "black" : "white"}
+          />
+        }
       >
-        Filtres
+        {`Filtres ${filtersLength > 0 ? `(${filtersLength})` : ""}`}
       </Button>
     </>
   );

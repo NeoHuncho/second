@@ -4,13 +4,18 @@ import useShops from "../stores/state/useShops";
 import ShopTabs from "../components/search/header/shopTabs/ShopTabs";
 import useLocalStorage from "../stores/useLocalStorage";
 import ListingsShop from "../components/search/listingsShop/ListingShop";
+import useShopFilters from "../stores/state/useShopFilters";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 const Search = () => {
   useSearch();
   const { shops, activeShop, lastSearched } = useShops();
+  const { setFiltersFromQuery, filters } = useShopFilters();
+  useEffect(() => {
+    setFiltersFromQuery({ query: window.location.search });
+  }, []);
 
-  // TODO this is not needed but when removed the page loops the shop loading
-  useLocalStorage();
   return lastSearched ? (
     <div className="m-auto flex max-w-screen-2xl flex-col gap-4 sm:gap-2 ">
       <div>
