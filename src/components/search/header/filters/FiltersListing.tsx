@@ -6,6 +6,8 @@ import type {
 import { useDisclosure } from "@mantine/hooks";
 import { Icon } from "../../../../assets/icons";
 import FilterDrawer from "./FilterDrawer";
+import useShopFilters from "../../../../stores/state/useShopFilters";
+import { useRouter } from "next/router";
 
 export interface DropDownInterface {
   setFilterText: (text: string) => void;
@@ -14,8 +16,13 @@ export interface DropDownInterface {
 }
 
 const FiltersListing = () => {
+  const router = useRouter();
+  const { confirmFilters } = useShopFilters();
   const [opened, { open, close }] = useDisclosure(false);
-
+  const onClose = () => {
+    confirmFilters({ router });
+    close();
+  };
   return (
     <>
       <Drawer
@@ -27,12 +34,12 @@ const FiltersListing = () => {
           </div>
         }
         opened={opened}
-        onClose={close}
+        onClose={onClose}
         position="right"
         classNames={{ drawer: "w-80 p-2" }}
       >
         <Divider className="mb-8 -mt-3" size="xs" />
-        <FilterDrawer />
+        <FilterDrawer close={close} />
       </Drawer>
       <Button
         onClick={open}

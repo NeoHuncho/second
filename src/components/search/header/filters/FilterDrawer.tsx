@@ -4,7 +4,12 @@ import { colors } from "../../../../../common/keys/filterKeys";
 import CategorySelect from "../../../searchBar/CategorySelect";
 import { Icon } from "../../../../assets/icons";
 import { Filters } from "../../../../../common/keys/keys";
-import type { MultiKeyFilterType } from "../../../../../common/types/types";
+import type {
+  Filter,
+  MultiKeyFilterType,
+} from "../../../../../common/types/types";
+import DeliveryMethodSelect from "../../../searchBar/DeliveryMethodSelect";
+import { useRouter } from "next/router";
 
 type FilterBlockProps = {
   children: React.ReactNode;
@@ -12,9 +17,8 @@ type FilterBlockProps = {
   icon: React.ReactNode;
 };
 
-export default function FilterDrawer() {
-  const { filters } = useShopFilters();
-  const priceKeys = Object.keys(filters).filter((key) => key.includes("price"));
+export default function FilterDrawer({ close }: { close: () => void }) {
+  const { filters, setFilter, removeFilter } = useShopFilters();
   const selectedConditions = Object.keys(filters).filter((key) =>
     key.includes("condition")
   );
@@ -28,6 +32,18 @@ export default function FilterDrawer() {
       value: key,
       label: Filters[key as keyof typeof Filters],
     }));
+  console.log(filters);
+
+  function onPriceChange({
+    num,
+    type,
+  }: {
+    num: number | undefined;
+    type: "priceMin" | "priceMax";
+  }) {
+    if (!num) removeFilter({ key: type });
+    else setFilter({ key: type, value: num.toString() });
+  }
 
   return (
     <>
@@ -37,20 +53,34 @@ export default function FilterDrawer() {
             radius="sm"
             size="md"
             className="mt-2"
-            onChange={(val) => console.log(val)}
+            onChange={(val) =>
+              setFilter({ key: "category", value: val as string })
+            }
           />
         </FilterBlock>
         <FilterBlock title="Prix" icon={<Icon name="OutlineEuro" />}>
           <div className="flex  gap-2">
             <NumberInput
+              value={
+                filters.priceMin
+                  ? parseInt(filters.priceMin as string)
+                  : undefined
+              }
               label="Minimum"
               hideControls
               rightSection={<Icon name="OutlineEuro" />}
+              onChange={(num) => onPriceChange({ num, type: "priceMin" })}
             />
             <NumberInput
+              value={
+                filters.priceMax
+                  ? parseInt(filters.priceMax as string)
+                  : undefined
+              }
               label="Maximum"
               hideControls
               rightSection={<Icon name="OutlineEuro" />}
+              onChange={(num) => onPriceChange({ num, type: "priceMax" })}
             />
           </div>
         </FilterBlock>
@@ -62,7 +92,7 @@ export default function FilterDrawer() {
           />
         </FilterBlock>
       </div>
-      <DrawerFooter />
+      <DrawerFooter close={close} />
     </>
   );
 }
@@ -92,8 +122,8 @@ function MultiSelectFilter({
   typeKey: MultiKeyFilterType;
 }) {
   const { setMultiKeyFilter } = useShopFilters();
-  const onChange = (val: string[]) => {
-    setMultiKeyFilter({ key: val[val.length - 1] as string, typeKey });
+  const onChange = (val: Filter[]) => {
+    setMultiKeyFilter({ keys: val, typeKey });
   };
 
   return (
@@ -107,21 +137,32 @@ function MultiSelectFilter({
   );
 }
 
-function DrawerFooter() {
+function DrawerFooter({ close }: { close: () => void }) {
+  const router = useRouter();
+  const { confirmFilters, resetFilters } = useShopFilters();
   return (
     <div className="absolute bottom-0 w-full pb-2 pr-2">
       <Divider my="sm" />
       <div className="flex w-full justify-between gap-2 px-2">
-        <Button size="md" variant="outline">
+        <Button onClick={resetFilters} size="md" variant="outline">
           Tout effacer
         </Button>
-        <Button size="md" radius={"sm"} color="secondary">
+        <Button
+          onClick={() => {
+            confirmFilters({ router });
+            close();
+          }}
+          size="md"
+          radius={"sm"}
+          color="secondary"
+        >
           Rechercher
         </Button>
       </div>
     </div>
   );
 }
+
 // <div className="flex flex-wrap gap-4">
 //   {(filters.category === "shoes" || filters.category === "clothes") && (
 //     <Filter

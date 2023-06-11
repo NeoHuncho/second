@@ -29,7 +29,7 @@ export default function CategorySelect({
       size={size}
       radius={radius}
       data={data}
-      value={filters.category ? filters.category : null}
+      value={filters.category ? (filters.category as string) : null}
       onChange={onChange}
       placeholder="Catégorie"
     />

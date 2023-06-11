@@ -1,9 +1,11 @@
 import type { NextRouter } from "next/router";
 import type { Filter, MultiKeyFilterType } from "../../../common/types/types";
 import { create } from "zustand";
+import { MultiKeyFilterTypes } from "../../../common/keys/keys";
 
 type FiltersStore = {
-  filters: Partial<Record<Filter, string>>;
+  filters: Partial<Record<Filter, string | boolean>>;
+
   setFilter: ({
     key,
     value,
@@ -14,12 +16,10 @@ type FiltersStore = {
     router?: NextRouter;
   }) => void;
   setMultiKeyFilter: ({
-    key,
-    router,
+    keys,
     typeKey,
   }: {
-    key: string;
-    router?: NextRouter;
+    keys: Filter[];
     typeKey: MultiKeyFilterType;
   }) => void;
   removeFilter: ({
@@ -28,13 +28,14 @@ type FiltersStore = {
     typeKey,
   }: {
     key: Filter;
-    router: NextRouter;
+    router?: NextRouter;
     typeKey?: MultiKeyFilterType;
   }) => void;
   resetFilters: () => void;
+  confirmFilters: ({ router }: { router: NextRouter }) => void;
 };
 
-const useShopFilters = create<FiltersStore>((set) => ({
+const useShopFilters = create<FiltersStore>((set, get) => ({
   filters: {},
 
   setFilter: ({ key, value, router }) => {
@@ -55,25 +56,28 @@ const useShopFilters = create<FiltersStore>((set) => ({
         },
       });
   },
-  setMultiKeyFilter: ({ key, router, typeKey }) => {
+  setMultiKeyFilter: ({ keys, typeKey }) => {
+    //updating the filters object
+    const filters = get().filters;
+
+    const keyFilters = Object.keys(filters).filter((key) =>
+      key.includes(typeKey)
+    ) as Filter[];
+    const newKey = keys.filter((key) => !keyFilters.includes(key))[0];
+    const removedKey = keyFilters.filter((key) => !keys.includes(key))[0];
+
+    const newFilters = {
+      ...filters,
+    };
+    if (newKey) newFilters[newKey] = true;
+    if (removedKey) delete newFilters[removedKey];
+
     set((state) => ({
       ...state,
-      filters: {
-        ...state.filters,
-        [key]: true,
-      },
+      filters: newFilters,
     }));
-    if (!router) return;
-    const prevValue = router.query[typeKey] as string | undefined;
-    return void router.push({
-      pathname: router.pathname,
-      query: {
-        ...router.query,
-        [typeKey]: prevValue ? `${prevValue}+${key}` : key,
-      },
-    });
   },
-  removeFilter: ({ key, router, typeKey }) => {
+  removeFilter: ({ key, router }) => {
     set((state) => {
       const filters = { ...state.filters };
       delete filters[key];
@@ -82,29 +86,7 @@ const useShopFilters = create<FiltersStore>((set) => ({
         filters,
       };
     });
-    if (typeKey) {
-      const prevValue = router.query[typeKey] as string;
-
-      if (prevValue.split("+").length === 1) {
-        const { [typeKey]: value, ...queryWithoutParam } = router.query;
-        return void router.push({
-          pathname: router.pathname,
-          query: queryWithoutParam,
-        });
-      }
-
-      const newValue = prevValue
-        .split("+")
-        .filter((value) => value !== key)
-        .join("+");
-      return void router.push({
-        pathname: router.pathname,
-        query: {
-          ...router.query,
-          [typeKey]: newValue,
-        },
-      });
-    }
+    if (!router) return;
     const { [key]: value, ...queryWithoutParam } = router.query;
     void router.push({
       pathname: router.pathname,
@@ -116,6 +98,49 @@ const useShopFilters = create<FiltersStore>((set) => ({
       ...state,
       filters: {},
     }));
+  },
+  confirmFilters: ({ router }) => {
+    const query: Partial<Record<Filter | MultiKeyFilterType, string>> = {};
+    const typeKeysFilters = Object.keys(get().filters).filter(
+      (key) =>
+        !!Object.keys(MultiKeyFilterTypes).filter((typeKey) =>
+          key.includes(typeKey)
+        ).length
+    ) as Filter[];
+    const nonTypeKeysFilters = Object.keys(get().filters).filter(
+      (key) => !typeKeysFilters.includes(key as Filter)
+    ) as Filter[];
+    console.log(typeKeysFilters, nonTypeKeysFilters);
+    if (nonTypeKeysFilters.length) {
+      nonTypeKeysFilters.forEach((key) => {
+        query[key] = get().filters[key] as string;
+      });
+    }
+    if (typeKeysFilters.length) {
+      //we need to group the type keys together
+      const groupedTypeKeys = typeKeysFilters.reduce((acc, key) => {
+        const typeKey = Object.keys(MultiKeyFilterTypes).find((typeKey) =>
+          key.includes(typeKey)
+        ) as MultiKeyFilterType;
+        if (acc[typeKey]) {
+          acc[typeKey] += `+${key}`;
+        } else {
+          acc[typeKey] = key;
+        }
+        return acc;
+      }, {} as Record<string, string>);
+      Object.keys(groupedTypeKeys).forEach((key) => {
+        query[key as MultiKeyFilterType] = groupedTypeKeys[key];
+      });
+    }
+    void router.push({
+      pathname: router.pathname,
+      query: {
+        ...router.query,
+        ...query,
+      },
+    });
+    //add to end of url using router
   },
 }));
 
