@@ -218,3 +218,19 @@ function DrawerFooter({ close }: { close: () => void }) {
 //     />
 //   )}
 // </div>
+
+// const ColorValueAndHex = ({
+//   value,
+//   color,
+// }: {
+//   value: string;
+//   color: string;
+// }) => {
+//   return (
+//     <div className="flex items-center gap-2">
+//       <ColorSwatch color={color} size={16} />
+//       <Text>{value}</Text>
+//     </div>
+//   );
+// };
+//  <ColorValueAndHex color={colorsHex[key as Color]} value={value} />
