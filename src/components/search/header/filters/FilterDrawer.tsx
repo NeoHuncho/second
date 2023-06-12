@@ -1,4 +1,11 @@
-import { Button, Divider, MultiSelect, NumberInput, Text } from "@mantine/core";
+import {
+  Button,
+  ColorSwatch,
+  Divider,
+  MultiSelect,
+  NumberInput,
+  Text,
+} from "@mantine/core";
 import useShopFilters from "../../../../stores/state/useShopFilters";
 import { colors } from "../../../../../common/keys/filterKeys";
 import CategorySelect from "../../../searchBar/CategorySelect";
@@ -8,14 +15,20 @@ import type {
   Filter,
   MultiKeyFilterType,
 } from "../../../../../common/types/types";
-import DeliveryMethodSelect from "../../../searchBar/DeliveryMethodSelect";
 import { useRouter } from "next/router";
+import { forwardRef } from "react";
+import colorsHex from "../../../../static/colorsHex";
 
 type FilterBlockProps = {
   children: React.ReactNode;
   title: string;
   icon: React.ReactNode;
 };
+
+interface ItemProps extends React.ComponentPropsWithoutRef<"div"> {
+  color: string;
+  label: string;
+}
 
 export default function FilterDrawer({ close }: { close: () => void }) {
   const { filters, setFilter, removeFilter } = useShopFilters();
@@ -26,6 +39,7 @@ export default function FilterDrawer({ close }: { close: () => void }) {
   const colorKeys = Object.keys(filters).filter((key) =>
     Object.keys(colors).includes(key)
   );
+
   const conditionData = Object.keys(Filters)
     .filter((key) => key.includes("condition"))
     .map((key) => ({
@@ -33,6 +47,18 @@ export default function FilterDrawer({ close }: { close: () => void }) {
       label: Filters[key as keyof typeof Filters],
     }));
 
+  const sizeData = Object.keys(Filters)
+    .filter((key) => key.includes("size"))
+    .map((key) => ({
+      value: key,
+      label: Filters[key as keyof typeof Filters],
+    }));
+
+  const colorData = Object.keys(colors).map((key) => ({
+    value: key,
+    label: Filters[key as keyof typeof Filters],
+    color: colorsHex[key as keyof typeof colorsHex],
+  }));
   function onPriceChange({
     num,
     type,
@@ -83,11 +109,21 @@ export default function FilterDrawer({ close }: { close: () => void }) {
             />
           </div>
         </FilterBlock>
-        <FilterBlock title="État" icon={<Icon name="Adjustments" />}>
+        <FilterBlock title="État" icon={<Icon name="OutlineHandThumbsUp" />}>
           <MultiSelectFilter
             data={conditionData}
             value={selectedConditions}
             typeKey="condition"
+            placeholder="État"
+          />
+        </FilterBlock>
+        <FilterBlock title="Couleur" icon={<Icon name="OutlinePalette" />}>
+          <MultiSelectFilter
+            data={colorData}
+            value={colorKeys}
+            typeKey="color"
+            placeholder="Couleur"
+            customItem={ColorItem}
           />
         </FilterBlock>
       </div>
@@ -115,10 +151,14 @@ function MultiSelectFilter({
   data,
   value,
   typeKey,
+  placeholder,
+  customItem: CustomItem,
 }: {
   data: { value: string; label: string }[];
   value: string[];
   typeKey: MultiKeyFilterType;
+  placeholder: string;
+  customItem?: React.FC<ItemProps>;
 }) {
   const { setMultiKeyFilter } = useShopFilters();
   const onChange = (val: Filter[]) => {
@@ -130,8 +170,9 @@ function MultiSelectFilter({
       value={value}
       onChange={onChange}
       size="md"
-      placeholder="État"
+      placeholder={placeholder}
       data={data}
+      itemComponent={CustomItem || undefined}
     />
   );
 }
@@ -161,6 +202,17 @@ function DrawerFooter({ close }: { close: () => void }) {
     </div>
   );
 }
+// eslint-disable-next-line react/display-name
+const ColorItem = forwardRef<HTMLDivElement, ItemProps>(
+  ({ color, label, ...others }: ItemProps, ref) => (
+    <div ref={ref} {...others}>
+      <div className="flex items-center gap-2">
+        <ColorSwatch color={color} size={16} />
+        <Text>{label}</Text>
+      </div>
+    </div>
+  )
+);
 
 // <div className="flex flex-wrap gap-4">
 //   {(filters.category === "shoes" || filters.category === "clothes") && (

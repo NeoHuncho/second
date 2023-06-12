@@ -6,6 +6,7 @@ import type { ParsedUrlQuery } from "querystring";
 
 type FiltersStore = {
   filters: Partial<Record<Filter, string | boolean>>;
+  lastConfirmedFilters: Partial<Record<Filter, string | boolean>>;
   hasChanged: boolean;
   setFilter: ({
     key,
@@ -40,7 +41,7 @@ type FiltersStore = {
 const useShopFilters = create<FiltersStore>((set, get) => ({
   filters: {},
   hasChanged: false,
-
+  lastConfirmedFilters: {},
   setFilter: ({ key, value, router }) => {
     //value is optional. This is for multi key filters where the value is the key. In this cas we just set the value to true
     set((state) => ({
@@ -145,11 +146,66 @@ const useShopFilters = create<FiltersStore>((set, get) => ({
     }
 
     if (router.query === query) return;
+    if (
+      !Object.keys(query).length &&
+      Object.keys(get().lastConfirmedFilters) !== Object.keys(get().filters)
+    ) {
+      //remove all filters that have gone from router.query
+      const lastConfirmedFilters = get().lastConfirmedFilters;
+      const filters = get().filters;
+      const removedFilters = Object.keys(lastConfirmedFilters).filter(
+        (key) => !Object.keys(filters).includes(key)
+      );
+
+      const queryWithoutRemovedFilters = Object.keys(router.query).reduce(
+        (acc, key) => {
+          if (!removedFilters.includes(key))
+            acc[key] = router.query[key] as string;
+          return acc;
+        },
+        {} as Record<string, string>
+      );
+
+      set((state) => ({
+        ...state,
+        lastConfirmedFilters: filters,
+      }));
+      return void router.push({
+        pathname: router.pathname,
+        query: queryWithoutRemovedFilters,
+      });
+    }
     if (!Object.keys(query).length) return;
-    void router.push({
+    //check if any key is not in the filters but is in the lastConfirmedFilters. if it is, remove it from the query and push the new query
+    const lastConfirmedFilters = get().lastConfirmedFilters;
+    const filters = get().filters;
+    const removedFilters = Object.keys(lastConfirmedFilters).filter(
+      (key) => !Object.keys(filters).includes(key)
+    );
+    const queryWithoutRemovedFilters = Object.keys(router.query).reduce(
+      (acc, key) => {
+        if (!removedFilters.includes(key))
+          acc[key] = router.query[key] as string;
+        return acc;
+      },
+      {} as Record<string, string>
+    );
+    const multiKeyQueryParams = Object.keys(queryWithoutRemovedFilters).filter(
+      (key) => Object.keys(MultiKeyFilterTypes).includes(key)
+    ) as MultiKeyFilterType[];
+    multiKeyQueryParams.forEach((key) => {
+      if (Object.keys(filters).includes(key)) return;
+      delete queryWithoutRemovedFilters[key];
+    });
+
+    set((state) => ({
+      ...state,
+      lastConfirmedFilters: filters,
+    }));
+    return void router.push({
       pathname: router.pathname,
       query: {
-        ...router.query,
+        ...queryWithoutRemovedFilters,
         ...query,
       },
     });
@@ -184,6 +240,7 @@ const useShopFilters = create<FiltersStore>((set, get) => ({
     set((state) => ({
       ...state,
       filters: parsedUrls,
+      lastConfirmedFilters: parsedUrls,
     }));
   },
 }));
