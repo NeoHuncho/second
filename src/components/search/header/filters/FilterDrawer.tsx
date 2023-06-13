@@ -32,6 +32,9 @@ interface ItemProps extends React.ComponentPropsWithoutRef<"div"> {
 
 export default function FilterDrawer({ close }: { close: () => void }) {
   const { filters, setFilter, removeFilter } = useShopFilters();
+  const isClothesOrShoes =
+    filters.category === "clothes" || filters.category === "shoes";
+
   const selectedConditions = Object.keys(filters).filter((key) =>
     key.includes("condition")
   );
@@ -124,6 +127,7 @@ export default function FilterDrawer({ close }: { close: () => void }) {
             typeKey="color"
             placeholder="Couleur"
             customItem={ColorItem}
+            disabled={!isClothesOrShoes}
           />
         </FilterBlock>
       </div>
@@ -152,12 +156,14 @@ function MultiSelectFilter({
   value,
   typeKey,
   placeholder,
+  disabled = false,
   customItem: CustomItem,
 }: {
   data: { value: string; label: string }[];
   value: string[];
   typeKey: MultiKeyFilterType;
   placeholder: string;
+  disabled?: boolean;
   customItem?: React.FC<ItemProps>;
 }) {
   const { setMultiKeyFilter } = useShopFilters();
@@ -173,6 +179,7 @@ function MultiSelectFilter({
       placeholder={placeholder}
       data={data}
       itemComponent={CustomItem || undefined}
+      disabled={disabled}
     />
   );
 }
