@@ -4,7 +4,7 @@ const useColorTheme = () => {
   const { theme } = useLocalStorage();
 
   const isDark = theme === "dark";
-  const isLight = theme === "light";
+  const isLight = !theme || theme === "light";
 
   return { isDark, isLight };
 };
