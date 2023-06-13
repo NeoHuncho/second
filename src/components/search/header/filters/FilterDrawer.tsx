@@ -50,11 +50,27 @@ export default function FilterDrawer({ close }: { close: () => void }) {
       label: Filters[key as keyof typeof Filters],
     }));
 
-  const sizeData = Object.keys(Filters)
-    .filter((key) => key.includes("size"))
+  const clothesSizeData = Object.keys(Filters)
+    .filter((key) => key.includes("size") && !key.includes("Shoes"))
     .map((key) => ({
       value: key,
       label: Filters[key as keyof typeof Filters],
+      group: key.includes("Woman")
+        ? "Taille femme"
+        : key.includes("Man")
+        ? "Taille homme"
+        : "Taille Enfant",
+    }));
+  const clothesShoesData = Object.keys(Filters)
+    .filter((key) => key.includes("size") && key.includes("Shoes"))
+    .map((key) => ({
+      value: key,
+      label: Filters[key as keyof typeof Filters],
+      group: key.includes("Woman")
+        ? "Taille femme"
+        : key.includes("Man")
+        ? "Taille homme"
+        : "Taille Enfant",
     }));
 
   const colorData = Object.keys(colors).map((key) => ({
@@ -66,7 +82,7 @@ export default function FilterDrawer({ close }: { close: () => void }) {
     num,
     type,
   }: {
-    num: number | undefined;
+    num: number | "";
     type: "priceMin" | "priceMax";
   }) {
     if (!num) removeFilter({ key: type });
@@ -120,6 +136,24 @@ export default function FilterDrawer({ close }: { close: () => void }) {
             placeholder="État"
           />
         </FilterBlock>
+        <FilterBlock title="Taille" icon={<Icon name="Clothes" />}>
+          <MultiSelectFilter
+            data={
+              filters.category === "clothes"
+                ? clothesSizeData
+                : clothesShoesData
+            }
+            value={sizeKeys}
+            typeKey="size"
+            placeholder={
+              filters.category === "clothes"
+                ? "Taille vêtement"
+                : "Pointure chaussure"
+            }
+            disabled={!isClothesOrShoes}
+            searchable
+          />
+        </FilterBlock>
         <FilterBlock title="Couleur" icon={<Icon name="OutlinePalette" />}>
           <MultiSelectFilter
             data={colorData}
@@ -128,17 +162,18 @@ export default function FilterDrawer({ close }: { close: () => void }) {
             placeholder="Couleur"
             customItem={ColorItem}
             disabled={!isClothesOrShoes}
+            searchable
           />
         </FilterBlock>
+        <DrawerFooter close={close} />
       </div>
-      <DrawerFooter close={close} />
     </>
   );
 }
 
 function FilterBlock({ children, title, icon: Icon }: FilterBlockProps) {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2" key={title}>
       <div className="flex items-center gap-2">
         {Icon}
         <Text size="md" weight={500}>
@@ -158,6 +193,7 @@ function MultiSelectFilter({
   placeholder,
   disabled = false,
   customItem: CustomItem,
+  searchable = false,
 }: {
   data: { value: string; label: string }[];
   value: string[];
@@ -165,6 +201,7 @@ function MultiSelectFilter({
   placeholder: string;
   disabled?: boolean;
   customItem?: React.FC<ItemProps>;
+  searchable?: boolean;
 }) {
   const { setMultiKeyFilter } = useShopFilters();
   const onChange = (val: Filter[]) => {
@@ -176,10 +213,11 @@ function MultiSelectFilter({
       value={value}
       onChange={onChange}
       size="md"
-      placeholder={placeholder}
+      placeholder={searchable ? "rechercher" : placeholder}
       data={data}
       itemComponent={CustomItem || undefined}
       disabled={disabled}
+      searchable={searchable}
     />
   );
 }
@@ -188,8 +226,7 @@ function DrawerFooter({ close }: { close: () => void }) {
   const router = useRouter();
   const { confirmFilters, resetFilters } = useShopFilters();
   return (
-    <div className="absolute bottom-0 w-full pb-2 pr-2">
-      <Divider my="sm" />
+    <div className=" ">
       <div className="flex w-full justify-between gap-2 px-2">
         <Button onClick={resetFilters} size="md" variant="outline">
           Tout effacer

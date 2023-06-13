@@ -1,4 +1,4 @@
-import { Button, Divider, Drawer, Title } from "@mantine/core";
+import { Button, Drawer, Title } from "@mantine/core";
 import type {
   Filter as FilterKey,
   MultiKeyFilterType,
@@ -9,6 +9,7 @@ import FilterDrawer from "./FilterDrawer";
 import useShopFilters from "../../../../stores/state/useShopFilters";
 import { useRouter } from "next/router";
 import useColorTheme from "../../../../hooks/ui/useColorTheme";
+import useBreakpoints from "../../../../hooks/ui/useBreakpoints";
 
 export interface DropDownInterface {
   setFilterText: (text: string) => void;
@@ -19,6 +20,7 @@ export interface DropDownInterface {
 const FiltersListing = () => {
   const router = useRouter();
   const { isLight } = useColorTheme();
+  const { isMobile } = useBreakpoints();
   const { confirmFilters, filters } = useShopFilters();
   const [opened, { open, close }] = useDisclosure(false);
   const onClose = () => {
@@ -39,9 +41,8 @@ const FiltersListing = () => {
         opened={opened}
         onClose={onClose}
         position="right"
-        classNames={{ drawer: "w-80 p-2" }}
+        size={isMobile ? "xs" : "sm"}
       >
-        <Divider className="mb-8 -mt-3" size="xs" />
         <FilterDrawer close={close} />
       </Drawer>
       <Button
