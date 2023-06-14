@@ -27,11 +27,11 @@ const AppHeader = () => {
           <UserMenu />
         </div>
       </div>
-      {router.pathname === "/search" && !isMobile && (
+      {router.pathname === "/search" && !isMobile && !isShopTabsVisible && (
         <div
           className={`transition-opacity ${
-            !isShopTabsVisible ? "opacity-100" : "pointer-events-none opacity-0"
-          } ${isDark ? "bg-darkBackground" : "bg-white"} px-3`}
+            isDark ? "bg-darkBackground" : "bg-white"
+          } px-3`}
         >
           <ShopTabs shops={[...Object.values(shops)]} noObserver />
         </div>

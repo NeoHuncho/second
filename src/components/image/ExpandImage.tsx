@@ -11,7 +11,7 @@ const ExpandImage = ({ alt, src, opened, setOpened }: Props) => {
     <Modal
       classNames={{
         header: "mb-0",
-        modal: "p-0",
+        body: "p-0",
         close:
           "bg-white hover:bg-slate-300 absolute top-1 right-1 z-10 text-black ",
       }}

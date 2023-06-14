@@ -9,7 +9,6 @@ import { AppShell, Footer, Header, MantineProvider } from "@mantine/core";
 import { useRouter } from "next/router";
 import AppHeader from "../components/header/AppHeader";
 import { useEffect, useState } from "react";
-import { NotificationsProvider } from "@mantine/notifications";
 import useResetFilters from "../hooks/search/useResetFilters";
 import useBreakpoints from "../hooks/ui/useBreakpoints";
 import MobileFooter from "../components/footer/MobileFooter";
@@ -48,36 +47,34 @@ const MyApp: AppType<{ session: Session | null }> = ({
             fontFamily: "Inter, sans-serif",
           }}
         >
-          <NotificationsProvider>
-            <AppShell
-              unstyled={router.pathname === "/"}
-              padding="md"
-              header={
-                <>
-                  {!isMobile && !isIndexPage && (
-                    <Header height={65}>
-                      <AppHeader />
-                    </Header>
-                  )}
-                  {isMobile && isSearchPage && (
-                    <Header height={105}>
-                      <MobileSearchHeader />
-                    </Header>
-                  )}
-                </>
-              }
-              footer={
-                isMobile ? (
-                  <Footer className="flex w-full items-center" height={60}>
-                    <MobileFooter />
-                  </Footer>
-                ) : undefined
-              }
-            >
-              <Component {...pageProps} />
-              <Analytics />
-            </AppShell>
-          </NotificationsProvider>
+          <AppShell
+            unstyled={router.pathname === "/"}
+            padding="md"
+            header={
+              <>
+                {!isMobile && !isIndexPage && (
+                  <Header height={65}>
+                    <AppHeader />
+                  </Header>
+                )}
+                {isMobile && isSearchPage && (
+                  <Header height={105}>
+                    <MobileSearchHeader />
+                  </Header>
+                )}
+              </>
+            }
+            footer={
+              isMobile ? (
+                <Footer className="flex w-full items-center" height={60}>
+                  <MobileFooter />
+                </Footer>
+              ) : undefined
+            }
+          >
+            <Component {...pageProps} />
+            <Analytics />
+          </AppShell>
         </MantineProvider>
       )}
     </SessionProvider>

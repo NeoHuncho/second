@@ -6,7 +6,7 @@ import type {
   Filter,
   SizeCategory,
 } from "../../../../../../common/types/types";
-import useShops from "../../../../../stores/state/useShops";
+import useShopFilters from "../../../../../stores/state/useShopFilters";
 import multiText from "../../../../../utils/filterText/multiText";
 import type { DropDownInterface } from "../FiltersListing";
 import { Icon } from "../../../../../assets/icons";
@@ -20,7 +20,7 @@ const useSizeDropdown = ({
     filters: storeFilters,
     setMultiKeyFilter: setStoreFilters,
     removeFilter,
-  } = useShops();
+  } = useShopFilters();
 
   const getValueCategory = (category: string) => {
     return multiValues?.filter((value) => {
@@ -57,7 +57,7 @@ const useSizeDropdown = ({
         const newFilters = [...prev, valueKey];
         if (typeKey) {
           setFilterText(multiText({ filters: newFilters, key: typeKey }));
-          setStoreFilters({ key: valueKey, router, typeKey });
+          // setStoreFilters({ key: valueKey, router, typeKey });
         }
         return newFilters;
       }

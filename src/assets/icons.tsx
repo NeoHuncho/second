@@ -9,6 +9,8 @@ import {
   BsScrewdriver,
   BsPencilFill,
   BsGridFill,
+  BsHandThumbsUp,
+  BsPalette,
 } from "react-icons/bs";
 import { FaUser } from "react-icons/fa";
 import useColorTheme from "../hooks/ui/useColorTheme";
@@ -67,6 +69,10 @@ const icons = {
   Adjustments: HiAdjustments,
   FillDollar: AiIcons.AiFillDollarCircle,
   OutlineDollar: AiIcons.AiOutlineDollarCircle,
+  OutlineEuro: AiIcons.AiOutlineEuroCircle,
+  OutlineList: AiIcons.AiOutlineUnorderedList,
+  OutlineHandThumbsUp: BsHandThumbsUp,
+  OutlinePalette: BsPalette,
 };
 
 export const Icon: React.FC<IconProps & { name: keyof typeof icons }> = ({

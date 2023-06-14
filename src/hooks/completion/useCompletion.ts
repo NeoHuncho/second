@@ -7,7 +7,7 @@ import type { SearchResult } from "../../requests/services";
 import { getSearchAutocomplete } from "../../requests/services";
 import useSearchParams from "../../stores/state/useSearchParams";
 import useSuggestedCat from "../../stores/state/useSuggestedCat";
-import useShops from "../../stores/state/useShops";
+import useShopsFilters from "../../stores/state/useShopFilters";
 
 const useCompletion = () => {
   const router = useRouter();
@@ -22,7 +22,7 @@ const useCompletion = () => {
   const [completionResults, setCompletionResults] = useState<SearchResult[]>(
     []
   );
-  const { filters } = useShops();
+  const { filters } = useShopsFilters();
   const [loading, setLoading] = useState<boolean>(false);
 
   const [searchTerm, setSearchTerm] = useState(searchTermStore);
