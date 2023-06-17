@@ -91,7 +91,7 @@ export default function FilterDrawer({ close }: { close: () => void }) {
 
   return (
     <>
-      <div className="flex flex-col  px-2">
+      <div className="flex h-full flex-col px-2">
         <FilterBlock title="Catégorie" icon={<Icon name="OutlineList" />}>
           <CategorySelect
             radius="sm"
@@ -226,23 +226,21 @@ function DrawerFooter({ close }: { close: () => void }) {
   const router = useRouter();
   const { confirmFilters, resetFilters } = useShopFilters();
   return (
-    <div className=" ">
-      <div className="flex w-full justify-between gap-2 px-2">
-        <Button onClick={resetFilters} size="md" variant="outline">
-          Tout effacer
-        </Button>
-        <Button
-          onClick={() => {
-            confirmFilters({ router });
-            close();
-          }}
-          size="md"
-          radius={"sm"}
-          color="secondary"
-        >
-          Rechercher
-        </Button>
-      </div>
+    <div className="mt-auto flex w-full justify-center gap-2 px-2 sm:justify-between">
+      <Button onClick={resetFilters} size="md" variant="outline">
+        Tout effacer
+      </Button>
+      <Button
+        onClick={() => {
+          confirmFilters({ router });
+          close();
+        }}
+        size="md"
+        radius={"sm"}
+        color="secondary"
+      >
+        Rechercher
+      </Button>
     </div>
   );
 }

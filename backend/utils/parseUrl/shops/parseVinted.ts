@@ -1,7 +1,7 @@
 import { load } from "cheerio";
 
 import type { ShopListing } from "../../../../src/types/types";
-
+import { env } from "process";
 type vintedData = {
   items: {
     catalogItems: {

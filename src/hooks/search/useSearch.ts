@@ -20,8 +20,14 @@ const useSearch = () => {
   const { deliveryMethod, locationRange, addressCoords, address } =
     useLocalStorage();
 
-  const { updateListings, resetShops, setSort, shops, setLastSearched } =
-    useShops();
+  const {
+    updateListings,
+    resetShops,
+    setSort,
+    shops,
+    setLastSearched,
+    lastSearched,
+  } = useShops();
   const { setFilter } = useShopFilters();
 
   const { suggestedCat, setSuggestedCat } = useSuggestedCat();
@@ -102,9 +108,11 @@ const useSearch = () => {
   }, [router.query]);
 
   useEffect(() => {
-    if (Object.values(shops).every((shop) => shop.listings.length === 0)) {
+    if (
+      Object.values(shops).every((shop) => shop.listings.length === 0) ||
+      router.asPath !== lastSearched
+    )
       setAlreadyHasListings(false);
-    }
   }, []);
 
   useEffect(() => {

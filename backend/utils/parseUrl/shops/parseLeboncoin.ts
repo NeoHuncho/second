@@ -1,6 +1,6 @@
 import { load } from "cheerio";
 import type { ShopListing } from "../../../../src/types/types";
-
+import { env } from "process";
 type LeboncoinData = {
   props: {
     pageProps: {
@@ -83,7 +83,10 @@ const parseLeboncoin = (responseText: string, deliveryMethod: string) => {
           url_thumb: item.images.urls?.[0] || item.images.small_url,
           url: item.images.urls?.[0] || item.images.small_url,
         },
-        id: item.list_id,
+        id:
+          env.NODE_ENV === "production"
+            ? item.list_id
+            : Math.floor(Math.random() * 100000) + 1,
         body: item.body,
         price: item.price?.[0] || 0,
         title: item.subject,

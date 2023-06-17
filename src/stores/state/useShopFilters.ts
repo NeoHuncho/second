@@ -148,8 +148,10 @@ const useShopFilters = create<FiltersStore>((set, get) => ({
     if (router.query === query) return;
     if (
       !Object.keys(query).length &&
-      Object.keys(get().lastConfirmedFilters) !== Object.keys(get().filters)
+      JSON.stringify(Object.keys(get().lastConfirmedFilters)) !==
+        JSON.stringify(Object.keys(get().filters))
     ) {
+  
       //remove all filters that have gone from router.query
       const lastConfirmedFilters = get().lastConfirmedFilters;
       const filters = get().filters;

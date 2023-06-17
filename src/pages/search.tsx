@@ -2,16 +2,14 @@ import HeaderSearch from "../components/search/header/HeaderSearch";
 import useSearch from "../hooks/search/useSearch";
 import useShops from "../stores/state/useShops";
 import ShopTabs from "../components/search/header/shopTabs/ShopTabs";
-import useLocalStorage from "../stores/useLocalStorage";
 import ListingsShop from "../components/search/listingsShop/ListingShop";
 import useShopFilters from "../stores/state/useShopFilters";
 import { useEffect } from "react";
-import { useRouter } from "next/router";
 
 const Search = () => {
   useSearch();
   const { shops, activeShop, lastSearched } = useShops();
-  const { setFiltersFromQuery, filters } = useShopFilters();
+  const { setFiltersFromQuery } = useShopFilters();
   useEffect(() => {
     setFiltersFromQuery({ query: window.location.search });
   }, []);

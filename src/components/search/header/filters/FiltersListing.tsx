@@ -42,6 +42,7 @@ const FiltersListing = () => {
         onClose={onClose}
         position="right"
         size={isMobile ? "xs" : "sm"}
+        styles={{ body: { minHeight: "calc(100vh - 50px)" } }}
       >
         <FilterDrawer close={close} />
       </Drawer>

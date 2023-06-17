@@ -67,7 +67,7 @@ export default function ListingsShop({ shop }: Props) {
       const listing = listings[i];
       if (!listing) break;
       items.push(
-        <div className={"col-span-1"} key={`${listing.id}/${shop.name}`}>
+        <div className={"col-span-1"} id={`${listing.id}/${shop.name}`}>
           <Listing listing={listing} isScrolling={false} enlargeButton />
         </div>
       );
