@@ -1,11 +1,14 @@
 import { load } from "cheerio";
 import type { ShopListing } from "../../../../src/types/types";
 import { env } from "process";
+
 type LeboncoinData = {
   props: {
     pageProps: {
-      searchData: {
-        ads: LeboncoinItem[];
+      initialProps: {
+        searchData: {
+          ads: LeboncoinItem[];
+        };
       };
     };
   };
@@ -51,9 +54,10 @@ const parseLeboncoin = (responseText: string, deliveryMethod: string) => {
     .text();
   const leboncoinRes = JSON.parse(data) as LeboncoinData;
   const formatted: ShopListing[] = [];
-  if (!leboncoinRes.props.pageProps.searchData.ads) return formatted;
+  if (!leboncoinRes.props.pageProps.initialProps.searchData.ads)
+    return formatted;
 
-  Object.values(leboncoinRes.props.pageProps.searchData.ads)
+  Object.values(leboncoinRes.props.pageProps.initialProps.searchData.ads)
     .filter((item) => {
       let hasFilteredAttributes = false;
       item.attributes.forEach((attribute) => {
