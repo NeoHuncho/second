@@ -114,6 +114,24 @@ const useShopFilters = create<FiltersStore>((set, get) => ({
       hasChanged: false,
     }));
     const query: Partial<Record<Filter | MultiKeyFilterType, string>> = {};
+    if (get().filters.category === "all") {
+      const filters = get().filters;
+      const rest = Object.keys(filters).reduce((acc, key) => {
+        if (
+          !Object.keys(MultiKeyFilterTypes).filter((typeKey) =>
+            key.includes(typeKey)
+          ).length
+        ) {
+          acc[key as Filter] = filters[key as Filter] as string;
+        }
+        return acc;
+      }, {} as Partial<Record<Filter, string>>);
+
+      set((state) => ({
+        ...state,
+        filters: rest,
+      }));
+    }
     const typeKeysFilters = Object.keys(get().filters).filter(
       (key) =>
         !!Object.keys(MultiKeyFilterTypes).filter((typeKey) =>
@@ -151,7 +169,6 @@ const useShopFilters = create<FiltersStore>((set, get) => ({
       JSON.stringify(Object.keys(get().lastConfirmedFilters)) !==
         JSON.stringify(Object.keys(get().filters))
     ) {
-  
       //remove all filters that have gone from router.query
       const lastConfirmedFilters = get().lastConfirmedFilters;
       const filters = get().filters;
@@ -184,6 +201,7 @@ const useShopFilters = create<FiltersStore>((set, get) => ({
     const removedFilters = Object.keys(lastConfirmedFilters).filter(
       (key) => !Object.keys(filters).includes(key)
     );
+
     const queryWithoutRemovedFilters = Object.keys(router.query).reduce(
       (acc, key) => {
         if (!removedFilters.includes(key))
@@ -192,6 +210,8 @@ const useShopFilters = create<FiltersStore>((set, get) => ({
       },
       {} as Record<string, string>
     );
+
+    console.log(removedFilters, queryWithoutRemovedFilters);
     const multiKeyQueryParams = Object.keys(queryWithoutRemovedFilters).filter(
       (key) => Object.keys(MultiKeyFilterTypes).includes(key)
     ) as MultiKeyFilterType[];

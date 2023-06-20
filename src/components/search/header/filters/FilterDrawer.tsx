@@ -5,6 +5,7 @@ import {
   MultiSelect,
   NumberInput,
   Text,
+  Tooltip,
 } from "@mantine/core";
 import useShopFilters from "../../../../stores/state/useShopFilters";
 import { colors } from "../../../../../common/keys/filterKeys";
@@ -16,7 +17,8 @@ import type {
   MultiKeyFilterType,
 } from "../../../../../common/types/types";
 import { useRouter } from "next/router";
-import { forwardRef } from "react";
+import type { RefObject } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import colorsHex from "../../../../static/colorsHex";
 
 type FilterBlockProps = {
@@ -32,6 +34,10 @@ interface ItemProps extends React.ComponentPropsWithoutRef<"div"> {
 
 export default function FilterDrawer({ close }: { close: () => void }) {
   const { filters, setFilter, removeFilter } = useShopFilters();
+  const [isHoveringCategoryChange, setIsHoveringCategoryChange] =
+    useState(false);
+
+  //data
   const isClothesOrShoes =
     filters.category === "clothes" || filters.category === "shoes";
 
@@ -78,6 +84,8 @@ export default function FilterDrawer({ close }: { close: () => void }) {
     label: Filters[key as keyof typeof Filters],
     color: colorsHex[key as keyof typeof colorsHex],
   }));
+
+  //end of data
   function onPriceChange({
     num,
     type,
@@ -91,82 +99,91 @@ export default function FilterDrawer({ close }: { close: () => void }) {
 
   return (
     <>
-      <div className="flex h-full flex-col px-2">
-        <FilterBlock title="Catégorie" icon={<Icon name="OutlineList" />}>
-          <CategorySelect
-            radius="sm"
-            size="md"
-            className="mt-2"
-            onChange={(val) =>
-              setFilter({ key: "category", value: val as string })
+      <FilterBlock title="Catégorie" icon={<Icon name="OutlineList" />}>
+        <CategorySelect
+          animate={isHoveringCategoryChange}
+          radius="sm"
+          size="md"
+          className="mt-2"
+          onChange={(val) =>
+            setFilter({ key: "category", value: val as string })
+          }
+        />
+      </FilterBlock>
+      <FilterBlock title="Prix" icon={<Icon name="OutlineEuro" />}>
+        <div className="flex  gap-2">
+          <NumberInput
+            value={
+              filters.priceMin
+                ? parseInt(filters.priceMin as string)
+                : undefined
             }
+            label="Minimum"
+            hideControls
+            rightSection={<Icon name="OutlineEuro" />}
+            onChange={(num) => onPriceChange({ num, type: "priceMin" })}
           />
-        </FilterBlock>
-        <FilterBlock title="Prix" icon={<Icon name="OutlineEuro" />}>
-          <div className="flex  gap-2">
-            <NumberInput
-              value={
-                filters.priceMin
-                  ? parseInt(filters.priceMin as string)
-                  : undefined
-              }
-              label="Minimum"
-              hideControls
-              rightSection={<Icon name="OutlineEuro" />}
-              onChange={(num) => onPriceChange({ num, type: "priceMin" })}
-            />
-            <NumberInput
-              value={
-                filters.priceMax
-                  ? parseInt(filters.priceMax as string)
-                  : undefined
-              }
-              label="Maximum"
-              hideControls
-              rightSection={<Icon name="OutlineEuro" />}
-              onChange={(num) => onPriceChange({ num, type: "priceMax" })}
-            />
-          </div>
-        </FilterBlock>
-        <FilterBlock title="État" icon={<Icon name="OutlineHandThumbsUp" />}>
-          <MultiSelectFilter
-            data={conditionData}
-            value={selectedConditions}
-            typeKey="condition"
-            placeholder="État"
-          />
-        </FilterBlock>
-        <FilterBlock title="Taille" icon={<Icon name="Clothes" />}>
-          <MultiSelectFilter
-            data={
-              filters.category === "clothes"
-                ? clothesSizeData
-                : clothesShoesData
+          <NumberInput
+            value={
+              filters.priceMax
+                ? parseInt(filters.priceMax as string)
+                : undefined
             }
-            value={sizeKeys}
-            typeKey="size"
-            placeholder={
-              filters.category === "clothes"
-                ? "Taille vêtement"
-                : "Pointure chaussure"
-            }
-            disabled={!isClothesOrShoes}
-            searchable
+            label="Maximum"
+            hideControls
+            rightSection={<Icon name="OutlineEuro" />}
+            onChange={(num) => onPriceChange({ num, type: "priceMax" })}
           />
-        </FilterBlock>
-        <FilterBlock title="Couleur" icon={<Icon name="OutlinePalette" />}>
-          <MultiSelectFilter
-            data={colorData}
-            value={colorKeys}
-            typeKey="color"
-            placeholder="Couleur"
-            customItem={ColorItem}
-            disabled={!isClothesOrShoes}
-            searchable
-          />
-        </FilterBlock>
-        <DrawerFooter close={close} />
-      </div>
+        </div>
+      </FilterBlock>
+      <FilterBlock title="État" icon={<Icon name="OutlineHandThumbsUp" />}>
+        <MultiSelectFilter
+          data={conditionData}
+          value={selectedConditions}
+          typeKey="condition"
+          placeholder="État"
+        />
+      </FilterBlock>
+      <FilterBlock title="Taille" icon={<Icon name="Clothes" />}>
+        <MultiSelectFilter
+          data={
+            filters.category === "clothes" ? clothesSizeData : clothesShoesData
+          }
+          value={sizeKeys}
+          typeKey="size"
+          placeholder={
+            filters.category === "clothes"
+              ? "Taille vêtement"
+              : "Pointure chaussure"
+          }
+          disabled={!isClothesOrShoes}
+          disabledText={
+            isClothesOrShoes
+              ? ""
+              : "Veuillez sélectionner la catégorie vêtements ou chaussures"
+          }
+          searchable
+          onTooltipVisible={setIsHoveringCategoryChange}
+        />
+      </FilterBlock>
+      <FilterBlock title="Couleur" icon={<Icon name="OutlinePalette" />}>
+        <MultiSelectFilter
+          data={colorData}
+          value={colorKeys}
+          typeKey="color"
+          placeholder="Couleur"
+          customItem={ColorItem}
+          disabled={!isClothesOrShoes}
+          disabledText={
+            isClothesOrShoes
+              ? ""
+              : "Veuillez sélectionner la catégorie vêtements ou chaussures"
+          }
+          searchable
+          onTooltipVisible={setIsHoveringCategoryChange}
+        />
+      </FilterBlock>
+      <DrawerFooter close={close} />
     </>
   );
 }
@@ -194,6 +211,8 @@ function MultiSelectFilter({
   disabled = false,
   customItem: CustomItem,
   searchable = false,
+  disabledText,
+  onTooltipVisible,
 }: {
   data: { value: string; label: string }[];
   value: string[];
@@ -202,23 +221,47 @@ function MultiSelectFilter({
   disabled?: boolean;
   customItem?: React.FC<ItemProps>;
   searchable?: boolean;
+  disabledText?: string;
+  onTooltipVisible?: (visible: boolean) => void;
 }) {
   const { setMultiKeyFilter } = useShopFilters();
   const onChange = (val: Filter[]) => {
     setMultiKeyFilter({ keys: val, typeKey });
   };
+  const [openTooltip, setOpenTooltip] = useState(false);
+
+  useEffect(() => {
+    if (onTooltipVisible) onTooltipVisible(openTooltip);
+  }, [openTooltip]);
 
   return (
-    <MultiSelect
-      value={value}
-      onChange={onChange}
-      size="md"
-      placeholder={searchable ? "rechercher" : placeholder}
-      data={data}
-      itemComponent={CustomItem || undefined}
-      disabled={disabled}
-      searchable={searchable}
-    />
+    <Tooltip
+      disabled={!disabledText}
+      label={disabledText}
+      multiline
+      offset={20}
+      classNames={{ tooltip: "mr-3" }}
+      opened={openTooltip}
+    >
+      <MultiSelect
+        value={value}
+        onChange={onChange}
+        size="md"
+        placeholder={searchable ? "rechercher" : placeholder}
+        data={!disabled ? data : []}
+        itemComponent={CustomItem || undefined}
+        searchable={!disabled && searchable}
+        onMouseOver={() => {
+          if (disabledText) setOpenTooltip(true);
+        }}
+        onMouseLeave={() => {
+          if (disabledText) setOpenTooltip(false);
+        }}
+        onClick={() => {
+          if (disabledText) setOpenTooltip((prev) => !prev);
+        }}
+      />
+    </Tooltip>
   );
 }
 
@@ -226,7 +269,7 @@ function DrawerFooter({ close }: { close: () => void }) {
   const router = useRouter();
   const { confirmFilters, resetFilters } = useShopFilters();
   return (
-    <div className="mt-auto flex w-full justify-center gap-2 px-2 sm:justify-between">
+    <div className="mt-auto flex w-full justify-center gap-2  sm:justify-between">
       <Button onClick={resetFilters} size="md" variant="outline">
         Tout effacer
       </Button>

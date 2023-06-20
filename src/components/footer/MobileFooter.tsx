@@ -17,11 +17,10 @@ export default function MobileFooter() {
 
   const onClick = (path: string) => {
     setCurrentPage(path);
-    if (router.pathname !== path) { 
+    if (path !== window.location.pathname + window.location.search) {
       void router.push(path);
     }
   };
-
   useEffect(() => {
     setCurrentPage(router.pathname);
   }, [router.pathname]);
@@ -36,7 +35,7 @@ export default function MobileFooter() {
       />
       <IconAndLabelVertical
         onClick={onClick}
-        icon={`${currentPage === "/search" ? "Fill" : "Outline"}Search`}
+        icon={`${currentPage.includes("/search") ? "Fill" : "Outline"}Search`}
         path={!lastSearched ? "/search" : lastSearched}
         label="Recherche"
       />
