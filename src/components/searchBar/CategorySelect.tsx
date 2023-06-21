@@ -25,11 +25,21 @@ export default function CategorySelect({
     label: value,
     value: key,
   }));
+  const ParentWrapper = ({ children }: { children: React.ReactNode }) => {
+    if (animate) {
+      return (
+        <motion.div
+          animate={{ scale: [1, 1.05, 1] }}
+          transition={{ duration: 2, ease: "easeInOut", repeat: Infinity }}
+        >
+          {children}
+        </motion.div>
+      );
+    } else return <>{children}</>;
+  };
+
   return (
-    <motion.div
-      animate={animate ? { scale: 1.05 } : { scale: 1 }}
-      transition={{ duration: 0.3 }}
-    >
+    <ParentWrapper>
       <Select
         className={className ?? ""}
         clearable
@@ -39,8 +49,7 @@ export default function CategorySelect({
         value={filters.category ? (filters.category as string) : null}
         onChange={onChange}
         placeholder="Catégorie"
-        
       />
-    </motion.div>
+    </ParentWrapper>
   );
 }

@@ -20,6 +20,7 @@ import { useRouter } from "next/router";
 import type { RefObject } from "react";
 import { forwardRef, useEffect, useRef, useState } from "react";
 import colorsHex from "../../../../static/colorsHex";
+import useBreakpoints from "../../../../hooks/ui/useBreakpoints";
 
 type FilterBlockProps = {
   children: React.ReactNode;
@@ -229,6 +230,7 @@ function MultiSelectFilter({
     setMultiKeyFilter({ keys: val, typeKey });
   };
   const [openTooltip, setOpenTooltip] = useState(false);
+  const { isMobile } = useBreakpoints();
 
   useEffect(() => {
     if (onTooltipVisible) onTooltipVisible(openTooltip);
@@ -258,7 +260,7 @@ function MultiSelectFilter({
           if (disabledText) setOpenTooltip(false);
         }}
         onClick={() => {
-          if (disabledText) setOpenTooltip((prev) => !prev);
+          if (disabledText && isMobile) setOpenTooltip(true);
         }}
       />
     </Tooltip>
