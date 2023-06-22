@@ -49,3 +49,5 @@ public/sw.js.map
 public/workbox-*.js.map
 
 src/pages/Test.tsx
+# Sentry Auth Token
+.sentryclirc
