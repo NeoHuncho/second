@@ -69,7 +69,7 @@ export default function ListingsShop({ shop }: Props) {
       items.push(
         <div
           className={"col-span-1"}
-          key={`${listing.id}/${shop.name}`}
+          key={listing.id}
           id={`${listing.id}/${shop.name}`}
         >
           <Listing listing={listing} isScrolling={false} enlargeButton />
@@ -118,7 +118,7 @@ export default function ListingsShop({ shop }: Props) {
         <Text italic>Veuillez essayer une autre recherche 🔎</Text>
       </div>
     );
-
+  console.log(shop.hasFetchedAll);
   if (!shop.listings.length) return <RingLoader color={shop.color} />;
   return (
     <InfiniteScroll
@@ -140,6 +140,13 @@ export default function ListingsShop({ shop }: Props) {
       >
         {showItems(shop.listings)}
       </div>
+      {shop.hasFetchedAll && (
+        <div className="!mt-10 !mb-2">
+          <Text italic size={"lg"} className="text-center">
+            Tout les résultats ont été visionnés 🌱
+          </Text>
+        </div>
+      )}
     </InfiniteScroll>
   );
 }

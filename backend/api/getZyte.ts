@@ -21,11 +21,22 @@ const getWebsiteScrape = async (websiteUrl: string) => {
     "Content-Type": "application/json",
     Authorization: "Basic " + Buffer.from(`${API_KEY}:`).toString("base64"),
   };
-  const response = await axios.post<ResponseData>(API_URL, data, { headers });
-  const httpResponseBody = Buffer.from(
-    response.data.httpResponseBody,
-    "base64"
-  ).toString();
+  let httpResponseBody
+  try {   
+    const response = await axios.post<ResponseData>(API_URL, data, { headers });
+    httpResponseBody = Buffer.from(
+      response.data.httpResponseBody,
+      "base64"
+    ).toString();
+  } catch (error) {
+      const response = await axios.post<ResponseData>(API_URL, data, {
+        headers,
+      });
+      httpResponseBody = Buffer.from(
+        response.data.httpResponseBody,
+        "base64"
+      ).toString();
+  }
   return httpResponseBody;
 };
 

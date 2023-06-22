@@ -15,7 +15,7 @@ export default async function handler(
       error: "text has not been provided or is not a string",
     });
   }
-  if (env.NODE_ENV !== "production") return response.status(200).json("shoes");
+  if (env.NODE_ENV !== "production") return response.status(200).json("other");
 
   if (request.query.text) {
     try {

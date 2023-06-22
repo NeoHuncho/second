@@ -30,7 +30,7 @@ export default function CategorySelect({
       return (
         <motion.div
           animate={{ scale: [1, 1.05, 1] }}
-          transition={{ duration: 2, ease: "easeInOut", repeat: Infinity }}
+          transition={{ duration: 2, ease: "easeOut", repeat: Infinity }}
         >
           {children}
         </motion.div>
@@ -49,6 +49,7 @@ export default function CategorySelect({
         value={filters.category ? (filters.category as string) : null}
         onChange={onChange}
         placeholder="Catégorie"
+        
       />
     </ParentWrapper>
   );
