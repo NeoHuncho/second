@@ -14,12 +14,14 @@ type ShopState = {
   slides: ShopListing[];
   lastListingUpdate: Record<ShopName, number>;
   lastSearched: string;
+  shopOrder: ShopName[];
   setSlides: (slides: ShopListing[]) => void;
   updateListings: (shop: ShopName) => Promise<void>;
   resetShops: () => void;
   setSort: (sort: Sort, router: NextRouter) => void;
   setLastSearched: (lastSearched: string) => void;
   setActiveShop: (shop: ShopName) => void;
+  setShopOrder: (shopOrder: ShopName[]) => void;
 };
 
 const useShops = create<ShopState>()((set, get) => ({
@@ -39,7 +41,14 @@ const useShops = create<ShopState>()((set, get) => ({
   ) as Record<ShopName, number>,
   slides: [],
   lastSearched: "",
+  shopOrder: ["Leboncoin", "Vinted"],
 
+  setShopOrder: (shopOrder: ShopName[]) => {
+    set((state) => ({
+      ...state,
+      shopOrder,
+    }));
+  },
   setSlides: (slides: ShopListing[]) => {
     set((state) => ({
       ...state,
