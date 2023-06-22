@@ -12,7 +12,7 @@ import { parse } from "querystring";
 import { Filters, Categories } from "../../../common/keys/keys";
 import type { Category, ShopName } from "../../../common/types/types";
 
-import { showNotification } from "@mantine/notifications";
+import { notifications } from "@mantine/notifications";
 import useShopFilters from "../../stores/state/useShopFilters";
 
 const useSearch = () => {
@@ -92,14 +92,17 @@ const useSearch = () => {
         router,
       });
       setSuggestedCat("");
-      showNotification({
+      notifications.show({
         title: `Category ajoutée: ${Categories[suggestedCat as Category]}`,
         message: `Nous avons ajouté la catégorie ${
           Categories[suggestedCat as Category]
         } à votre recherche`,
         color: "teal",
-        autoClose: 5000,
+        id: "category-added",
       });
+      setTimeout(() => {
+        notifications.hide('category-added');
+      }, 4000);
       return;
     }
     if (router.query.query) {

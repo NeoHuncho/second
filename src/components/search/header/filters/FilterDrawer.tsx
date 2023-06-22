@@ -10,6 +10,7 @@ import {
 import useShopFilters from "../../../../stores/state/useShopFilters";
 import { colors } from "../../../../../common/keys/filterKeys";
 import CategorySelect from "../../../searchBar/CategorySelect";
+import type { IconNames } from "../../../../assets/icons";
 import { Icon } from "../../../../assets/icons";
 import { Filters } from "../../../../../common/keys/keys";
 import type {
@@ -18,7 +19,7 @@ import type {
 } from "../../../../../common/types/types";
 import { useRouter } from "next/router";
 import type { RefObject } from "react";
-import { forwardRef, useEffect, useRef, useState } from "react";
+import { forwardRef, useEffect,  useState } from "react";
 import colorsHex from "../../../../static/colorsHex";
 import useBreakpoints from "../../../../hooks/ui/useBreakpoints";
 
@@ -113,27 +114,25 @@ export default function FilterDrawer({ close }: { close: () => void }) {
       </FilterBlock>
       <FilterBlock title="Prix" icon={<Icon name="OutlineEuro" />}>
         <div className="flex  gap-2">
-          <NumberInput
+          <CustomNumberInput
             value={
               filters.priceMin
                 ? parseInt(filters.priceMin as string)
                 : undefined
             }
-            label="Minimum"
-            hideControls
-            rightSection={<Icon name="OutlineEuro" />}
+            iconName="OutlineEuro"
             onChange={(num) => onPriceChange({ num, type: "priceMin" })}
+            label="Minimum"
           />
-          <NumberInput
+          <CustomNumberInput
             value={
               filters.priceMax
                 ? parseInt(filters.priceMax as string)
                 : undefined
             }
-            label="Maximum"
-            hideControls
-            rightSection={<Icon name="OutlineEuro" />}
+            iconName="OutlineEuro"
             onChange={(num) => onPriceChange({ num, type: "priceMax" })}
+            label="Maximum"
           />
         </div>
       </FilterBlock>
@@ -186,6 +185,35 @@ export default function FilterDrawer({ close }: { close: () => void }) {
       </FilterBlock>
       <DrawerFooter close={close} />
     </>
+  );
+}
+
+type NumberInputProps = {
+  value: number | undefined;
+  onChange: (num: number | "") => void;
+  iconName: IconNames;
+  label: string;
+};
+function CustomNumberInput({
+  value,
+  onChange,
+  iconName,
+  label,
+}: NumberInputProps) {
+  const [shouldReset, setShouldReset] = useState(false);
+  useEffect(() => {
+    if (!value) setShouldReset(true);
+    setTimeout(() => setShouldReset(false), 1);
+  }, [value]);
+  if (shouldReset) return <></>;
+  return (
+    <NumberInput
+      value={value ? value : undefined}
+      label={label}
+      hideControls
+      rightSection={<Icon name={iconName} />}
+      onChange={(num) => onChange(num)}
+    />
   );
 }
 
@@ -254,6 +282,7 @@ function MultiSelectFilter({
         itemComponent={CustomItem || undefined}
         searchable={!disabled && searchable}
         onMouseOver={() => {
+        
           if (disabledText) setOpenTooltip(true);
         }}
         onMouseLeave={() => {

@@ -15,6 +15,7 @@ import MobileFooter from "../components/footer/MobileFooter";
 import MobileSearchHeader from "../components/header/MobileSearchHeader";
 import useLocalStorage from "../stores/useLocalStorage";
 import useIsComponentVisible from "../stores/state/useIsComponentVisible";
+import { Notifications } from "@mantine/notifications";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -47,6 +48,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
             fontFamily: "Inter, sans-serif",
           }}
         >
+          <Notifications />
           <AppShell
             unstyled={router.pathname === "/"}
             padding="md"

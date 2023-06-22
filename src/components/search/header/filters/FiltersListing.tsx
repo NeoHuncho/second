@@ -27,7 +27,7 @@ const FiltersListing = () => {
     confirmFilters({ router });
     close();
   };
-  const filtersLength = Object.keys(filters).length;
+  const filtersLength = Object.keys(filters).filter((key)=>key!=="category").length
   return (
     <>
       <Drawer

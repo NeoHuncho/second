@@ -114,7 +114,10 @@ const useShopFilters = create<FiltersStore>((set, get) => ({
       hasChanged: false,
     }));
     const query: Partial<Record<Filter | MultiKeyFilterType, string>> = {};
-    if (get().filters.category === "all") {
+    if (
+      get().filters.category !== "shoes" &&
+      get().filters.category !== "clothes"
+    ) {
       const filters = get().filters;
       const rest = Object.keys(filters).reduce((acc, key) => {
         if (
@@ -176,9 +179,13 @@ const useShopFilters = create<FiltersStore>((set, get) => ({
         (key) => !Object.keys(filters).includes(key)
       );
 
+      console.log("removedFilters", removedFilters, router.query);
       const queryWithoutRemovedFilters = Object.keys(router.query).reduce(
         (acc, key) => {
-          if (!removedFilters.includes(key))
+          if (
+            !removedFilters.filter((removedKey) => removedKey.includes(key))
+              .length
+          )
             acc[key] = router.query[key] as string;
           return acc;
         },
