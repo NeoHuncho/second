@@ -33,7 +33,7 @@ const AppHeader = () => {
             isDark ? "bg-darkBackground" : "bg-white"
           } px-3`}
         >
-          <ShopTabs shops={[...Object.values(shops)]} noObserver />
+          <ShopTabs noObserver />
         </div>
       )}
     </div>

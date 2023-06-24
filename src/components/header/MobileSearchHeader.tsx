@@ -18,11 +18,7 @@ export default function MobileSearchHeader() {
             isDark ? "bg-darkBackground" : "bg-white"
           } px-3`}
         >
-          <ShopTabs
-            className="pt-2"
-            shops={[...Object.values(shops)]}
-            noObserver
-          />
+          <ShopTabs className="pt-2" noObserver />
         </div>
       )}
     </div>

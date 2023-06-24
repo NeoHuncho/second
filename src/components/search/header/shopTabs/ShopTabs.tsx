@@ -17,11 +17,15 @@ import type { ShopName } from "../../../../../common/types/types";
 import useLocalStorage from "../../../../stores/useLocalStorage";
 import useIsComponentVisible from "../../../../stores/state/useIsComponentVisible";
 import { useInView } from "react-intersection-observer";
-
+import useShopFilters from "../../../../stores/state/useShopFilters";
+import {
+  clothingShopOrder,
+  defaultShopOrder,
+  shoesShopOrder,
+} from "../../../../static/storeOrder";
 // Install Swiper modules
 
 type ShopTabsProps = {
-  shops: Shop[];
   noObserver?: boolean;
   className?: string;
 };
@@ -91,14 +95,41 @@ const ShopStatus = ({ shop }: { shop: Shop }) => {
 };
 
 const ShopTabs: React.FC<ShopTabsProps> = ({
-  shops,
   noObserver = false,
   className = "",
 }) => {
   const { isDark } = useColorTheme();
-  const { activeShop, setActiveShop } = useShops();
+  const { filters } = useShopFilters();
+  const {
+    activeShop,
+    setActiveShop,
+    shops: storeShops,
+    setShopOrder,
+    shopOrder,
+  } = useShops();
   const { validShopKeys: validShops } = useValidShops();
   const ref = useIsVisible(noObserver);
+  const shops = [
+    ...Object.values(storeShops).sort(
+      (shopA, shopB) =>
+        shopOrder.indexOf(shopA.name) - shopOrder.indexOf(shopB.name)
+    ),
+  ];
+
+  useEffect(() => {
+    if (!filters.category || filters.category === "all") {
+      setShopOrder(defaultShopOrder);
+      setActiveShop(defaultShopOrder[0] as ShopName);
+    }
+    if (filters.category === "clothes") {
+      setShopOrder(clothingShopOrder);
+      setActiveShop(clothingShopOrder[0] as ShopName);
+    }
+    if (filters.category === "shoes") {
+      setShopOrder(shoesShopOrder);
+      setActiveShop(shoesShopOrder[0] as ShopName);
+    }
+  }, [filters.category]);
 
   return (
     <div
