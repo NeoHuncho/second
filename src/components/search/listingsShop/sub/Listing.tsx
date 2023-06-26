@@ -106,7 +106,7 @@ const Listing = ({
                   }}
                   color="gray"
                   variant="filled"
-                  className="absolute right-0 top-0 z-10 mt-2 mr-2"
+                  className="absolute right-0 top-0 z-10 mr-2 mt-2"
                 >
                   <Icon name="Enlarge" size={14} color="white" />
                 </ActionIcon>
@@ -148,6 +148,13 @@ const Listing = ({
           >
             {listing.title}
           </Title>
+          {isShowcase && listing.children && (
+            <Icon
+              className="absolute bottom-20 right-2"
+              name="Carousel"
+              size={17}
+            />
+          )}
 
           <div className="flex flex-col" style={{ minHeight: 40 }}>
             {isShopListing && listing.condition && (
