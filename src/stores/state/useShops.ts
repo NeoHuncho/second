@@ -96,7 +96,11 @@ const useShops = create<ShopState>()((set, get) => ({
       () => {
         return set((state) => {
           if (currentDate < get().lastListingUpdate[shop]) return state;
-          if (page + 1 === 1)
+          if (page + 1 === 1) {
+            const newOrder = [
+              ...state.shopOrder.filter((s) => s !== shop),
+              shop,
+            ];
             return {
               ...state,
               shops: {
@@ -106,7 +110,10 @@ const useShops = create<ShopState>()((set, get) => ({
                   status: "error",
                 },
               },
+              shopOrder: newOrder,
+              activeShop: newOrder[0],
             };
+          }
           return {
             ...state,
             shops: {

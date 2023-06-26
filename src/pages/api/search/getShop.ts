@@ -34,6 +34,10 @@ export default async function handler(
   );
 
   let res = "";
+  if (request.query.shop !== "Vinted")
+    return response.status(400).json({
+      query: request.query,
+    });
   if (env.NODE_ENV === "production")
     res = await getWebsiteScrape(formattedStoreUrl);
   else {

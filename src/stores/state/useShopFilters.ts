@@ -179,7 +179,6 @@ const useShopFilters = create<FiltersStore>((set, get) => ({
         (key) => !Object.keys(filters).includes(key)
       );
 
-      console.log("removedFilters", removedFilters, router.query);
       const queryWithoutRemovedFilters = Object.keys(router.query).reduce(
         (acc, key) => {
           if (
@@ -218,7 +217,6 @@ const useShopFilters = create<FiltersStore>((set, get) => ({
       {} as Record<string, string>
     );
 
-    console.log(removedFilters, queryWithoutRemovedFilters);
     const multiKeyQueryParams = Object.keys(queryWithoutRemovedFilters).filter(
       (key) => Object.keys(MultiKeyFilterTypes).includes(key)
     ) as MultiKeyFilterType[];

@@ -118,7 +118,6 @@ export default function ListingsShop({ shop }: Props) {
         <Text italic>Veuillez essayer une autre recherche 🔎</Text>
       </div>
     );
-  console.log(shop.hasFetchedAll);
   if (!shop.listings.length) return <RingLoader color={shop.color} />;
   return (
     <InfiniteScroll

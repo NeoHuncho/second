@@ -5,26 +5,11 @@ import ShopTabs from "../components/search/header/shopTabs/ShopTabs";
 import ListingsShop from "../components/search/listingsShop/ListingShop";
 import useShopFilters from "../stores/state/useShopFilters";
 import { useEffect } from "react";
-import { filter } from "cheerio/lib/api/traversing";
-import {
-  clothingShopOrder,
-  defaultShopOrder,
-  shoesShopOrder,
-} from "../static/storeOrder";
-import type { ShopName } from "../../common/types/types";
 
 const Search = () => {
   useSearch();
-  const {
-    shops,
-    activeShop,
-    lastSearched,
-    shopOrder,
-    setShopOrder,
-    setActiveShop,
-  } = useShops();
+  const { shops, activeShop, lastSearched } = useShops();
   const { setFiltersFromQuery } = useShopFilters();
-  const { filters } = useShopFilters();
   useEffect(() => {
     setFiltersFromQuery({ query: window.location.search });
   }, []);
