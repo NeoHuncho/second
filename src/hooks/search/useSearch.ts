@@ -3,17 +3,21 @@ import { useEffect, useState } from "react";
 import useShops from "../../stores/state/useShops";
 import useSuggestedCat from "../../stores/state/useSuggestedCat";
 import useLocalStorage from "../../stores/useLocalStorage";
-import useSearchParams from "../../stores/state/useSearchParams";
 import useValidShops from "./useValidShops";
 
 import type { ParsedUrlQuery } from "querystring";
 import { parse } from "querystring";
 
-import { Filters, Categories } from "../../../common/keys/keys";
+import { Categories } from "../../../common/keys/keys";
 import type { Category, ShopName } from "../../../common/types/types";
 
 import { notifications } from "@mantine/notifications";
 import useShopFilters from "../../stores/state/useShopFilters";
+import {
+  clothingShopOrder,
+  defaultShopOrder,
+  shoesShopOrder,
+} from "../../static/storeOrder";
 
 const useSearch = () => {
   const router = useRouter();
@@ -27,8 +31,10 @@ const useSearch = () => {
     shops,
     setLastSearched,
     lastSearched,
+    setActiveShop,
+    setShopOrder,
   } = useShops();
-  const { setFilter } = useShopFilters();
+  const { setFilter, filters } = useShopFilters();
 
   const { suggestedCat, setSuggestedCat } = useSuggestedCat();
 
@@ -101,7 +107,7 @@ const useSearch = () => {
         id: "category-added",
       });
       setTimeout(() => {
-        notifications.hide('category-added');
+        notifications.hide("category-added");
       }, 4000);
       return;
     }
@@ -121,6 +127,21 @@ const useSearch = () => {
   useEffect(() => {
     processNewDeliveryParams();
   }, [deliveryMethod, locationRange, address]);
+
+  useEffect(() => {
+    if (!filters.category || filters.category === "all") {
+      setShopOrder(defaultShopOrder);
+      setActiveShop(defaultShopOrder[0] as ShopName);
+    }
+    if (filters.category === "clothes") {
+      setShopOrder(clothingShopOrder);
+      setActiveShop(clothingShopOrder[0] as ShopName);
+    }
+    if (filters.category === "shoes") {
+      setShopOrder(shoesShopOrder);
+      setActiveShop(shoesShopOrder[0] as ShopName);
+    }
+  }, [filters.category]);
 };
 
 export default useSearch;

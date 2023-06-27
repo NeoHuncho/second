@@ -116,21 +116,6 @@ const ShopTabs: React.FC<ShopTabsProps> = ({
     ),
   ];
 
-  useEffect(() => {
-    if (!filters.category || filters.category === "all") {
-      setShopOrder(defaultShopOrder);
-      setActiveShop(defaultShopOrder[0] as ShopName);
-    }
-    if (filters.category === "clothes") {
-      setShopOrder(clothingShopOrder);
-      setActiveShop(clothingShopOrder[0] as ShopName);
-    }
-    if (filters.category === "shoes") {
-      setShopOrder(shoesShopOrder);
-      setActiveShop(shoesShopOrder[0] as ShopName);
-    }
-  }, [filters.category]);
-
   return (
     <div
       className={`relative w-full ${className}`}
