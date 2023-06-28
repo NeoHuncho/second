@@ -44,7 +44,11 @@ export default async function handler(
   const formatListings = (shopName: ShopName) => {
     switch (shopName) {
       case "Leboncoin":
-        return parseLeboncoin(res, request.query.deliveryMethod as string);
+        return parseLeboncoin(
+          res,
+          request.query.deliveryMethod as string,
+          request.query.condition as string | undefined
+        );
       //vinted has additional parameter for sorting because the sorting does not work on the website
       case "Vinted":
         return parseVinted(res, request.query.sort as string | undefined);

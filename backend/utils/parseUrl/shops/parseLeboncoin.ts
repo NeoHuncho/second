@@ -1,6 +1,8 @@
 import { load } from "cheerio";
 import type { ShopListing } from "../../../../src/types/types";
 import { env } from "process";
+import { conditionLeboncoinListings } from "../formatStoreUrl/static/condition";
+import type { Filter } from "../../../../common/types/types";
 
 type LeboncoinData = {
   props: {
@@ -45,7 +47,11 @@ interface Attribute {
   values: string[];
   value_label: string;
 }
-const parseLeboncoin = (responseText: string, deliveryMethod: string) => {
+const parseLeboncoin = (
+  responseText: string,
+  deliveryMethod: string,
+  condition: string | undefined
+) => {
   const $ = load(responseText);
   const data = $("script")
     .filter((i, el) => {
@@ -56,7 +62,6 @@ const parseLeboncoin = (responseText: string, deliveryMethod: string) => {
   const formatted: ShopListing[] = [];
   if (!leboncoinRes.props.pageProps.initialProps.searchData.ads)
     return formatted;
-
   Object.values(leboncoinRes.props.pageProps.initialProps.searchData.ads)
     .filter((item) => {
       let hasFilteredAttributes = false;
@@ -72,6 +77,23 @@ const parseLeboncoin = (responseText: string, deliveryMethod: string) => {
           deliveryMethod === "delivery"
         )
           hasFilteredAttributes = true;
+        if (condition && attribute.key === "condition") {
+          if (
+            condition.includes("+") &&
+            !condition
+              .split("+")
+              .some(
+                (cond) =>
+                  conditionLeboncoinListings[cond as Filter] === attribute.value
+              )
+          )
+            hasFilteredAttributes = true;
+          if (
+            !condition.includes("+") &&
+            attribute.value !== conditionLeboncoinListings[condition as Filter]
+          )
+            hasFilteredAttributes = true;
+        }
       });
       return (
         !hasFilteredAttributes &&
