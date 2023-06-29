@@ -10,6 +10,8 @@ import {
   Image,
   Text,
   Title,
+  Popover,
+  Checkbox,
 } from "@mantine/core";
 import NextImage from "next/image";
 import parsePrice from "../../../../utils/parsePrice";
@@ -98,6 +100,22 @@ const Listing = ({
         <Card.Section>
           {isShopListing ? (
             <div>
+              <ActionIcon
+                onClick={(event) => {
+                  event.stopPropagation();
+                }}
+                color="gray"
+                variant="filled"
+                className="absolute left-2 top-0 z-10 mr-2 mt-2"
+              >
+                <Icon
+                  name="FillHeart"
+                  size={14}
+                  // color={showFavoritesPopover ? "red" : "white"}
+                  color="white"
+                />
+              </ActionIcon>
+
               {enlargeButton && (
                 <ActionIcon
                   onClick={(event) => {
@@ -141,20 +159,22 @@ const Listing = ({
         </Card.Section>
 
         <div className="flex  flex-col gap-3 ">
-          <Title
-            lineClamp={2}
-            style={{ minHeight: 32 }}
-            className={`mt-3 ${size === "sm" ? "text-xs" : "text-sm"}`}
-          >
-            {listing.title}
-          </Title>
           {isShowcase && listing.children && (
             <Icon
-              className="absolute bottom-20 right-2"
+              className="absolute bottom-20 left-2"
               name="Carousel"
               size={17}
             />
           )}
+          <Title
+            lineClamp={2}
+            style={{ minHeight: 32 }}
+            className={`mt-3 ${size === "sm" ? "text-xs" : "text-sm"} ${
+              isShowcase && listing.children ? "ml-4" : ""
+            }`}
+          >
+            {listing.title}
+          </Title>
 
           <div className="flex flex-col" style={{ minHeight: 40 }}>
             {isShopListing && listing.condition && (
