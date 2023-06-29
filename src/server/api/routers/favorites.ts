@@ -1,21 +1,5 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
-import date from "date-fns";
-//schema
-// model Favorite {
-//   id          Int      @id @default(autoincrement())
-//   title       String
-//   url         String
-//   thumbUrl    String
-//   imgUrl      String
-//   price       Int
-//   deliveryMethod String
-//   searchTerm  String
-//   ownerId     String
-//   createdAt   DateTime @default(now())
-//   owner       User     @relation(fields: [ownerId], references: [id])
-//   @@index([ownerId])
-// }
 
 export const favoritesRouter = createTRPCRouter({
   createFavorite: protectedProcedure
@@ -27,20 +11,22 @@ export const favoritesRouter = createTRPCRouter({
         imgUrl: z.string(),
         price: z.number(),
         deliveryMethod: z.string(),
+        searchTerm: z.string(),
       })
     )
     .mutation(async (opts) => {
       const { ctx, input } = opts;
-      await ctx.prisma.favorite.create({
+      const res = await ctx.prisma.favorite.create({
         data: { ...input, ownerId: ctx.session.user.id },
       });
+      return res;
     }),
   deleteFavorite: protectedProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async (opts) => {
       const { ctx, input } = opts;
       await ctx.prisma.favorite.delete({
-        where: { id: input.id },
+        where: {id: input.id},
       });
     }),
   //get favorites with pagination

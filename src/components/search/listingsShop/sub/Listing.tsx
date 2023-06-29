@@ -26,6 +26,7 @@ import { Icon } from "../../../../assets/icons";
 import useSearchParams from "../../../../stores/state/useSearchParams";
 import type { LandingListing, ShopListing } from "../../../../types/types";
 import ExpandImage from "../../../image/ExpandImage";
+import { api } from "../../../../utils/api";
 
 type Props = {
   listing: ShopListing | LandingListing;
@@ -51,7 +52,7 @@ const Listing = ({
   const isShowcase = detectShowcase(listing);
   const isShowcaseChild = detectChildShowcase(listing);
   const [showModal, modalHandlers] = useDisclosure(false);
-  const { setSearchTerm } = useSearchParams();
+  const { setSearchTerm, searchTerm } = useSearchParams();
 
   if (listing.body === "placeholder") {
     return (
@@ -100,22 +101,7 @@ const Listing = ({
         <Card.Section>
           {isShopListing ? (
             <div>
-              <ActionIcon
-                onClick={(event) => {
-                  event.stopPropagation();
-                }}
-                color="gray"
-                variant="filled"
-                className="absolute left-2 top-0 z-10 mr-2 mt-2"
-              >
-                <Icon
-                  name="FillHeart"
-                  size={14}
-                  // color={showFavoritesPopover ? "red" : "white"}
-                  color="white"
-                />
-              </ActionIcon>
-
+              <FavoriteButton listing={listing} />
               {enlargeButton && (
                 <ActionIcon
                   onClick={(event) => {
@@ -265,6 +251,65 @@ const Listing = ({
         </div>
       </Modal>
     </div>
+  );
+};
+
+const FavoriteButton = ({
+  listing,
+}: {
+  listing: ShopListing | LandingListing;
+}) => {
+  const isShopListing = detectShopListing(listing);
+  const { searchTerm } = useSearchParams();
+  const createFavoriteMutation = api.favorites.createFavorite.useMutation();
+  const deleteFavoriteMutation = api.favorites.deleteFavorite.useMutation();
+  const createFavorite = () => {
+    if (!isShopListing) return;
+    createFavoriteMutation.mutate(
+      {
+        title: listing.title,
+        url: listing.url,
+        price: listing.price,
+        imgUrl: listing.images.url,
+        thumbUrl: listing.images.url_thumb,
+        searchTerm: searchTerm,
+        deliveryMethod: listing.shippable ? "shipping" : "pickup",
+      },
+      {
+        onSuccess: (data) => {
+          setCreatedId(data.id);
+        },
+      }
+    );
+  };
+  const deleteFavorite = () => {
+    if (!isShopListing || !createdId) return;
+    deleteFavoriteMutation.mutate(
+      {
+        id: createdId,
+      },
+      {
+        onSuccess: () => {
+          setCreatedId(null);
+        },
+      }
+    );
+  };
+
+  const [createdId, setCreatedId] = useState<null | number>(null);
+  return (
+    <ActionIcon
+      onClick={(event) => {
+        event.stopPropagation();
+        if (!createdId) createFavorite();
+        deleteFavorite();
+      }}
+      color="gray"
+      variant="filled"
+      className="absolute left-2 top-0 z-10 mr-2 mt-2"
+    >
+      <Icon name="FillHeart" size={14} color={createdId ? "red" : "white"} />
+    </ActionIcon>
   );
 };
 

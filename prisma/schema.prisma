@@ -69,11 +69,12 @@ model Favorite {
   url         String
   thumbUrl    String
   imgUrl      String
-  price       Int
+  price       Float
   deliveryMethod String
   searchTerm  String
   createdAt   DateTime @default(now())
   ownerId     String
   owner       User     @relation(fields: [ownerId], references: [id])
   @@index([ownerId])
+  @@unique([ownerId, url])
 }
