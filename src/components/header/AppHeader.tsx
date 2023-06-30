@@ -7,11 +7,11 @@ import useIsComponentVisible from "../../stores/state/useIsComponentVisible";
 import ShopTabs from "../search/header/shopTabs/ShopTabs";
 import useShops from "../../stores/state/useShops";
 import useColorTheme from "../../hooks/ui/useColorTheme";
+import { ActionIcon, Text } from "@mantine/core";
+import { Icon } from "../../assets/icons";
 const AppHeader = () => {
   const router = useRouter();
-  const { isMobile } = useBreakpoints();
   const { isShopTabsVisible } = useIsComponentVisible();
-  const { shops } = useShops();
   const { isDark } = useColorTheme();
 
   return (
@@ -22,12 +22,24 @@ const AppHeader = () => {
           className="cursor-pointer"
           onClick={() => void router.push("/")}
         />
-        {!isMobile && <SearchBar size="sm" />}
-        <div className="flex justify-end">
+        <SearchBar size="sm" />
+        <div className="flex justify-end gap-5">
+          <div
+            onClick={() => void router.push("/favorites")}
+            className="flex cursor-pointer flex-col items-center"
+          >
+            <ActionIcon size="lg" variant="outline" radius="xl" color="gray">
+              <Icon name="OutlineHeart" size={20} />
+            </ActionIcon>
+            <Text size="xs" className="text-center">
+              Favoris
+            </Text>
+          </div>
+
           <UserMenu />
         </div>
       </div>
-      {router.pathname === "/search" && !isMobile && !isShopTabsVisible && (
+      {router.pathname === "/search" && !isShopTabsVisible && (
         <div
           className={`transition-opacity ${
             isDark ? "bg-darkBackground" : "bg-white"
