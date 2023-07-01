@@ -40,6 +40,18 @@ export interface LandingListing {
   children?: ListingChildren[];
 }
 
+export interface FavoriteListing {
+  id: number;
+  title: string;
+  images: {
+    url: string;
+    url_thumb: string;
+  };
+  price: number;
+  deliveryMethod: string;
+  type: "favorite";
+  url: string;
+}
 export interface ListingChildren {
   title: string;
   url: string;

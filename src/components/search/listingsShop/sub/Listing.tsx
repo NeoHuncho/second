@@ -20,16 +20,21 @@ import {
   detectShowcase,
   detectShopListing,
   detectChildShowcase,
+  detectFavorite,
 } from "../../../../types/TypeDetection";
 import RepairScoreIcon from "../../../../assets/repair-score-icon/RepairScoreIcon";
 import { Icon } from "../../../../assets/icons";
 import useSearchParams from "../../../../stores/state/useSearchParams";
-import type { LandingListing, ShopListing } from "../../../../types/types";
+import type {
+  FavoriteListing,
+  LandingListing,
+  ShopListing,
+} from "../../../../types/types";
 import ExpandImage from "../../../image/ExpandImage";
 import { api } from "../../../../utils/api";
 
 type Props = {
-  listing: ShopListing | LandingListing;
+  listing: ShopListing | LandingListing | FavoriteListing;
   isScrolling: boolean;
   enlargeButton?: boolean;
   size?: MantineNumberSize;
@@ -51,10 +56,11 @@ const Listing = ({
   const isShopListing = detectShopListing(listing);
   const isShowcase = detectShowcase(listing);
   const isShowcaseChild = detectChildShowcase(listing);
+  const isFavorite = detectFavorite(listing);
   const [showModal, modalHandlers] = useDisclosure(false);
   const { setSearchTerm, searchTerm } = useSearchParams();
 
-  if (listing.body === "placeholder") {
+  if (isShopListing && listing.body === "placeholder") {
     return (
       <Card
         className={`h-full w-full`}
@@ -75,7 +81,7 @@ const Listing = ({
       return null;
     }
 
-    if (isShopListing) {
+    if (isShopListing || isFavorite) {
       window.open(listing.url, "_blank");
       return;
     }
@@ -99,9 +105,9 @@ const Listing = ({
         onClick={onClick}
       >
         <Card.Section>
-          {isShopListing ? (
+          {isShopListing || isFavorite ? (
             <div>
-              <FavoriteButton listing={listing} />
+              {isShopListing && <FavoriteButton listing={listing} />}
               {enlargeButton && (
                 <ActionIcon
                   onClick={(event) => {

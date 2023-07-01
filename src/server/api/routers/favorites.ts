@@ -1,5 +1,8 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
+import type { Favorite } from "@prisma/client";
+
+const favoritesState: Favorite[] = [];
 
 export const favoritesRouter = createTRPCRouter({
   createFavorite: protectedProcedure
@@ -26,20 +29,25 @@ export const favoritesRouter = createTRPCRouter({
     .mutation(async (opts) => {
       const { ctx, input } = opts;
       await ctx.prisma.favorite.delete({
-        where: {id: input.id},
+        where: { id: input.id },
       });
     }),
-  //get favorites with pagination
   getFavorites: protectedProcedure
-    .input(z.object({ page: z.number() }))
+    .input(z.object({ cursor: z.number().nullish(), take: z.number() }))
     .query(async (opts) => {
       const { ctx, input } = opts;
-      const favorites = await ctx.prisma.favorite.findMany({
+      const items = await ctx.prisma.favorite.findMany({
         where: { ownerId: ctx.session.user.id },
         orderBy: { createdAt: "desc" },
-        skip: (input.page - 1) * 10,
-        take: 10,
+        cursor: input.cursor ? { id: input.cursor } : undefined,
+        take: input.take,
       });
-      return favorites;
+      let nextCursor = undefined;
+      const nextItem = items.pop(); // return the last item from the array
+      nextCursor = nextItem?.id;
+      return {
+        items,
+        nextCursor,
+      };
     }),
 });
