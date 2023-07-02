@@ -1,8 +1,5 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
-import type { Favorite } from "@prisma/client";
-
-const favoritesState: Favorite[] = [];
 
 export const favoritesRouter = createTRPCRouter({
   createFavorite: protectedProcedure

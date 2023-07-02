@@ -9,26 +9,30 @@ import { useState } from "react";
 
 export default function Favorites() {
   const [hasMore, setHasMore] = useState(true);
-  const { data, fetchNextPage, isLoading } =
+  const [isLoading, setIsLoading] = useState(false);
+  const { data, fetchNextPage, isLoading:isLoadingQuery } =
     api.favorites.getFavorites.useInfiniteQuery(
       {
         take: 20,
       },
       {
         getNextPageParam: (lastPage) => lastPage.nextCursor,
+        refetchOnWindowFocus: false,
       }
     );
 
   const favorites = data?.pages?.flatMap((page) => page.items);
   const listingsInView = useListingsInView();
   const fetchNext = async () => {
-    if (isLoading || !hasMore) return;
+    if (isLoadingQuery || !hasMore || isLoading) return;
+    setIsLoading(true);
     await fetchNextPage();
     if (!data?.pages[data.pages.length - 1]?.items.length) setHasMore(false);
+    setIsLoading(false);
   };
 
   if (!favorites) return <Loader />;
-  if (favorites.length === 0 && !isLoading)
+  if (favorites.length === 0 && !isLoadingQuery)
     return (
       <div>
         <Title order={4} align="center">

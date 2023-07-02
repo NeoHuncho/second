@@ -2,17 +2,7 @@ import type { MantineNumberSize } from "@mantine/core";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { useDisclosure } from "@mantine/hooks";
-import {
-  Modal,
-  Loader,
-  ActionIcon,
-  Card,
-  Image,
-  Text,
-  Title,
-  Popover,
-  Checkbox,
-} from "@mantine/core";
+import { Modal, ActionIcon, Card, Image, Text, Title } from "@mantine/core";
 import NextImage from "next/image";
 import parsePrice from "../../../../utils/parsePrice";
 import NoImage from "./NoImage";
@@ -32,6 +22,7 @@ import type {
 } from "../../../../types/types";
 import ExpandImage from "../../../image/ExpandImage";
 import { api } from "../../../../utils/api";
+import { notifications } from "@mantine/notifications";
 
 type Props = {
   listing: ShopListing | LandingListing | FavoriteListing;
@@ -58,7 +49,7 @@ const Listing = ({
   const isShowcaseChild = detectChildShowcase(listing);
   const isFavorite = detectFavorite(listing);
   const [showModal, modalHandlers] = useDisclosure(false);
-  const { setSearchTerm, searchTerm } = useSearchParams();
+  const { setSearchTerm } = useSearchParams();
 
   if (isShopListing && listing.body === "placeholder") {
     return (
@@ -285,10 +276,19 @@ const FavoriteButton = ({
         onSuccess: (data) => {
           setCreatedId(data.id);
         },
+        onError: (err) => {
+          if (err.shape?.code === -32603) return setCreatedId(420690.42);
+          else
+            notifications.show({
+              message: "Une erreur est survenue lors de la création du favori.",
+              color: "red",
+            });
+        },
       }
     );
   };
   const deleteFavorite = () => {
+    if (createdId === 420690.42) return setCreatedId(null);
     if (!isShopListing || !createdId) return;
     deleteFavoriteMutation.mutate(
       {
