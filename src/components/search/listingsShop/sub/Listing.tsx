@@ -262,6 +262,7 @@ const FavoriteButton = ({
   const deleteFavoriteMutation = api.favorites.deleteFavorite.useMutation();
   const createFavorite = () => {
     if (!isShopListing) return;
+    setHasClicked(true);
     createFavoriteMutation.mutate(
       {
         title: listing.title,
@@ -278,11 +279,11 @@ const FavoriteButton = ({
         },
         onError: (err) => {
           if (err.shape?.code === -32603) return setCreatedId(420690.42);
-          else
-            notifications.show({
-              message: "Une erreur est survenue lors de la création du favori.",
-              color: "red",
-            });
+          notifications.show({
+            message: "Une erreur est survenue lors de la création du favori.",
+            color: "red",
+          });
+          setHasClicked(false);
         },
       }
     );
@@ -297,12 +298,14 @@ const FavoriteButton = ({
       {
         onSuccess: () => {
           setCreatedId(null);
+          setHasClicked(false);
         },
       }
     );
   };
 
   const [createdId, setCreatedId] = useState<null | number>(null);
+  const [hasClicked, setHasClicked] = useState(false);
   return (
     <ActionIcon
       onClick={(event) => {
@@ -314,7 +317,7 @@ const FavoriteButton = ({
       variant="filled"
       className="absolute left-2 top-0 z-10 mr-2 mt-2"
     >
-      <Icon name="FillHeart" size={14} color={createdId ? "red" : "white"} />
+      <Icon name="FillHeart" size={14} color={hasClicked ? "red" : "white"} />
     </ActionIcon>
   );
 };

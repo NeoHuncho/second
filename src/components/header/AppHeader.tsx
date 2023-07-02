@@ -1,11 +1,9 @@
 import { useRouter } from "next/router";
 import SearchBar from "../common/SearchBar";
 import UserMenu from "../userMenu/UserMenu";
-import useBreakpoints from "../../hooks/ui/useBreakpoints";
 import Logo from "../logo/logo";
 import useIsComponentVisible from "../../stores/state/useIsComponentVisible";
 import ShopTabs from "../search/header/shopTabs/ShopTabs";
-import useShops from "../../stores/state/useShops";
 import useColorTheme from "../../hooks/ui/useColorTheme";
 import { ActionIcon, Text } from "@mantine/core";
 import { Icon } from "../../assets/icons";
