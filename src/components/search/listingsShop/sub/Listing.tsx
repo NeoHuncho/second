@@ -260,6 +260,13 @@ const FavoriteButton = ({
   const { searchTerm } = useSearchParams();
   const createFavoriteMutation = api.favorites.createFavorite.useMutation();
   const deleteFavoriteMutation = api.favorites.deleteFavorite.useMutation();
+  const getFavoriteQuery = api.favorites.getFavorite.useQuery(
+    {
+      url: listing.url,
+    },
+    { enabled: false }
+  );
+
   const createFavorite = () => {
     if (!isShopListing) return;
     setHasClicked(true);
@@ -278,18 +285,33 @@ const FavoriteButton = ({
           setCreatedId(data.id);
         },
         onError: (err) => {
-          if (err.shape?.code === -32603) return setCreatedId(420690.42);
-          notifications.show({
-            message: "Une erreur est survenue lors de la création du favori.",
-            color: "red",
-          });
-          setHasClicked(false);
+          if (err.shape?.code === -32603) {
+            getFavoriteQuery
+              .refetch()
+              .then((data) => {
+                if (!data?.data?.id) return;
+                setCreatedId(data.data.id);
+              })
+              .catch(() => {
+                notifications.show({
+                  message:
+                    "Une erreur est survenue lors de la création du favori.",
+                  color: "red",
+                });
+                setHasClicked(false);
+              });
+          } else {
+            notifications.show({
+              message: "Une erreur est survenue lors de la création du favori.",
+              color: "red",
+            });
+            setHasClicked(false);
+          }
         },
       }
     );
   };
   const deleteFavorite = () => {
-    if (createdId === 420690.42) return setCreatedId(null);
     if (!isShopListing || !createdId) return;
     deleteFavoriteMutation.mutate(
       {

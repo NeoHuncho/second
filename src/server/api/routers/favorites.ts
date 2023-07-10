@@ -47,4 +47,11 @@ export const favoritesRouter = createTRPCRouter({
         nextCursor,
       };
     }),
+  getFavorite: protectedProcedure
+    .input(z.object({ url: z.string() }))
+    .query(async (opts) =>
+      opts.ctx.prisma.favorite.findFirst({
+        where: { ownerId: opts.ctx.session.user.id, url: opts.input.url },
+      })
+    )
 });

@@ -5,22 +5,29 @@ import Listing from "../components/search/listingsShop/sub/Listing";
 import useListingsInView from "../hooks/search/useListingsInView";
 import type { Favorite } from "@prisma/client";
 import type { FavoriteListing } from "../types/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Favorites() {
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const { data, fetchNextPage, isLoading:isLoadingQuery } =
-    api.favorites.getFavorites.useInfiniteQuery(
-      {
-        take: 20,
-      },
-      {
-        getNextPageParam: (lastPage) => lastPage.nextCursor,
-        refetchOnWindowFocus: false,
-      }
-    );
+  const {
+    data,
+    fetchNextPage,
+    isLoading: isLoadingQuery,
+  } = api.favorites.getFavorites.useInfiniteQuery(
+    {
+      take: 20,
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+      refetchOnWindowFocus: false,
+    }
+  );
 
+  useEffect(() => {
+    if (!data?.pages[0]?.items.length) return;
+    if (data?.pages[0]?.items.length < 19) setHasMore(false);
+  }, [data]);
   const favorites = data?.pages?.flatMap((page) => page.items);
   const listingsInView = useListingsInView();
   const fetchNext = async () => {
