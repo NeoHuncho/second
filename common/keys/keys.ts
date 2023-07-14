@@ -32,6 +32,11 @@ export const MultiKeyFilterTypes = {
   color: "Couleur",
 };
 
+export const ShoesClothesOnlyFilters = {
+  size: "Taille",
+  color: "Couleur",
+};
+
 export const Categories = {
   all: "Tout",
   clothes: "Vêtements",

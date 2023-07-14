@@ -1,7 +1,11 @@
 import type { NextRouter } from "next/router";
 import type { Filter, MultiKeyFilterType } from "../../../common/types/types";
 import { create } from "zustand";
-import { Filters, MultiKeyFilterTypes } from "../../../common/keys/keys";
+import {
+  Filters,
+  MultiKeyFilterTypes,
+  ShoesClothesOnlyFilters,
+} from "../../../common/keys/keys";
 import type { ParsedUrlQuery } from "querystring";
 
 type FiltersStore = {
@@ -121,7 +125,7 @@ const useShopFilters = create<FiltersStore>((set, get) => ({
       const filters = get().filters;
       const rest = Object.keys(filters).reduce((acc, key) => {
         if (
-          !Object.keys(MultiKeyFilterTypes).filter((typeKey) =>
+          !Object.keys(ShoesClothesOnlyFilters).filter((typeKey) =>
             key.includes(typeKey)
           ).length
         ) {
