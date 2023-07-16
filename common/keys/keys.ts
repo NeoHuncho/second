@@ -7,7 +7,7 @@ import {
   colors,
 } from "./filterKeys";
 
-export const Shops = { Leboncoin: "Leboncoin", Vinted: "Vinted" };
+export const Shops = { Leboncoin: "Leboncoin", Vinted: "Vinted", Ebay: "Ebay" };
 export const Sorts = {
   recommended: "Pertinence",
   price_asc: "Prix croissant",

@@ -1,4 +1,5 @@
 import type { QueryUrl } from "../../../common/types/types";
+import formatEbay from "./formatStoreUrl/stores/formatEbay";
 import formatLeboncoin from "./formatStoreUrl/stores/formatLeboncoin";
 import formatVinted from "./formatStoreUrl/stores/formatVinted";
 
@@ -10,6 +11,7 @@ const formatQueriesToStoreUrl = (query: Partial<{ [key: string]: string }>) => {
   if (query.shop === "Leboncoin")
     return formatLeboncoin(query as formatStoreParams);
   if (query.shop === "Vinted") return formatVinted(query as formatStoreParams);
+  if (query.shop === "Ebay") return formatEbay(query as formatStoreParams);
   else return "";
 };
 

@@ -28,6 +28,11 @@ export interface ShopListing {
   condition?: string;
   size?: string;
   type: "ShopListing";
+  shippingCost?: number;
+  auctionTimeLeftDays?: string;
+  auctionTimeLeftHours?: string;
+  auctionTimeLeftMinutes?: string;
+  isAuction?: boolean;
 }
 
 export interface LandingListing {

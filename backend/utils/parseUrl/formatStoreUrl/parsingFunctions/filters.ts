@@ -142,4 +142,8 @@ const filtersVinted = (filters: Record<QueryUrl, string>) => {
 
   return filtersString;
 };
-export { filtersLeboncoin, filtersVinted };
+
+const filtersEbay = (filters: Record<QueryUrl, string>) => {
+  return "";
+};
+export { filtersLeboncoin, filtersVinted, filtersEbay };

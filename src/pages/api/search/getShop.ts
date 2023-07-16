@@ -7,6 +7,7 @@ import parseLeboncoin from "../../../../backend/utils/parseUrl/shops/parseLebonc
 import parseVinted from "../../../../backend/utils/parseUrl/shops/parseVinted";
 import getStaticListings from "../../../../backend/utils/static/getStaticListings";
 import type { ShopName } from "../../../../common/types/types";
+import parseEbay from "../../../../backend/utils/parseUrl/shops/parseEbay";
 
 export default async function handler(
   request: NextApiRequest,
@@ -34,12 +35,12 @@ export default async function handler(
   );
 
   let res = "";
-  if (env.NODE_ENV === "production")
-    res = await getWebsiteScrape(formattedStoreUrl);
-  else {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    res = await getStaticListings(request.query.shop as ShopName);
-  }
+  // if (env.NODE_ENV === "production")
+  res = await getWebsiteScrape(formattedStoreUrl);
+  // else {
+  //   await new Promise((resolve) => setTimeout(resolve, 500));
+  //   res = await getStaticListings(request.query.shop as ShopName);
+  // }
 
   const formatListings = (shopName: ShopName) => {
     switch (shopName) {
@@ -52,6 +53,8 @@ export default async function handler(
       //vinted has additional parameter for sorting because the sorting does not work on the website
       case "Vinted":
         return parseVinted(res, request.query.sort as string | undefined);
+      case "Ebay":
+        return parseEbay(res);
       default:
         return [];
     }
