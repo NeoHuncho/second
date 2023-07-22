@@ -1,7 +1,7 @@
 import { load } from "cheerio";
 import type { ShopListing } from "../../../../src/types/types";
 
-const getTime = (inputString, unit) => {
+const getTime = (inputString: string, unit: "d" | "h" | "m") => {
   let regex;
   switch (unit) {
     case "d":
@@ -73,17 +73,16 @@ const parseEbay = (responseText: string) => {
       // check if s-item__bidCount exists, if it does, get the text from s-item__time-left (example : Il reste 5 j 21 h) retreive only the number of days and hours and minutes
       isAuction,
       auctionTimeLeftDays: isAuction
-        ? getTime($(this).find(".s-item__time-left").text(), "d")
+        ? getTime($(this).find(".s-item__time-left").text(), "d") || undefined
         : undefined,
       auctionTimeLeftHours: isAuction
         ? //find number before "h"
-          getTime($(this).find(".s-item__time-left").text(), "h")
+          getTime($(this).find(".s-item__time-left").text(), "h") || undefined
         : undefined,
       auctionTimeLeftMinutes: isAuction
         ? //find number before "m"
-          getTime($(this).find(".s-item__time-left").text(), "m")
+          getTime($(this).find(".s-item__time-left").text(), "m") || undefined
         : undefined,
-      auctionNumber: $(this).find(".s-item__time-left").text(),
     });
   });
   return items;

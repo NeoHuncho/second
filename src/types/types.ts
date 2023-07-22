@@ -29,9 +29,9 @@ export interface ShopListing {
   size?: string;
   type: "ShopListing";
   shippingCost?: number;
-  auctionTimeLeftDays?: string;
-  auctionTimeLeftHours?: string;
-  auctionTimeLeftMinutes?: string;
+  auctionTimeLeftDays?: number | undefined;
+  auctionTimeLeftHours?: number | undefined;
+  auctionTimeLeftMinutes?: number | undefined;
   isAuction?: boolean;
 }
 
