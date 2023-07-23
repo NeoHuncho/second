@@ -22,7 +22,7 @@ const Search = () => {
         </div>
         <ShopTabs />
         <div className="mt-5 flex flex-col">
-          <ListingsShop shop={shops[activeShop]} />
+          <ListingsShop  shop={shops[activeShop]} />
         </div>
       </div>
     </div>

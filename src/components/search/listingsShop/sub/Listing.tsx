@@ -159,7 +159,7 @@ const Listing = ({
             {listing.title}
           </Title>
 
-          <div className="flex flex-col" style={{ minHeight: 40 }}>
+          <div className="flex flex-col justify-end" style={{ minHeight: 40 }}>
             {isShopListing && listing.condition && (
               <div className="flex items-center gap-1">
                 <Icon name="OutlineEye" className="mt-0.5" />
@@ -178,7 +178,7 @@ const Listing = ({
               </div>
             )}
 
-            {isShopListing && (
+            {/* {isShopListing && (
               <div className="flex items-center gap-1">
                 <Icon name="TruckDelivery" className="mt-0.5" />
                 <Text lineClamp={1} className=" mt-1 text-xs ">
@@ -187,7 +187,7 @@ const Listing = ({
                     : "Pas de livraison"}
                 </Text>
               </div>
-            )}
+            )} */}
 
             {isShowcaseChild && listing.priceRange && (
               <div className="-mt-5 flex ">

@@ -28,7 +28,9 @@ const getTime = (inputString: string, unit: "d" | "h" | "m") => {
 const parseEbay = (responseText: string) => {
   const $ = load(responseText);
   const items: ShopListing[] = [];
+
   $("li.s-item__pl-on-bottom").each(function () {
+    if (!$(this).attr("id")) return;
     const priceElementText = $(this)
       .find(".s-item__price")
       .first()
@@ -46,16 +48,21 @@ const parseEbay = (responseText: string) => {
         ? "Livraison gratuite"
         : "";
     const isAuction = $(this).find(".s-item__bidCount").length > 0;
-    if (!$(this).attr("id")) return;
+
+    const title = $(this)
+      .find(".s-item__title")
+      .text()
+      .trim()
+      .replace("Nouvelle annonce", " ");
     items.push({
       id: Math.floor(Math.random() * 1000000000),
       type: "ShopListing",
       url: $(this).find(".s-item__image a").attr("href") || "",
       images: {
-        url: $(this).find(".s-item__image-img").attr("src") || "",
-        url_thumb: $(this).find(".s-item__image-img").attr("src") || "",
+        url: $(this).find(".s-item__image img").attr("src") || "",
+        url_thumb: $(this).find(".s-item__image img").attr("src") || "",
       },
-      title: $(this).find(".s-item__title span").text().trim(),
+      title: title,
       condition: $(this).find(".s-item__subtitle").text().trim(),
       price: parseFloat(
         priceElementText.substring(0, priceElementText.indexOf(" "))

@@ -72,7 +72,12 @@ export default function ListingsShop({ shop }: Props) {
           key={listing.id}
           id={`${listing.id}/${shop.name}`}
         >
-          <Listing listing={listing} isScrolling={false} enlargeButton />
+          <Listing
+            rootClassName="h-full"
+            listing={listing}
+            isScrolling={false}
+            enlargeButton
+          />
         </div>
       );
     }
@@ -140,7 +145,7 @@ export default function ListingsShop({ shop }: Props) {
         {showItems(shop.listings)}
       </div>
       {shop.hasFetchedAll && (
-        <div className="!mt-10 !mb-2">
+        <div className="!mb-2 !mt-10">
           <Text italic size={"lg"} className="text-center">
             Tout les résultats ont été visionnés 🌱
           </Text>

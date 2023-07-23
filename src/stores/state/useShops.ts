@@ -6,6 +6,7 @@ import getFiltersFromUrl from "../../utils/url/getFiltersFromUrl";
 import type { ShopName } from "../../../common/types/types";
 import { Shops } from "../../../common/keys/keys";
 import { getShopListings } from "../../requests/backend";
+import { defaultShopOrder } from "../../static/storeOrder";
 
 type ShopState = {
   shops: Record<ShopName, Shop>;
@@ -41,7 +42,7 @@ const useShops = create<ShopState>()((set, get) => ({
   ) as Record<ShopName, number>,
   slides: [],
   lastSearched: "",
-  shopOrder: ["Leboncoin", "Vinted"],
+  shopOrder: defaultShopOrder,
 
   setShopOrder: (shopOrder: ShopName[]) => {
     set((state) => ({

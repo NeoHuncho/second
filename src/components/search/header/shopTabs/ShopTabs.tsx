@@ -137,7 +137,7 @@ const ShopTabs: React.FC<ShopTabsProps> = ({
             {validShops.includes(shop.name) && shop.status !== "waiting" ? (
               <div
                 onClick={() => setActiveShop(shop.name)}
-                className="flex h-full w-full cursor-pointer items-center justify-between gap-2"
+                className="flex h-full w-full cursor-pointer items-center justify-center gap-2"
               >
                 <Image
                   src={shop.image}

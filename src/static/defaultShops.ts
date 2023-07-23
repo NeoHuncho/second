@@ -26,6 +26,6 @@ const defaultShop = (
 
 export const defaultShops = {
   Leboncoin: defaultShop("Leboncoin", leboncoinImage, "#FF6F15"),
-  Ebay: defaultShop("Ebay", ebayImage, "#FF6F15", true),
+  Ebay: defaultShop("Ebay", ebayImage, "#E53238", true),
   Vinted: defaultShop("Vinted", vintedImage, "#007781", true),
 };
