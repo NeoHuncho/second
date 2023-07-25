@@ -141,20 +141,14 @@ const Listing = ({
           )}
         </Card.Section>
 
-        <div className="flex  flex-col gap-3 ">
-          {isShowcase && listing.children && (
-            <Icon
-              className="absolute bottom-20 left-2"
-              name="Carousel"
-              size={17}
-            />
-          )}
+        <div
+          className="flex flex-col justify-between gap-3"
+          style={{ height: 104 }}
+        >
           <Title
             lineClamp={2}
             style={{ minHeight: 32 }}
-            className={`mt-3 ${size === "sm" ? "text-xs" : "text-sm"} ${
-              isShowcase && listing.children ? "ml-4" : ""
-            }`}
+            className={`mt-3 ${size === "sm" ? "text-xs" : "text-sm"}`}
           >
             {listing.title}
           </Title>
