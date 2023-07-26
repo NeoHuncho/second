@@ -142,7 +142,9 @@ const Listing = ({
         </Card.Section>
 
         <div
-          className="flex flex-col justify-between gap-3"
+          className={`flex flex-col ${
+            isShopListing ? "justify-between" : ""
+          } gap-3`}
           style={{ height: 104 }}
         >
           <Title
@@ -153,10 +155,13 @@ const Listing = ({
             {listing.title}
           </Title>
 
-          <div className="flex flex-col justify-end" style={{ minHeight: 40 }}>
+          <div
+            className={`flex flex-col ${isShopListing ? "justify-end" : ""}`}
+            style={{ minHeight: 40 }}
+          >
             {isShopListing && listing.condition && (
               <div className="flex items-center gap-1">
-                <Icon name="OutlineEye" className="mt-0.5" />
+                <Icon name="OutlineEye" className="mt-0.5 w-4 flex-shrink-0" />
                 <Text lineClamp={1} className=" mt-1 text-xs ">
                   {listing.condition}
                 </Text>
@@ -165,7 +170,7 @@ const Listing = ({
 
             {isShopListing && listing.size && (
               <div className="flex items-center gap-1">
-                <Icon name="Clothes" className="mt-0.5" />
+                <Icon name="Clothes" className="mt-0.5 w-4 flex-shrink-0" />
                 <Text lineClamp={1} className=" mt-1 text-xs ">
                   {listing.size}
                 </Text>
@@ -174,7 +179,7 @@ const Listing = ({
 
             {/* {isShopListing && (
               <div className="flex items-center gap-1">
-                <Icon name="TruckDelivery" className="mt-0.5" />
+                <Icon name="TruckDelivery" className="mt-0.5 w-4 flex-shrink-0" />
                 <Text lineClamp={1} className=" mt-1 text-xs ">
                   {listing.shippable
                     ? "Livraison possible"
