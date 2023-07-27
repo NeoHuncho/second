@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import { Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -10,19 +10,12 @@ import useColorTheme from "../../../../hooks/ui/useColorTheme";
 import useShops from "../../../../stores/state/useShops";
 import { motion } from "framer-motion";
 import useValidShops from "../../../../hooks/search/useValidShops";
-import { Loader, Switch, Text } from "@mantine/core";
+import { Loader, Text } from "@mantine/core";
 import { appearMotion } from "../../../../animate/Animate";
 import { Icon } from "../../../../assets/icons";
-import type { ShopName } from "../../../../../common/types/types";
-import useLocalStorage from "../../../../stores/useLocalStorage";
 import useIsComponentVisible from "../../../../stores/state/useIsComponentVisible";
 import { useInView } from "react-intersection-observer";
-import useShopFilters from "../../../../stores/state/useShopFilters";
-import {
-  clothingShopOrder,
-  defaultShopOrder,
-  shoesShopOrder,
-} from "../../../../static/storeOrder";
+
 // Install Swiper modules
 
 type ShopTabsProps = {

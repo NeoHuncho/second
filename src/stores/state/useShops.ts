@@ -183,6 +183,19 @@ const useShops = create<ShopState>()((set, get) => ({
     set({ sort: sort });
   },
   setActiveShop: (shop) => {
+    const updateListings = get().updateListings;
+    const shops = get().shops;
+    const shopOrder = get().shopOrder;
+    if (shops[shop].status === "waiting") {
+      void updateListings(shop);
+    }
+
+    const shopOrderIndex = shopOrder.findIndex((value) => value === shop);
+    const nextShop = shopOrder[shopOrderIndex + 1];
+    if (nextShop && shops[nextShop].status === "waiting") {
+      void updateListings(shopOrder[shopOrderIndex + 1] as ShopName);
+    }
+
     set((state) => ({
       ...state,
       activeShop: shop,
