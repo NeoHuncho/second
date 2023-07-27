@@ -73,9 +73,8 @@ const useSearch = () => {
   const updateShops = () => {
     resetShops();
     setLastSearched(router.asPath);
-    validShops.forEach((shop) => {
-      void updateListings(shop as ShopName);
-    });
+    void updateListings(validShops[0] as ShopName);
+    void updateListings(validShops[1] as ShopName);
   };
 
   useEffect(() => {

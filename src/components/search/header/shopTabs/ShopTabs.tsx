@@ -99,12 +99,10 @@ const ShopTabs: React.FC<ShopTabsProps> = ({
   className = "",
 }) => {
   const { isDark } = useColorTheme();
-  const { filters } = useShopFilters();
   const {
     activeShop,
     setActiveShop,
     shops: storeShops,
-    setShopOrder,
     shopOrder,
   } = useShops();
   const { validShopKeys: validShops } = useValidShops();
@@ -134,7 +132,7 @@ const ShopTabs: React.FC<ShopTabsProps> = ({
             key={index}
             className="!flex  !h-10 !w-36 !flex-col !justify-end"
           >
-            {validShops.includes(shop.name) && shop.status !== "waiting" ? (
+            {validShops.includes(shop.name) ? (
               <div
                 onClick={() => setActiveShop(shop.name)}
                 className="flex h-full w-full cursor-pointer items-center justify-center gap-2"
