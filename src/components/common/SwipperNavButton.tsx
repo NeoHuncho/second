@@ -1,5 +1,5 @@
 import { ActionIcon } from "@mantine/core";
-import { Icon } from "../../../../assets/icons";
+import { Icon } from "../../assets/icons";
 
 type Props = {
   type: "prev" | "next";

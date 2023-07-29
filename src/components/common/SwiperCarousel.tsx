@@ -4,7 +4,7 @@ import Listing from "../search/listingsShop/sub/Listing";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
-import SwipperNavButton from "../search/listingsShop/sub/SwipperNavButton";
+import SwipperNavButton from "./SwipperNavButton";
 import useCarousel from "../../hooks/carousel/useCarousel";
 import type { LandingListing, ShopListing } from "../../types/types";
 import { detectShopListing } from "../../types/TypeDetection";

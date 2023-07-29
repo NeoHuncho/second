@@ -2,7 +2,7 @@ import HeaderSearch from "../components/search/header/HeaderSearch";
 import useSearch from "../hooks/search/useSearch";
 import useShops from "../stores/state/useShops";
 import ShopTabs from "../components/search/header/shopTabs/ShopTabs";
-import ListingsShop from "../components/search/listingsShop/ListingShop";
+import ListingsShop from "../components/search/listingsShop/ListingsShop";
 import useShopFilters from "../stores/state/useShopFilters";
 import { useEffect } from "react";
 

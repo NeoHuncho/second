@@ -174,6 +174,7 @@ const useShops = create<ShopState>()((set, get) => ({
       shops: defaultShops,
     }));
   },
+  
   setSort: (sort, router) => {
     if (!Object.keys(router.query).length) return;
     void router.push({
