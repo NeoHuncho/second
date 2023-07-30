@@ -1,20 +1,20 @@
-import { useEffect } from "react";
-import { Navigation, Pagination } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-import Image from "next/image";
-import type { Shop } from "../../../../types/types";
-import useColorTheme from "../../../../hooks/ui/useColorTheme";
-import useShops from "../../../../stores/state/useShops";
-import { motion } from "framer-motion";
-import useValidShops from "../../../../hooks/search/useValidShops";
 import { Loader, Text } from "@mantine/core";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
+import { Navigation } from "swiper";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { appearMotion } from "../../../../animate/Animate";
 import { Icon } from "../../../../assets/icons";
+import useValidShops from "../../../../hooks/search/useValidShops";
+import useColorTheme from "../../../../hooks/ui/useColorTheme";
 import useIsComponentVisible from "../../../../stores/state/useIsComponentVisible";
-import { useInView } from "react-intersection-observer";
+import useShops from "../../../../stores/state/useShops";
+import type { Shop } from "../../../../types/types";
 
 // Install Swiper modules
 
@@ -112,14 +112,7 @@ const ShopTabs: React.FC<ShopTabsProps> = ({
       className={`relative w-full ${className}`}
       ref={!noObserver ? ref : undefined}
     >
-      <Swiper
-        spaceBetween={10}
-        slidesPerView={"auto"}
-        modules={[Navigation, Pagination]}
-        pagination={{
-          clickable: true,
-        }}
-      >
+      <Swiper spaceBetween={10} slidesPerView={"auto"} modules={[Navigation]}>
         {shops.map((shop, index) => (
           <SwiperSlide
             key={index}
