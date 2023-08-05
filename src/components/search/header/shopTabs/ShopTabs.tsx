@@ -107,6 +107,7 @@ const ShopTabs: React.FC<ShopTabsProps> = ({
     ),
   ];
 
+
   return (
     <div
       className={`relative w-full ${className}`}
