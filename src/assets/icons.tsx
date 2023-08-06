@@ -1,23 +1,24 @@
 import * as AiIcons from "react-icons/ai";
-import { VscError } from "react-icons/vsc";
-import { TbTruckDelivery } from "react-icons/tb";
-import { GiClothes, GiConverseShoe, GiLaptop } from "react-icons/gi";
-import { FaSignOutAlt } from "react-icons/fa";
 import {
-  BsMoonFill,
-  BsPhoneFill,
-  BsScrewdriver,
-  BsPencilFill,
   BsGridFill,
   BsHandThumbsUp,
+  BsMoonFill,
   BsPalette,
+  BsPencilFill,
+  BsPhoneFill,
+  BsScrewdriver,
 } from "react-icons/bs";
-import { FaUser } from "react-icons/fa";
-import useColorTheme from "../hooks/ui/useColorTheme";
-import { RiSearchFill } from "react-icons/ri";
+import { FaSignOutAlt, FaUser } from "react-icons/fa";
+import { GiClothes, GiConverseShoe, GiLaptop } from "react-icons/gi";
 import { ImEnlarge } from "react-icons/im";
+import { RiSearchFill } from "react-icons/ri";
+import { TbTruckDelivery } from "react-icons/tb";
+import { VscError } from "react-icons/vsc";
+import useColorTheme from "../hooks/ui/useColorTheme";
 // BiCarousel
 import { BiCarousel } from "react-icons/bi";
+// RiAuctionLine
+import { RiAuctionLine } from "react-icons/ri";
 
 import { HiAdjustments } from "react-icons/hi";
 export type IconProps = {
@@ -73,6 +74,7 @@ const icons = {
   OutlineList: AiIcons.AiOutlineUnorderedList,
   OutlineHandThumbsUp: BsHandThumbsUp,
   OutlinePalette: BsPalette,
+  OutlineAuction: RiAuctionLine,
 };
 
 export const Icon: React.FC<IconProps & { name: keyof typeof icons }> = ({

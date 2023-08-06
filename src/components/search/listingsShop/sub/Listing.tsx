@@ -1,28 +1,27 @@
 import type { MantineNumberSize } from "@mantine/core";
-import { useState } from "react";
-import { useRouter } from "next/router";
+import { ActionIcon, Card, Image, Modal, Text, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { Modal, ActionIcon, Card, Image, Text, Title } from "@mantine/core";
 import NextImage from "next/image";
-import parsePrice from "../../../../utils/parsePrice";
-import NoImage from "./NoImage";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { Icon } from "../../../../assets/icons";
+import RepairScoreIcon from "../../../../assets/repair-score-icon/RepairScoreIcon";
+import useSearchParams from "../../../../stores/state/useSearchParams";
 import {
-  detectShowcase,
-  detectShopListing,
   detectChildShowcase,
   detectFavorite,
+  detectShopListing,
+  detectShowcase,
 } from "../../../../types/TypeDetection";
-import RepairScoreIcon from "../../../../assets/repair-score-icon/RepairScoreIcon";
-import { Icon } from "../../../../assets/icons";
-import useSearchParams from "../../../../stores/state/useSearchParams";
 import type {
   FavoriteListing,
   LandingListing,
   ShopListing,
 } from "../../../../types/types";
+import parsePrice from "../../../../utils/parsePrice";
 import ExpandImage from "../../../image/ExpandImage";
-import { api } from "../../../../utils/api";
-import { notifications } from "@mantine/notifications";
+import FavoriteButton from "./FavoriteButton";
+import NoImage from "./NoImage";
 
 type Props = {
   listing: ShopListing | LandingListing | FavoriteListing;
@@ -66,7 +65,9 @@ const Listing = ({
       </Card>
     );
   }
-
+  {
+    isShopListing && console.log(listing);
+  }
   const onClick = () => {
     if (isScrolling) {
       return null;
@@ -159,6 +160,25 @@ const Listing = ({
             className={`flex flex-col ${isShopListing ? "justify-end" : ""}`}
             style={{ minHeight: 40 }}
           >
+            {isShopListing && listing.isAuction && (
+              <div className="flex items-center gap-1">
+                <Icon
+                  name="OutlineAuction"
+                  className="mt-0.5 w-4 flex-shrink-0"
+                />
+                <Text
+                  lineClamp={1}
+                  color={!listing.auctionTimeLeftDays ? "red" : ""}
+                  className=" mt-1 text-xs "
+                >
+                  Enchères:{" "}
+                  {`${listing.auctionTimeLeftDays || 0}j ${
+                    listing.auctionTimeLeftHours || 0
+                  }h ${listing.auctionTimeLeftMinutes || 0}m`}
+                </Text>
+              </div>
+            )}
+
             {isShopListing && listing.condition && (
               <div className="flex items-center gap-1">
                 <Icon name="OutlineEye" className="mt-0.5 w-4 flex-shrink-0" />
@@ -247,99 +267,6 @@ const Listing = ({
         </div>
       </Modal>
     </div>
-  );
-};
-
-const FavoriteButton = ({
-  listing,
-}: {
-  listing: ShopListing | LandingListing;
-}) => {
-  const isShopListing = detectShopListing(listing);
-  const { searchTerm } = useSearchParams();
-  const createFavoriteMutation = api.favorites.createFavorite.useMutation();
-  const deleteFavoriteMutation = api.favorites.deleteFavorite.useMutation();
-  const getFavoriteQuery = api.favorites.getFavorite.useQuery(
-    {
-      url: listing.url,
-    },
-    { enabled: false }
-  );
-
-  const createFavorite = () => {
-    if (!isShopListing) return;
-    setHasClicked(true);
-    createFavoriteMutation.mutate(
-      {
-        title: listing.title,
-        url: listing.url,
-        price: listing.price,
-        imgUrl: listing.images.url,
-        thumbUrl: listing.images.url_thumb,
-        searchTerm: searchTerm,
-        deliveryMethod: listing.shippable ? "shipping" : "pickup",
-      },
-      {
-        onSuccess: (data) => {
-          setCreatedId(data.id);
-        },
-        onError: (err) => {
-          if (err.shape?.code === -32603) {
-            getFavoriteQuery
-              .refetch()
-              .then((data) => {
-                if (!data?.data?.id) return;
-                setCreatedId(data.data.id);
-              })
-              .catch(() => {
-                notifications.show({
-                  message:
-                    "Une erreur est survenue lors de la création du favori.",
-                  color: "red",
-                });
-                setHasClicked(false);
-              });
-          } else {
-            notifications.show({
-              message: "Une erreur est survenue lors de la création du favori.",
-              color: "red",
-            });
-            setHasClicked(false);
-          }
-        },
-      }
-    );
-  };
-  const deleteFavorite = () => {
-    if (!isShopListing || !createdId) return;
-    deleteFavoriteMutation.mutate(
-      {
-        id: createdId,
-      },
-      {
-        onSuccess: () => {
-          setCreatedId(null);
-          setHasClicked(false);
-        },
-      }
-    );
-  };
-
-  const [createdId, setCreatedId] = useState<null | number>(null);
-  const [hasClicked, setHasClicked] = useState(false);
-  return (
-    <ActionIcon
-      onClick={(event) => {
-        event.stopPropagation();
-        if (!createdId) createFavorite();
-        deleteFavorite();
-      }}
-      color="gray"
-      variant="filled"
-      className="absolute left-2 top-0 z-10 mr-2 mt-2"
-    >
-      <Icon name="FillHeart" size={14} color={hasClicked ? "red" : "white"} />
-    </ActionIcon>
   );
 };
 
