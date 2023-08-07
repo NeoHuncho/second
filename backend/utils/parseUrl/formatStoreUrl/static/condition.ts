@@ -29,4 +29,20 @@ const conditionsVinted: Partial<Record<Filter, string>> = {
   conditionParts: "status_ids%5B%5D=4",
   conditionReconditioned: "status_ids%5B%5D=2",
 };
-export { conditionsLeboncoin, conditionsVinted ,conditionLeboncoinListings};
+
+const conditionsEbay: Partial<Record<Filter, string>> = {
+  conditionNew: "1500",
+  conditionNewWithTags: "1000",
+  conditionVeryGood: "3000",
+  conditionGood: "3000",
+  conditionAcceptable: "3000",
+  conditionParts: "7000",
+  conditionReconditioned: "2010%7C2020%7C2030",
+};
+
+export {
+  conditionLeboncoinListings,
+  conditionsEbay,
+  conditionsLeboncoin,
+  conditionsVinted,
+};

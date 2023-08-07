@@ -65,9 +65,6 @@ const Listing = ({
       </Card>
     );
   }
-  {
-    isShopListing && console.log(listing);
-  }
   const onClick = () => {
     if (isScrolling) {
       return null;
@@ -175,6 +172,17 @@ const Listing = ({
                   {`${listing.auctionTimeLeftDays || 0}j ${
                     listing.auctionTimeLeftHours || 0
                   }h ${listing.auctionTimeLeftMinutes || 0}m`}
+                </Text>
+              </div>
+            )}
+            {isShopListing && listing.isAuction === false && (
+              <div className="flex items-center gap-1">
+                <Icon
+                  name="OutlineDollar"
+                  className="mt-0.5 w-4 flex-shrink-0"
+                />
+                <Text lineClamp={1} className=" mt-1 text-xs ">
+                  Achat immédiat
                 </Text>
               </div>
             )}

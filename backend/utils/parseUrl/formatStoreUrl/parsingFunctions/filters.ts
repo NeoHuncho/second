@@ -5,7 +5,11 @@ import type {
 } from "../../../../../common/types/types";
 import { categoriesLeboncoin, categoriesVinted } from "../static/category";
 import { colorsLeboncoin, colorsVinted } from "../static/color";
-import { conditionsLeboncoin, conditionsVinted } from "../static/condition";
+import {
+  conditionsEbay,
+  conditionsLeboncoin,
+  conditionsVinted,
+} from "../static/condition";
 import {
   clothesTypesLeboncoin,
   sizesLeboncoin,
@@ -144,6 +148,19 @@ const filtersVinted = (filters: Record<QueryUrl, string>) => {
 };
 
 const filtersEbay = (filters: Record<QueryUrl, string>) => {
-  return "";
+  const { priceMin, priceMax, category, condition, size, color } = filters;
+  let filtersString = "";
+  if (priceMin) filtersString += `&rt=nc&_udlo=${priceMin}`;
+  if (priceMax) filtersString += `&rt=nc&_udhi=${priceMax}`;
+  if (condition) {
+    if (!filters.condition?.toString()) return filtersString;
+    const conditions = multiChoiceFilterParser({
+      filters,
+      key: "condition",
+      staticValues: conditionsEbay,
+    });
+    filtersString += `&LH_ItemCondition=${conditions.join("%7C")}`;
+  }
+  return filtersString;
 };
-export { filtersLeboncoin, filtersVinted, filtersEbay };
+export { filtersEbay, filtersLeboncoin, filtersVinted };

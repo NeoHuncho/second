@@ -31,7 +31,18 @@ const sortVinted = (sort: string | undefined) => {
 
 const sortEbay = (sort: string | undefined) => {
   if (!sort) return "";
-  return "";
+  switch (sort) {
+    case "price_asc":
+      return "&_sop=15";
+    case "price_desc":
+      return "&_sop=16";
+    case "date_asc":
+      return "&_sop=10";
+    case "date_desc":
+      return "&_sop=1";
+    default:
+      return "";
+  }
 };
 
-export { sortLeboncoin, sortVinted, sortEbay };
+export { sortEbay, sortLeboncoin, sortVinted };
