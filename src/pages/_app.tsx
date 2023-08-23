@@ -1,21 +1,20 @@
-import { type AppType } from "next/app";
+import { AppShell, Footer, Header, MantineProvider } from "@mantine/core";
+import { Notifications } from "@mantine/notifications";
+import { Analytics } from "@vercel/analytics/react";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
-import { Analytics } from "@vercel/analytics/react";
-import { api } from "../utils/api";
-import "../styles/globals.css";
-import { colors } from "../styles/colors";
-import { AppShell, Footer, Header, MantineProvider } from "@mantine/core";
+import { type AppType } from "next/app";
 import { useRouter } from "next/router";
-import AppHeader from "../components/header/AppHeader";
 import { useEffect, useState } from "react";
+import MobileFooter from "../components/footer/MobileFooter";
+import AppHeader from "../components/header/AppHeader";
+import MobileSearchHeader from "../components/header/MobileSearchHeader";
 import useResetFilters from "../hooks/search/useResetFilters";
 import useBreakpoints from "../hooks/ui/useBreakpoints";
-import MobileFooter from "../components/footer/MobileFooter";
-import MobileSearchHeader from "../components/header/MobileSearchHeader";
 import useLocalStorage from "../stores/useLocalStorage";
-import useIsComponentVisible from "../stores/state/useIsComponentVisible";
-import { Notifications } from "@mantine/notifications";
+import { colors } from "../styles/colors";
+import "../styles/globals.css";
+import { api } from "../utils/api";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -25,7 +24,6 @@ const MyApp: AppType<{ session: Session | null }> = ({
   const [hasLoaded, setHasLoaded] = useState(false);
   const { isMobile } = useBreakpoints();
   const { theme } = useLocalStorage();
-  const { isShopTabsVisible } = useIsComponentVisible();
   const isSearchPage = router.pathname === "/search";
   const isIndexPage = router.pathname === "/";
 

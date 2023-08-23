@@ -1,4 +1,4 @@
-import {withSentryConfig} from "@sentry/nextjs";
+import { withSentryConfig } from "@sentry/nextjs";
 // @ts-check
 import withPWA from "next-pwa";
 
@@ -64,4 +64,5 @@ hideSourceMaps: true,
 
 // Automatically tree-shake Sentry logger statements to reduce bundle size
 disableLogger: true,
+
 });
