@@ -30,6 +30,8 @@ const server = z.object({
   EMAIL_SERVER_PASS: z.string(),
   EMAIL_FROM: z.string(),
   GOOGLE_MAPS_API_KEY: z.string(),
+  OPEN_AI_API_KEY: z.string(),
+  ZYTE_API_KEY: z.string(),
 });
 
 /**
@@ -61,6 +63,9 @@ const processEnv = {
   EMAIL_SERVER_PASS: process.env.EMAIL_SERVER_PASS,
   EMAIL_FROM: process.env.EMAIL_FROM,
   GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY,
+  OPEN_AI_API_KEY: process.env.OPEN_AI_API_KEY,
+  ZYTE_API_KEY: process.env.ZYTE_API_KEY,
+
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 };
 

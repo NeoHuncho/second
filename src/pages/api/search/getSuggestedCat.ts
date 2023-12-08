@@ -36,7 +36,7 @@ export default async function handler(
 
 const getCatSuggestionWithTimeout = async (text: string) => {
   const configuration = new Configuration({
-    apiKey: "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",
+    apiKey: process.env.OPEN_AI_API_KEY,
   });
   const openai = new OpenAIApi(configuration);
   let timeoutId: NodeJS.Timeout;

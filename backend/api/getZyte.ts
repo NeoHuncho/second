@@ -1,6 +1,6 @@
 import axios from "axios";
 const API_URL = "https://api.zyte.com/v1/extract";
-const API_KEY = "69a64864e18441039bb861a4c5090899";
+const API_KEY = process.env.ZYTE_API_KEY || "";
 
 interface WebsiteData {
   url: string;
@@ -21,21 +21,21 @@ const getWebsiteScrape = async (websiteUrl: string) => {
     "Content-Type": "application/json",
     Authorization: "Basic " + Buffer.from(`${API_KEY}:`).toString("base64"),
   };
-  let httpResponseBody
-  try {   
+  let httpResponseBody;
+  try {
     const response = await axios.post<ResponseData>(API_URL, data, { headers });
     httpResponseBody = Buffer.from(
       response.data.httpResponseBody,
       "base64"
     ).toString();
   } catch (error) {
-      const response = await axios.post<ResponseData>(API_URL, data, {
-        headers,
-      });
-      httpResponseBody = Buffer.from(
-        response.data.httpResponseBody,
-        "base64"
-      ).toString();
+    const response = await axios.post<ResponseData>(API_URL, data, {
+      headers,
+    });
+    httpResponseBody = Buffer.from(
+      response.data.httpResponseBody,
+      "base64"
+    ).toString();
   }
   return httpResponseBody;
 };
